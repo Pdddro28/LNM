@@ -37,7 +37,7 @@ integral = 0.0
 MAX_INTEGRAL = 15.0 
 
 # --- PARÁMETROS PID EXCLUSIVOS PARA EVITAR OBSTÁCULOS ---
-Kp_obstaculo = 0.32   # Más agresivo porque el rango de error en píxeles es menor
+Kp_obstaculo = 0.28   # Más agresivo porque el rango de error en píxeles es menor
 Kd_obstaculo = 0.01   # Amortigua el giro para evitar que la cola derrape y toque el pilar
 
 # --- MÁQUINA DE ESTADOS PARA OBSTÁCULOS ---
@@ -45,7 +45,7 @@ estado_carrera = "LINEAL"
 memoria_lado = None  # Guardará "IZQUIERDA" o "DERECHA"
 
 # --- CONFIGURACIÓN DE VELOCIDAD Y AJUSTES (MODERADA A 65) ---
-VELOCIDAD_BASE = 68
+VELOCIDAD_BASE = 75
 DIST_MIN_CHOQUE = 12.0  
 steering_angle = 80     
 
@@ -210,8 +210,8 @@ while running:
             print(f"🔄 [MODO ESQUIVA]: Evadiendo pilar por la {memoria_lado} | L:{left_dist}cm R:{right_dist}cm")
             
             # SETPOINTS ABSOLUTOS EN PÍXELES
-            SETPOINT_VERDE = 549
-            SETPOINT_ROJO = 50
+            SETPOINT_VERDE = 548
+            SETPOINT_ROJO = 51
             
             # DETECCIÓN DE ENCAJONAMIENTO TOTAL VIA ULTRASONIDOS
             if memoria_lado == "IZQUIERDA" and left_dist < DIST_MIN_PARED and left_dist > 1.0:
