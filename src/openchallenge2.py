@@ -78,12 +78,10 @@ while running:
         black_areas = obtener_areas()
         draw_rois()
 
-        #cv2.imshow('Vision HD - Posicion Corregida', LNM.vision.frame)
-        #if cv2.waitKey(1) & 0xFF == ord('q'):
-           # break
-
-        front_dist, left_dist, right_dist = LNM.get_distances()
-        print(f"black area: {LNM.black_area}")
+        # CORREGIDO: Desempaquetamos las 4 variables que retorna get_distances()
+        front_dist, left_dist, dist_laser1, dist_laser2 = LNM.get_distances()
+        print(f"black area: {LNM.black_area} | Laser1: {dist_laser1}cm | Laser2: {dist_laser2}cm")
+        
         # =========================================================================
         # FRENO DE MANO DE EMERGENCIA (Basado en proximidad física frontal)
         # =========================================================================
@@ -108,7 +106,6 @@ while running:
             continue
 
         # Avanzamos con la velocidad normal del Open Challenge
-
         LNM.move_forward(speed=130) 
 
         # 1. TRACK TYPE DETECTION
@@ -151,12 +148,12 @@ while running:
             steering_angle = int(80 + correction)
             steering_angle = max(40, min(120, steering_angle))
             print(f"Error: {error}, Integral: {integral:.2f}, Derivative: {derivative}, Steering Angle: {steering_angle}")
+            
             # --- FILTROS DE TOLERANCIA SUAVE (Evita movimientos constantes en rectas) ---
             if abs(error) < UMBRAL_PIXELES_MUERTO: 
                 LNM.turn_center()
                 steering_angle = 80
             elif abs(steering_angle - 80) <= TOLERANCIA_ANGULO:
-                # Si la corrección es mínima (ej: 81 u 78), forzamos dirección recta
                 LNM.turn_center()
                 steering_angle = 80
             elif steering_angle > 80:
@@ -181,13 +178,9 @@ while running:
 
         if current_time - orange_timer > 1.1 and LNM.turning_direction == 2: 
             n = 0
-            #print("Timer reset, ready for next orange line detection.")
 
         if current_time - blue_timer > 1.1 and LNM.turning_direction == 1:
             n = 0
-            #print("Timer reset, ready for next blue line detection.")
-
-        #print("Loop count:", loops)
 
         # Control asíncrono para el fin de carrera (3 segundos extra manteniendo lógica)
         if loops >= 12 and not end_game_triggered:
@@ -196,7 +189,6 @@ while running:
             end_game_triggered = True
 
         if end_game_triggered:
-            # Comprobamos dinámicamente si ya transcurrieron los 3 segundos
             if current_time - end_game_timer >= 1:
                 print("⏱️ Tiempo de gracia completado. Deteniendo robot.")
                 break
