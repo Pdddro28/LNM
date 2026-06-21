@@ -24,11 +24,11 @@ class MegaPiController:
             time.sleep(2) 
             print(f"✅ System: Connected to MegaPi on {port}")
             
-            # --- Sensores de Distancia ---
-            self.dist_front = 0
-            self.dist_left = 0
-            self.dist_right = 0
-            self.dist_right_front = 0 # NUEVO: Variable para el cuarto ultrasónico
+            # --- Sensores de Distancia (Actualizados a la nueva configuración) ---
+            self.dist_front = 0   # Ultrasónico Frontal
+            self.dist_left = 0    # Ultrasónico Izquierdo
+            self.dist_laser1 = 0  # NUEVO: Sensor Láser ToF 1 (0x30)
+            self.dist_laser2 = 0  # NUEVO: Sensor Láser ToF 2 (0x29)
             
             self.data_log = []
             self.log_index = 0
@@ -68,20 +68,19 @@ class MegaPiController:
     def _read_telemetry(self):
         while self.running:
             try:
-                # Esperamos el paquete mínimo de 8 bytes (1 header + 7 datos)
+                # Esperamos el paquete de 8 bytes (1 header + 7 datos)
                 if self.ser.in_waiting >= 8:
                     header = self.ser.read(1)
                     
                     if header == b'\xaa':
-                        # Leemos los 7 bytes restantes del payload
                         payload = self.ser.read(7)
                         
-                        # Mapeo idéntico al Serial.write() del Arduino:
-                        self.dist_front       = payload[0] # Byte 1
-                        self.dist_left        = payload[1] # Byte 2
-                        self.dist_right       = payload[2] # Byte 3
-                        self.dist_right_front = payload[3] # Byte 4 (NUEVO)
-                        self.button_value     = payload[4] # Byte 5
+                        # Mapeo idéntico al Serial.write() del nuevo Arduino:
+                        self.dist_front   = payload[0] # Byte 1: Ultrasónico Frontal
+                        self.dist_left    = payload[1] # Byte 2: Ultrasónico Izquierdo
+                        self.dist_laser1  = payload[2] # Byte 3: Láser VL53L0X (1)
+                        self.dist_laser2  = payload[3] # Byte 4: Láser VL53L0X (2)
+                        self.button_value = payload[4] # Byte 5: Botón
                         
                         # payload[5] y payload[6] son bytes de relleno (0x00), se ignoran.
                         
@@ -145,14 +144,14 @@ class MegaPiController:
 
     # --- TELEMETRY DATA LOGGING ---
     def log_step(self, action_code):
-        d_front, d_left, d_right, d_r_front = self.get_distances()
+        d_front, d_left, d_l1, d_l2 = self.get_distances()
 
         self.data_log.append({
             'index': self.log_index,
             'dist_front_cm': d_front,
             'dist_left_cm': d_left,
-            'dist_right_cm': d_right,
-            'dist_right_front_cm': d_r_front, # Actualizado para guardar el nuevo sensor
+            'dist_laser1_cm': d_l1, # Guardar distancias reales del ToF
+            'dist_laser2_cm': d_l2,
         })
         
         self.log_index += 1
@@ -187,12 +186,11 @@ class MegaPiController:
     def stop(self, log=True):
         self._send_command(5)
 
-    # CORREGIDO: Retorna los 4 sensores ultrasónicos como una tupla
+    # REVISADO: Retorna los 4 sensores activos actuales
     def get_distances(self):
-        return (self.dist_front, self.dist_left, self.dist_right, self.dist_right_front)
+        return (self.dist_front, self.dist_left, self.dist_laser1, self.dist_laser2)
 
     def start(self):
-        # Retorna True si el botón físico fue presionado/liberado
         return self.button_value == 1
 
     # --- SYSTEM EXITS AND RESOURCE MANAGEMENT ---
