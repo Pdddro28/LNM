@@ -24,13 +24,11 @@ class MegaPiController:
             time.sleep(2) 
             print(f"✅ System: Connected to MegaPi on {port}")
             
+            # --- Sensores de Distancia ---
             self.dist_front = 0
             self.dist_left = 0
             self.dist_right = 0
-            
-            # --- NUEVO: Inicialización de variables para sensores IR (0% a 100%) ---
-            self.ir_left = 0
-            self.ir_right = 0
+            self.dist_right_front = 0 # NUEVO: Variable para el cuarto ultrasónico
             
             self.data_log = []
             self.log_index = 0
@@ -70,7 +68,7 @@ class MegaPiController:
     def _read_telemetry(self):
         while self.running:
             try:
-                # Esperamos el paquete m�nimo de 8 bytes (1 header + 7 datos)
+                # Esperamos el paquete mínimo de 8 bytes (1 header + 7 datos)
                 if self.ser.in_waiting >= 8:
                     header = self.ser.read(1)
                     
@@ -78,7 +76,7 @@ class MegaPiController:
                         # Leemos los 7 bytes restantes del payload
                         payload = self.ser.read(7)
                         
-                        # Mapeo id�ntico al Serial.write() del Arduino:
+                        # Mapeo idéntico al Serial.write() del Arduino:
                         self.dist_front       = payload[0] # Byte 1
                         self.dist_left        = payload[1] # Byte 2
                         self.dist_right       = payload[2] # Byte 3
@@ -101,7 +99,11 @@ class MegaPiController:
         header = 0xFF
         msg_type = 0x01
         package = bytearray([header, msg_type, action, v1, v2])
-        self.ser.write(package)
+        try:
+            if hasattr(self, 'ser') and self.ser.is_open:
+                self.ser.write(package)
+        except serial.SerialException as e:
+            print(f"⚠️ [Fallo de Enlace]: No se pudo enviar el comando {action}. {e}")
 
     # --- COMPUTER VISION SUBSYSTEM ---
     def get_masks(self, color):
@@ -143,17 +145,14 @@ class MegaPiController:
 
     # --- TELEMETRY DATA LOGGING ---
     def log_step(self, action_code):
-        d_front, d_left, d_right = self.get_distances()
-        ir_l, ir_r = self.get_ir_reflectance() # Capturar datos analógicos actuales
+        d_front, d_left, d_right, d_r_front = self.get_distances()
 
         self.data_log.append({
             'index': self.log_index,
             'dist_front_cm': d_front,
             'dist_left_cm': d_left,
             'dist_right_cm': d_right,
-            # --- NUEVO: Columnas añadidas al registro de entrenamiento ---
-            'ir_left_pct': ir_l,
-            'ir_right_pct': ir_r,
+            'dist_right_front_cm': d_r_front, # Actualizado para guardar el nuevo sensor
         })
         
         self.log_index += 1
@@ -188,13 +187,13 @@ class MegaPiController:
     def stop(self, log=True):
         self._send_command(5)
 
+    # CORREGIDO: Retorna los 4 sensores ultrasónicos como una tupla
     def get_distances(self):
         return (self.dist_front, self.dist_left, self.dist_right, self.dist_right_front)
 
-    # --- NUEVO MÉTODO: Obtener datos de reflectancia de los TCRT5000 ---
-    def get_ir_reflectance(self):
-        """Devuelve una tupla (ir_izquierdo, ir_derecho) con valores de 0 a 100%"""
-        return (self.ir_left, self.ir_right)
+    def start(self):
+        # Retorna True si el botón físico fue presionado/liberado
+        return self.button_value == 1
 
     # --- SYSTEM EXITS AND RESOURCE MANAGEMENT ---
     def save_data_to_csv(self, filename='training_data.csv'):
@@ -213,12 +212,6 @@ class MegaPiController:
 
     def close(self):
         self.running = False
+        self.stop(log=False)
         if hasattr(self, 'ser') and self.ser.is_open:
-            self.stop(log=False)
             self.ser.close()
-            print("System: Connection closed.")
-
-    def start(self):
-        return self.button_value == 0
-    
-
