@@ -103,9 +103,10 @@ while running:
         LNM.obtener_linea_naranja()
         LNM.obtenerarea_frontal()
         
-        # Distancias físicas de los ultrasonidos
-        front_dist, left_dist, right_dist, right_front_dist = LNM.get_distances()
-        print(f"📡 Ultrasonidos: Frente={front_dist:.2f}cm | Izq={left_dist:.2f}cm | Der={right_dist:.2f}cm | Der-Frontal={right_front_dist:.2f}cm")
+        # INTEGRADO: Desempaquetado correcto de la tupla con los 2 nuevos láseres ToF
+        front_dist, left_dist, dist_laser1, dist_laser2 = LNM.get_distances()
+        print(f"📡 Sensores: Frente={front_dist:.2f}cm | Izq_Ultra={left_dist:.2f}cm | Laser1={dist_laser1}cm | Laser2={dist_laser2}cm")
+        
         # Procesar datos de visión localizados
         black_areas = obtener_areas_lineas()
         datos_rojo, datos_verde = procesar_obstaculos()
@@ -207,19 +208,19 @@ while running:
 
         # --- ESTADO 2: ESQUIVANDO ---
         elif estado_carrera == "ESQUIVANDO":
-            print(f"🔄 [MODO ESQUIVA]: Evadiendo pilar por la {memoria_lado} | L:{left_dist}cm R:{right_dist}cm")
+            print(f"🔄 [MODO ESQUIVA]: Evadiendo pilar por la {memoria_lado} | ToF1:{dist_laser1}cm ToF2:{dist_laser2}cm")
             
             # SETPOINTS ABSOLUTOS EN PÍXELES
             SETPOINT_VERDE = 548
             SETPOINT_ROJO = 51
             
-            # DETECCIÓN DE ENCAJONAMIENTO TOTAL VIA ULTRASONIDOS
-            if memoria_lado == "IZQUIERDA" and left_dist < DIST_MIN_PARED and left_dist > 1.0:
-                print("⚠️ Pared izquierda encima. Forzando REBASANDO.")
+            # INTEGRADO: Validación de encajonamiento lateral usando los ToF precisos
+            if memoria_lado == "IZQUIERDA" and dist_laser1 < DIST_MIN_PARED and dist_laser1 > 1.0:
+                print("⚠️ Pared/Pilar izquierdo demasiado cerca (ToF 1). Forzando REBASANDO.")
                 estado_carrera = "REBASANDO"
                 continue
-            elif memoria_lado == "DERECHA" and right_dist < DIST_MIN_PARED and right_dist > 1.0:
-                print("⚠️ Pared derecha encima. Forzando REBASANDO.")
+            elif memoria_lado == "DERECHA" and dist_laser2 < DIST_MIN_PARED and dist_laser2 > 1.0:
+                print("⚠️ Pared/Pilar derecho demasiado cerca (ToF 2). Forzando REBASANDO.")
                 estado_carrera = "REBASANDO"
                 continue
             
@@ -268,26 +269,27 @@ while running:
 
         # --- ESTADO 3: REBASANDO ---
         elif estado_carrera == "REBASANDO":
-            print(f"⏱️ [MODO REBASE]: Esperando liberación lateral. L:{left_dist}cm | R:{right_dist}cm")
+            print(f"⏱️ [MODO REBASE]: Esperando liberación lateral. ToF1:{dist_laser1}cm | ToF2:{dist_laser2}cm")
             
+            # INTEGRADO: Uso estratégico de los sensores ToF en lugar de los ultrasonidos genéricos
             if memoria_lado == "IZQUIERDA":
-                if left_dist < DIST_MIN_PARED and left_dist > 1.0:
+                if dist_laser1 < DIST_MIN_PARED and dist_laser1 > 1.0:
                     LNM.turn_right(angle=85, speed=VELOCIDAD_BASE) 
                 else:
                     LNM.turn_left(angle=72, speed=VELOCIDAD_BASE)  
                 
-                if right_dist > 40:
+                if dist_laser2 > 40: # Si el flanco derecho se abre de forma segura
                     print("✅ Pilar verde superado por completo.")
                     estado_carrera = "LINEAL"
                     prev_error = 0.0
             
             elif memoria_lado == "DERECHA":
-                if right_dist < DIST_MIN_PARED and right_dist > 1.0:
+                if dist_laser2 < DIST_MIN_PARED and dist_laser2 > 1.0:
                     LNM.turn_left(angle=75, speed=VELOCIDAD_BASE)  
                 else:
                     LNM.turn_right(angle=88, speed=VELOCIDAD_BASE) 
                 
-                if left_dist > 40:
+                if dist_laser1 > 40: # Si el flanco izquierdo se abre de forma segura
                     print("✅ Pilar rojo superado por completo.")
                     estado_carrera = "LINEAL"
                     prev_error = 0.0
