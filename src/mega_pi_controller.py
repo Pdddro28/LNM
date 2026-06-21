@@ -70,7 +70,7 @@ class MegaPiController:
     def _read_telemetry(self):
         while self.running:
             try:
-                # MODIFICADO: Ahora esperamos un paquete mínimo de 8 bytes (1 header + 7 datos)
+                # Esperamos el paquete m�nimo de 8 bytes (1 header + 7 datos)
                 if self.ser.in_waiting >= 8:
                     header = self.ser.read(1)
                     
@@ -78,15 +78,14 @@ class MegaPiController:
                         # Leemos los 7 bytes restantes del payload
                         payload = self.ser.read(7)
                         
-                        self.dist_front = payload[0]
-                        self.dist_left  = payload[1]
-                        self.dist_right = payload[2]
-                        self.button_value = payload[3]  
+                        # Mapeo id�ntico al Serial.write() del Arduino:
+                        self.dist_front       = payload[0] # Byte 1
+                        self.dist_left        = payload[1] # Byte 2
+                        self.dist_right       = payload[2] # Byte 3
+                        self.dist_right_front = payload[3] # Byte 4 (NUEVO)
+                        self.button_value     = payload[4] # Byte 5
                         
-                        # --- NUEVO: Extraer valores de los sensores TCRT5000 ---
-                        self.ir_left    = payload[4] # Byte 5 del paquete completo
-                        self.ir_right   = payload[5] # Byte 6 del paquete completo
-                        # payload[6] es el byte 7 de relleno (0x00), se ignora.
+                        # payload[5] y payload[6] son bytes de relleno (0x00), se ignoran.
                         
                     else:
                         line = self.ser.readline().decode('ascii', errors='ignore').strip()
@@ -190,7 +189,7 @@ class MegaPiController:
         self._send_command(5)
 
     def get_distances(self):
-        return (self.dist_front, self.dist_left, self.dist_right)
+        return (self.dist_front, self.dist_left, self.dist_right, self.dist_right_front)
 
     # --- NUEVO MÉTODO: Obtener datos de reflectancia de los TCRT5000 ---
     def get_ir_reflectance(self):
@@ -223,5 +222,3 @@ class MegaPiController:
         return self.button_value == 0
     
 
-if __name__ == "__main__":
-    pass

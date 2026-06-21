@@ -104,8 +104,8 @@ while running:
         LNM.obtenerarea_frontal()
         
         # Distancias físicas de los ultrasonidos
-        front_dist, left_dist, right_dist = LNM.get_distances()
-        
+        front_dist, left_dist, right_dist, right_front_dist = LNM.get_distances()
+        print(f"📡 Ultrasonidos: Frente={front_dist:.2f}cm | Izq={left_dist:.2f}cm | Der={right_dist:.2f}cm | Der-Frontal={right_front_dist:.2f}cm")
         # Procesar datos de visión localizados
         black_areas = obtener_areas_lineas()
         datos_rojo, datos_verde = procesar_obstaculos()
@@ -294,7 +294,6 @@ while running:
 
     except Exception as e:
         print("Exception en el bucle principal:", e)
-        LNM.stop()
         break
 
 # --- SAFETY SHUTDOWN ---
