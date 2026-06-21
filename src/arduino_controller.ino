@@ -3,6 +3,7 @@
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
 #include "Ultrasonic.h"
+#include "Adafruit_VL53L0X.h"
 
 // --- Constantes del Sistema ---
 #define SERVO_CENTER    90
@@ -11,7 +12,7 @@
 #define SERIAL_BAUD     115200
 #define SENSOR_TIMEOUT  25000
 
-// Pines de Hardware
+// Pines de Hardware Fijos
 #define BUTTON           A9
 #define pinServo         A7
 #define trig_front       A15
@@ -21,12 +22,21 @@
 #define trig_right       A11
 #define echo_right       A10
 #define centro           90
-#define Ir_izquierda     A12  // Sensor IR Izquierdo
-#define Ir_derecha       A13  // Sensor IR Derecho
 
-Ultrasonic sensorF(A15, A14);
-Ultrasonic sensorL(29, 39);
-Ultrasonic sensorD(A11, A10);
+// --- Configuración Láser VL53L0X ---
+const int XSHUT_PIN1 = 4;
+const int XSHUT_PIN2 = 5;
+
+const int LOX1_ADDRESS = 0x30; // Sensor ToF 1
+const int LOX2_ADDRESS = 0x29; // Sensor ToF 2
+
+// Instancias de Sensores
+Ultrasonic sensorF(trig_front, echo_front);
+Ultrasonic sensorL(trig_left, echo_left);
+Ultrasonic sensorD(trig_right, echo_right);
+
+Adafruit_VL53L0X lox1 = Adafruit_VL53L0X();
+Adafruit_VL53L0X lox2 = Adafruit_VL53L0X();
 
 class Carro {
   private:
@@ -42,48 +52,64 @@ class Carro {
       // Configuración del botón (Pull-up interna)
       pinMode(BUTTON, INPUT_PULLUP);
 
-      // Configuración de pines analógicos para los TCRT5000
-      pinMode(Ir_izquierda, INPUT);
-      pinMode(Ir_derecha, INPUT);
-
       // Configuración del Servo
       servoDireccion.attach(pinServo);
       servoDireccion.write(centro);
       
-      /*
-      // Inicialización del MPU6050 (I2C)
-      if (!mpu.begin()) {
-        Serial.println("System: MPU6050 NOT Found");
-      } else {
-        Serial.println("System: MPU6050 Initialized");
-        mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
-        mpu.setGyroRange(MPU6050_RANGE_500_DEG);
-        mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
+      // --- PASO 1: Apagar ambos sensores VL53L0X ---
+      pinMode(XSHUT_PIN1, OUTPUT);
+      pinMode(XSHUT_PIN2, OUTPUT);
+      digitalWrite(XSHUT_PIN1, LOW);
+      digitalWrite(XSHUT_PIN2, LOW);
+      delay(100); 
+
+      // --- PASO 2: Encender e iniciar SENSOR ToF 1 ---
+      pinMode(XSHUT_PIN1, INPUT); // Pone en modo flotante para encender
+      delay(100); 
+      if (!lox1.begin(LOX1_ADDRESS)) {
+        Serial.println("System: VL53L0X - Sensor 1 ERROR");
+        while (1);
       }
-      */
-      Serial.println("System: Hardware Initialized");
+      delay(10);
+
+      // --- PASO 3: Encender e iniciar SENSOR ToF 2 ---
+      pinMode(XSHUT_PIN2, INPUT); 
+      delay(100);  
+      if (!lox2.begin(LOX2_ADDRESS)) {
+        Serial.println("System: VL53L0X - Sensor 2 ERROR");
+        while (1);
+      }
+
+      Serial.println("System: Hardware and VL53L0X Initialized");
     }
 
     // --- Lógica de Sensores ---
     bool botonPresionado() {
-      return digitalRead(BUTTON) == LOW; // LOW porque usa INPUT_PULLUP
+      return digitalRead(BUTTON) == LOW; 
     }
 
     long getDistanciaFront() { return sensorF.read(); }
     long getDistanciaLeft()  { return sensorL.read(); }
     long getDistanciaRight() { return sensorD.read(); }
 
-    // --- Métodos Nuevos: Lectura de Sensores IR (TCRT5000) ---
-    // Devuelven el porcentaje de reflexión (0% a 100%)
-    int getPorcentajeIRIzquierdo() {
-      int valorRaw = analogRead(Ir_izquierda);
-      // Mapeo de 0-1023 a 0-100%. Si necesitas invertirlo, cambia a: map(valorRaw, 0, 1023, 100, 0)
-      return map(valorRaw, 0, 1023, 0, 100); 
+    // Retorna la distancia en CM del VL53L0X número 1
+    int getDistanciaLaser1() {
+      VL53L0X_RangingMeasurementData_t measure;
+      lox1.rangingTest(&measure, false);
+      if (measure.RangeStatus != 4) {
+        return measure.RangeMilliMeter / 10; // Conversión mm -> cm
+      }
+      return 255; // Fuera de rango o lectura inválida
     }
 
-    int getPorcentajeIRDerecho() {
-      int valorRaw = analogRead(Ir_derecha);
-      return map(valorRaw, 0, 1023, 0, 100);
+    // Retorna la distancia en CM del VL53L0X número 2
+    int getDistanciaLaser2() {
+      VL53L0X_RangingMeasurementData_t measure;
+      lox2.rangingTest(&measure, false);
+      if (measure.RangeStatus != 4) {
+        return measure.RangeMilliMeter / 10; // Conversión mm -> cm
+      }
+      return 255; 
     }
 
     // --- Lógica de Movimiento ---
@@ -132,8 +158,8 @@ void loop() {
     if (header == 0xFF) {
       byte tipo   = Serial.read();
       byte accion = Serial.read();
-      byte v1     = Serial.read(); // Velocidad o Ángulo
-      byte v2     = Serial.read(); // Velocidad secundaria
+      byte v1     = Serial.read(); 
+      byte v2     = Serial.read(); 
 
       switch (accion) {
         case 1: miCarro.avanzar(v1); break;
@@ -142,7 +168,7 @@ void loop() {
         case 4: miCarro.girarDerecha(v1, v2); break;
         case 5: miCarro.detenerse(); break;
         case 6: miCarro.girarCentro(); break;
-        case 7: miCarro.inicializar(); break; // Reiniciar configuración
+        case 7: miCarro.inicializar(); break; 
         default: miCarro.detenerse(); break;
       }
     }
@@ -150,24 +176,24 @@ void loop() {
 
   // --- PARTE 2: Telemetría (Arduino -> Raspberry) cada 100ms ---
   if (millis() - timerSensores > 100) {
-    int d_front = (int)miCarro.getDistanciaFront();
-    int d_left  = (int)miCarro.getDistanciaLeft();
-    int d_right = (int)miCarro.getDistanciaRight();
+    int d_front  = (int)miCarro.getDistanciaFront();
+    int d_left   = (int)miCarro.getDistanciaLeft();
+    
+    // NOTA: Como agregaste dos sensores láser, ajusté estas variables para enviarlos.
+    int d_laser1 = miCarro.getDistanciaLaser1(); // Sensor ToF Dirección 0x30
+    int d_laser2 = miCarro.getDistanciaLaser2(); // Sensor ToF Dirección 0x29
+    
     byte estadoBoton = miCarro.botonPresionado() ? 1 : 0;
     
-    // Obtenemos los porcentajes de los TCRT5000
-    byte ir_izq = (byte)constrain(miCarro.getPorcentajeIRIzquierdo(), 0, 100);
-    byte ir_der = (byte)constrain(miCarro.getPorcentajeIRDerecho(), 0, 100);
-    
-    // NUEVO: Paquete de Telemetría Expandido (8 bytes en total)
-    Serial.write(0xAA);                        // Byte 0: Header
-    Serial.write(constrain(d_front, 0, 255));  // Byte 1: Ultrasonido Frontal
-    Serial.write(constrain(d_left, 0, 255));   // Byte 2: Ultrasonido Izquierda
-    Serial.write(constrain(d_right, 0, 255));  // Byte 3: Ultrasonido Derecha
-    Serial.write(estadoBoton);                 // Byte 4: Botón (0 o 1)
-    Serial.write(ir_izq);                      // Byte 5: Porcentaje IR Izquierdo (0-100)
-    Serial.write(ir_der);                      // Byte 6: Porcentaje IR Derecho (0-100)
-    Serial.write(0x00);                        // Byte 7: Relleno (Padding) para mantener estructura
+    // ESTRUCTURA DEL PAQUETE MANTENIENDO LOS 8 BYTES
+    Serial.write(0xAA);                        // Byte 0: Header de inicio
+    Serial.write(constrain(d_front, 0, 255));  // Byte 1: Distancia Frontal (Ultrasónico)
+    Serial.write(constrain(d_left, 0, 255));   // Byte 2: Distancia Izquierda (Ultrasónico)
+    Serial.write(constrain(d_laser1, 0, 255)); // Byte 3: Reemplaza d_right -> AHORA ES LÁSER ToF 1
+    Serial.write(constrain(d_laser2, 0, 255)); // Byte 4: Reemplaza d_rightf -> AHORA ES LÁSER ToF 2
+    Serial.write(estadoBoton);                 // Byte 5: Estado del Botón (0 o 1)
+    Serial.write(0x00);                        // Byte 6: Relleno (Padding)
+    Serial.write(0x00);                        // Byte 7: Relleno (Padding)
     
     timerSensores = millis();
   }
