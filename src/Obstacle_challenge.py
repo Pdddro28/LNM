@@ -54,6 +54,7 @@ TOLERANCIA_ANGULO = 3
 
 # --- CONFIGURACIÓN PARA EVITAR PAREDES SEGUIDAS ---
 DIST_MIN_PARED = 18.0  # Si un lateral mide menos de esto, se está encajonando contra la pared
+DIST_CRITICA_TOFS = 8.0 # Umbral ultra-bajo para activar el Giro de Escape Extremo
 
 # --- FIN DE CARRERA ---
 end_game_triggered = False
@@ -103,9 +104,9 @@ while running:
         LNM.obtener_linea_naranja()
         LNM.obtenerarea_frontal()
         
-        # INTEGRADO: Desempaquetado correcto de la tupla con los 2 nuevos láseres ToF
-        front_dist, left_dist, dist_laser1, dist_laser2 = LNM.get_distances()
-        print(f"📡 Sensores: Frente={front_dist:.2f}cm | Izq_Ultra={left_dist:.2f}cm | Laser1={dist_laser1}cm | Laser2={dist_laser2}cm")
+        # CORREGIDO: Desempaquetado correcto de los 5 valores que retorna get_distances()
+        front_dist, left_dist, right_dist, dist_laser1, dist_laser2 = LNM.get_distances()
+        print(f"📡 Sensores: Frente={front_dist:.2f}cm | Izq_Ultra={left_dist:.2f}cm | Der_Ultra={right_dist:.2f}cm | ToF1={dist_laser1}cm | ToF2={dist_laser2}cm")
         
         # Procesar datos de visión localizados
         black_areas = obtener_areas_lineas()
@@ -118,7 +119,7 @@ while running:
             break
 
         # =========================================================================
-        # FRENO DE MANO DE EMERGENCIA
+        # FRENO DE MANO DE EMERGENCIA TRADICIONAL (Bloqueo Frontal Obvio)
         # =========================================================================
         if front_dist < DIST_MIN_CHOQUE and front_dist > 1.0:
             print(f"🚨 ¡FRENO DE MANO! Frente obstruido a {front_dist:.2f} cm.")
@@ -137,12 +138,22 @@ while running:
             integral = 0.0
             estado_carrera = "LINEAL" 
             girando = False
-            tiempo_perdida = 0.0 # Reset de seguridad
+            tiempo_perdida = 0.0 
             time.sleep(0.1)
             continue
 
-        # Mantenemos la velocidad constante
-        LNM.move_forward(speed=VELOCIDAD_BASE) 
+        # =========================================================================
+        # GATILLO DE ACTIVACIÓN: GIRO EXTREMO DE ESCAPE (ToFs en zona crítica)
+        # =========================================================================
+        if estado_carrera in ["ESQUIVANDO", "REBASANDO"]:
+            if (memoria_lado == "IZQUIERDA" and dist_laser1 < DIST_CRITICA_TOFS and dist_laser1 > 1.0) or \
+               (memoria_lado == "DERECHA" and dist_laser2 < DIST_CRITICA_TOFS and dist_laser2 > 1.0):
+                print(f"💥 ¡GIRO EXTREMO DE ESCAPE! Proximidad lateral crítica detectada. ToF1: {dist_laser1} | ToF2: {dist_laser2}")
+                estado_carrera = "ESCAPE_OBSTACULO"
+
+        # Mantenemos la velocidad constante si no estamos escapando en reversa
+        if estado_carrera != "ESCAPE_OBSTACULO":
+            LNM.move_forward(speed=VELOCIDAD_BASE) 
 
         # Detección del sentido de la pista (Líneas de las esquinas)
         if LNM.turning_direction == 0: 
@@ -155,9 +166,30 @@ while running:
         # MÁQUINA DE ESTADOS: NAVEGACIÓN Y EVASIÓN DE OBSTÁCULOS
         # =========================================================================
         
-        # --- ESTADO 1: LINEAL (Centrado de líneas + Giros controlados en Esquinas) ---
-        if estado_carrera == "LINEAL":
+        # --- ESTADO DE EMERGENCIA: ESCAPE OBSTACULO (Giro Extremo Reverso Asíncrono) ---
+        if estado_carrera == "ESCAPE_OBSTACULO":
+            LNM.stop(log=False)
+            time.sleep(0.04)
             
+            # Dirección del latigazo de reversa basada en el PD amortiguado para abrir espacio
+            if memoria_lado == "IZQUIERDA":
+                # Si el pilar/pared está a la izquierda, clava el volante a la derecha en reversa
+                LNM.move_backward(angle=120, speed=90)
+            else:
+                # Si el pilar/pared está a la derecha, clava el volante a la izquierda en reversa
+                LNM.move_backward(angle=40, speed=90)
+                
+            time.sleep(0.6) # Latigazo controlado rápido para desencajonar el chasis
+            LNM.turn_center(log=False)
+            prev_error = 0.0
+            integral = 0.0
+            tiempo_perdida = 0.0
+            estado_carrera = "REBASANDO" # Retorna a rebase para validar si ya hay espacio limpio
+            time.sleep(0.05)
+            continue
+
+        # --- ESTADO 1: LINEAL (Centrado de líneas + Giros controlados en Esquinas) ---
+        elif estado_carrera == "LINEAL":
             if datos_verde[0] > 350 and datos_verde[0] >= datos_rojo[0]:
                 print("🟢 ¡Pilar Verde Detectado! Cambiando a ESQUIVANDO.")
                 estado_carrera = "ESQUIVANDO"
@@ -210,48 +242,47 @@ while running:
         elif estado_carrera == "ESQUIVANDO":
             print(f"🔄 [MODO ESQUIVA]: Evadiendo pilar por la {memoria_lado} | ToF1:{dist_laser1}cm ToF2:{dist_laser2}cm")
             
-            # SETPOINTS ABSOLUTOS EN PÍXELES
             SETPOINT_VERDE = 548
             SETPOINT_ROJO = 51
             
-            # INTEGRADO: Validación de encajonamiento lateral usando los ToF precisos
+            # Validación regular de encajonamiento lateral usando los ToF precisos
             if memoria_lado == "IZQUIERDA" and dist_laser1 < DIST_MIN_PARED and dist_laser1 > 1.0:
-                print("⚠️ Pared/Pilar izquierdo demasiado cerca (ToF 1). Forzando REBASANDO.")
+                print("⚠️ Pared/Pilar izquierdo cerca (ToF 1). Forzando REBASANDO.")
                 estado_carrera = "REBASANDO"
                 continue
             elif memoria_lado == "DERECHA" and dist_laser2 < DIST_MIN_PARED and dist_laser2 > 1.0:
-                print("⚠️ Pared/Pilar derecho demasiado cerca (ToF 2). Forzando REBASANDO.")
+                print("⚠️ Pared/Pilar derecho cerca (ToF 2). Forzando REBASANDO.")
                 estado_carrera = "REBASANDO"
                 continue
             
             if memoria_lado == "IZQUIERDA": 
                 if datos_verde[0] == 0:
                     if tiempo_perdida == 0.0:
-                        tiempo_perdida = time.time()  # Inicia el contador
+                        tiempo_perdida = time.time()  
                     elif (time.time() - tiempo_perdida) > TIEMPO_GRACIA:
                         estado_carrera = "REBASANDO"
                         tiempo_perdida = 0.0
                         continue
                     
                     print(f"⏳ [GRACIA] Manteniendo evasión izquierda por {TIEMPO_GRACIA}s...")
-                    error_obs = prev_error  # Mantiene la inercia del cálculo PID anterior
+                    error_obs = prev_error  
                 else:
-                    tiempo_perdida = 0.0  # Resetea si vuelve a ver el pilar intermitentemente
+                    tiempo_perdida = 0.0  
                     error_obs = datos_verde[1] - SETPOINT_VERDE
                 
             else: 
                 if datos_rojo[0] == 0:
                     if tiempo_perdida == 0.0:
-                        tiempo_perdida = time.time()  # Inicia el contador
+                        tiempo_perdida = time.time()  
                     elif (time.time() - tiempo_perdida) > TIEMPO_GRACIA:
                         estado_carrera = "REBASANDO"
                         tiempo_perdida = 0.0
                         continue
                     
                     print(f"⏳ [GRACIA] Manteniendo evasión derecha por {TIEMPO_GRACIA}s...")
-                    error_obs = prev_error  # Mantiene la inercia del cálculo PID anterior
+                    error_obs = prev_error  
                 else:
-                    tiempo_perdida = 0.0  # Resetea
+                    tiempo_perdida = 0.0  
                     error_obs = datos_rojo[1] - SETPOINT_ROJO
             
             # --- CÁLCULO PID ---
@@ -271,14 +302,13 @@ while running:
         elif estado_carrera == "REBASANDO":
             print(f"⏱️ [MODO REBASE]: Esperando liberación lateral. ToF1:{dist_laser1}cm | ToF2:{dist_laser2}cm")
             
-            # INTEGRADO: Uso estratégico de los sensores ToF en lugar de los ultrasonidos genéricos
             if memoria_lado == "IZQUIERDA":
                 if dist_laser1 < DIST_MIN_PARED and dist_laser1 > 1.0:
                     LNM.turn_right(angle=85, speed=VELOCIDAD_BASE) 
                 else:
                     LNM.turn_left(angle=72, speed=VELOCIDAD_BASE)  
                 
-                if dist_laser2 > 40: # Si el flanco derecho se abre de forma segura
+                if dist_laser2 > 40: 
                     print("✅ Pilar verde superado por completo.")
                     estado_carrera = "LINEAL"
                     prev_error = 0.0
@@ -289,7 +319,7 @@ while running:
                 else:
                     LNM.turn_right(angle=88, speed=VELOCIDAD_BASE) 
                 
-                if dist_laser1 > 40: # Si el flanco izquierdo se abre de forma segura
+                if dist_laser1 > 40: 
                     print("✅ Pilar rojo superado por completo.")
                     estado_carrera = "LINEAL"
                     prev_error = 0.0
