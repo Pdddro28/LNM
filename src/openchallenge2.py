@@ -31,7 +31,7 @@ MAX_INTEGRAL = 15.0
 girando = False
 conteo = False
 
-# --- CONFIGURACIÓN DEL FRENO DE MANO DE EMERGENCIA ---
+# --- CONFIGURACIÓN DEL FRENO DE MANO DE EMBERGENCIA ---
 DIST_MIN_CHOQUE = 12.0  
 steering_angle = 80     
 
@@ -78,9 +78,13 @@ while running:
         black_areas = obtener_areas()
         draw_rois()
 
-        # CORREGIDO: Desempaquetamos las 4 variables que retorna get_distances()
-        front_dist, left_dist, dist_laser1, dist_laser2 = LNM.get_distances()
-        print(f"black area: {LNM.black_area} | Laser1: {dist_laser1}cm | Laser2: {dist_laser2}cm")
+        #cv2.imshow('Vision HD - Posicion Corregida', LNM.vision.frame)
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+           # break
+
+        # Recibe los 4 datos de la tupla (manteniendo tus 3 originales + 1 temporal ignorado)
+        front_dist, left_dist, right_dist, _ = LNM.get_distances()
+        print(f"black area: {LNM.black_area}")
         
         # =========================================================================
         # FRENO DE MANO DE EMERGENCIA (Basado en proximidad física frontal)
