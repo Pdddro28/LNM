@@ -78,9 +78,10 @@ class MegaPiController:
                         # Mapeo idéntico al Serial.write() del nuevo Arduino:
                         self.dist_front   = payload[0] # Byte 1: Ultrasónico Frontal
                         self.dist_left    = payload[1] # Byte 2: Ultrasónico Izquierdo
-                        self.dist_laser1  = payload[2] # Byte 3: Láser VL53L0X (1)
-                        self.dist_laser2  = payload[3] # Byte 4: Láser VL53L0X (2)
-                        self.button_value = payload[4] # Byte 5: Botón
+                        self.dist_right   = payload[2]
+                        self.dist_laser1  = payload[3] # Byte 3: Láser VL53L0X (1)
+                        self.dist_laser2  = payload[4] # Byte 4: Láser VL53L0X (2)
+                        self.button_value = payload[5] # Byte 5: Botón
                         
                         # payload[5] y payload[6] son bytes de relleno (0x00), se ignoran.
                         
@@ -144,12 +145,13 @@ class MegaPiController:
 
     # --- TELEMETRY DATA LOGGING ---
     def log_step(self, action_code):
-        d_front, d_left, d_l1, d_l2 = self.get_distances()
+        d_front, d_left, d_right, d_l1, d_l2 = self.get_distances()
 
         self.data_log.append({
             'index': self.log_index,
             'dist_front_cm': d_front,
             'dist_left_cm': d_left,
+            'dist_right_cm': d_right,
             'dist_laser1_cm': d_l1, # Guardar distancias reales del ToF
             'dist_laser2_cm': d_l2,
         })
@@ -188,7 +190,7 @@ class MegaPiController:
 
     # REVISADO: Retorna los 4 sensores activos actuales
     def get_distances(self):
-        return (self.dist_front, self.dist_left, self.dist_laser1, self.dist_laser2)
+        return (self.dist_front, self.dist_left, self.dist_right, self.dist_laser1, self.dist_laser2)
 
     def start(self):
         return self.button_value == 1
