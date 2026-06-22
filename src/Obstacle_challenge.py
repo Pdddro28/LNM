@@ -13,17 +13,14 @@ ROI_OBSTACULOS = ROI(30, 30, 610, 320)
 running = True
 
 # --- TIMERS Y CONTADORES ---
-orange_timer = time.time()
-blue_timer = time.time()
-loops = 0
-n = 0
-girando = False  
-
-# --- VARIABLES PARA TIEMPO DE GRACIA ---
 tiempo_perdida = 0.0
-TIEMPO_GRACIA = 0.2  
+TIEMPO_GRACIA = 0.35  # Aumentado para dar margen de seguridad en transiciones seguidas
 
-# --- PARÁMETROS PID PARA CENTRADO DE LÍNEAS ---
+# --- CONTROLLER DE BLOQUEO (ANTI-VOLTEO) ---
+ultimo_freno_time = 0.0
+frenos_consecutivos = 0
+
+# --- PARÁMETROS PID NAVEGACIÓN ---
 Kp_vision = 0.015    
 Ki_vision = 0.0
 Kd_vision = 0.035   
@@ -31,25 +28,29 @@ prev_error = 0.0
 integral = 0.0
 MAX_INTEGRAL = 15.0 
 
-# --- PARÁMETROS PID EXCLUSIVOS PARA EVITAR OBSTÁCULOS ---
+# --- PARÁMETROS NAVEGACIÓN OBSTÁCULOS ---
 Kp_obstaculo = 0.28   
 Kd_obstaculo = 0.01   
 
-# --- MÁQUINA DE ESTADOS PARA OBSTÁCULOS ---
+# --- CONFIGURACIÓN DE SEPARACIÓN PROPORCIONAL DE PAREDES (CRUCIAL) ---
+Kp_pared = 1.6  # Fuerza con la que se aleja de las paredes usando los ToF/Ultrasonidos
+
+# --- MÁQUINA DE ESTADOS ---
 estado_carrera = "LINEAL"
 memoria_lado = None  
 
 # --- CONFIGURACIÓN DE VELOCIDAD Y AJUSTES ---
-VELOCIDAD_BASE = 75
-DIST_MIN_CHOQUE = 12.0  
+VELOCIDAD_BASE = 70  # Bajamos levemente a 70 para ganar control en zonas densas
+DIST_MIN_CHOQUE = 14.0  
 steering_angle = 80     
 
 UMBRAL_PIXELES_MUERTO = 150  
 TOLERANCIA_ANGULO = 3       
 
-# --- CONFIGURACIÓN DE SEGURIDAD PARA PAREDES (ToF LASER) ---
-DIST_MIN_PARED = 18.0       # Distancia normal para empezar a rebasar/separarse de muros
-DIST_CRITICA_PARED = 7.5    # Umbral de impacto inminente con pared fija (Activa Giro Extremo)
+# --- UMBRALES DE DISTANCIA (Muros Fijos) ---
+DIST_DESEADA_PARED = 22.0  # El robot intentará mantenerse idealmente a esta distancia del muro lateral
+DIST_MIN_PARED = 16.0      # Límite de aviso de proximidad normal
+DIST_CRITICA_PARED = 8.5   # Umbral de impacto inminente con pared fija
 
 # --- ROIs LATERALES ---
 roi_izq = ROI(0, 100, 320, 150)  
@@ -67,8 +68,6 @@ def procesar_obstaculos():
     cnt_verde = LNM.vision.find_contours(LNM.mask_green, ROI_OBSTACULOS)
     datos_rojo = LNM.vision.max_contour(cnt_rojo, ROI_OBSTACULOS)
     datos_verde = LNM.vision.max_contour(cnt_verde, ROI_OBSTACULOS)
-    print(f"🔴 Rojo: Área={datos_rojo[0]}, X={datos_rojo[1]}")
-    print(f"🟢 Verde: Área={datos_verde[0]}, X={datos_verde[1]}")
     return datos_rojo, datos_verde
 
 def draw_all_rois(datos_rojo, datos_verde):
@@ -88,14 +87,11 @@ while running:
         LNM.obtener_linea_naranja()
         LNM.obtenerarea_frontal()
         
-        # Mapeo correcto de distancias físicas
         front_dist, left_dist, right_dist, laser_1, laser_2 = LNM.get_distances()
         
-        # Renombramos las variables internas de uso de los ToF para evitar confusiones en la lógica
+        # Asignación explícita de sensores ToF de alta velocidad
         tof_izq = laser_1
         tof_der = laser_2
-        
-        print(f"📡 Telemetría -> Frente: {front_dist:.1f}cm | ToF Izq: {tof_izq:.1f}cm | ToF Der: {tof_der:.1f}cm")
         
         black_areas = obtener_areas_lineas()
         datos_rojo, datos_verde = procesar_obstaculos()
@@ -106,38 +102,51 @@ while running:
             break
 
         # =========================================================================
-        # FILTRO CRÍTICO GLOBAL: DETECCIÓN DE IMPACTO CON PARED (GIRO EXTREMO)
+        # FILTRO CRÍTICO SEGURIDAD: IMPACTO LATERAL CON PARED
         # =========================================================================
-        # Solo se ejecuta si estamos esquivando u omitiendo un objeto, la distancia lateral es ínfima,
-        # Y la cámara certifica que NO hay un pilar de color interfiriendo la visual en esa dirección.
         if estado_carrera in ["ESQUIVANDO", "REBASANDO"]:
             if memoria_lado == "IZQUIERDA" and 1.0 < tof_izq < DIST_CRITICA_PARED and datos_verde[0] == 0:
-                print(f"🧱 [CRÍTICO] Colisión inminente pared IZQUIERDA ({tof_izq}cm). Forzando Giro Extremo.")
+                print(f"🧱 [MURO] ToF Izquierdo colapsando ({tof_izq}cm). Forzando ESCAPE.")
                 estado_carrera = "ESCAPE_PARED"
             elif memoria_lado == "DERECHA" and 1.0 < tof_der < DIST_CRITICA_PARED and datos_rojo[0] == 0:
-                print(f"🧱 [CRÍTICO] Colisión inminente pared DERECHA ({tof_der}cm). Forzando Giro Extremo.")
+                print(f"🧱 [MURO] ToF Derecho colapsando ({tof_der}cm). Forzando ESCAPE.")
                 estado_carrera = "ESCAPE_PARED"
 
         # =========================================================================
-        # FRENO DE MANO DE EMERGENCIA FRONTAL
+        # FRENO DE MANO INTELIGENTE (ANTI-VOLTEO)
         # =========================================================================
         if front_dist < DIST_MIN_CHOQUE and front_dist > 1.0:
-            print(f"🚨 ¡FRENO DE MANO! Frente obstruido a {front_dist:.2f} cm.")
+            current_time = time.time()
             LNM.stop(log=False)
-            time.sleep(0.05)
             
-            angulo_escape_opuesto = 160 - steering_angle
-            angulo_escape_opuesto = max(40, min(120, angulo_escape_opuesto))
-            if angulo_escape_opuesto == 80:
-                angulo_escape_opuesto = 60
+            # Verificamos si los impactos frontales son repetitivos en ráfaga (ciclo errático)
+            if (current_time - ultimo_freno_time) < 3.0:
+                frenos_consecutivos += 1
+            else:
+                frenos_consecutivos = 1
                 
-            LNM.move_backward(angle=angulo_escape_opuesto, speed=85)
-            time.sleep(0.75)
+            ultimo_freno_time = current_time
+            print(f"🚨 FRENO DE MANO N°{frenos_consecutivos}! Distancia frontal: {front_dist:.1f} cm.")
+            
+            if frenos_consecutivos >= 2:
+                # TRATAMIENTO ANTIBLOQUEO: Salir en línea recta hacia atrás de forma controlada sin rotar el coche
+                print("🌀 [SISTEMA ANTI-VOLTEO] Bloqueo cíclico detectado. Retrocediendo RECTO para salvar orientación.")
+                LNM.move_backward(angle=80, speed=85)
+                time.sleep(0.9)
+                frenos_consecutivos = 0
+            else:
+                # Escape angular normal si es un evento aislado
+                angulo_escape_opuesto = 160 - steering_angle
+                angulo_escape_opuesto = max(45, min(115, angulo_escape_opuesto))
+                if angulo_escape_opuesto == 80: 
+                    angulo_escape_opuesto = 65
+                LNM.move_backward(angle=angulo_escape_opuesto, speed=85)
+                time.sleep(0.7)
+                
             LNM.turn_center(log=False)
             prev_error = 0.0
             integral = 0.0
             estado_carrera = "LINEAL" 
-            girando = False
             tiempo_perdida = 0.0 
             time.sleep(0.1)
             continue
@@ -145,122 +154,97 @@ while running:
         if estado_carrera != "ESCAPE_PARED":
             LNM.move_forward(speed=VELOCIDAD_BASE) 
 
-        if LNM.turning_direction == 0: 
-            if LNM.orange_area > 1200:
-                 LNM.turning_direction = 2
-            elif LNM.blue_area > 1200:
-                 LNM.turning_direction = 1
-
         # =========================================================================
-        # MÁQUINA DE ESTADOS: NAVEGACIÓN Y EVASIÓN DE OBSTÁCULOS
+        # NAVEGACIÓN MEDIANTE MÁQUINA DE ESTADOS REVISADA
         # =========================================================================
         
-        # --- ESTADO DE EMERGENCIA: MANIOBRA DE LATIGAZO ---
+        # --- ESTADO DE EMERGENCIA: MANIOBRA DE ALINEACIÓN ---
         if estado_carrera == "ESCAPE_PARED":
             LNM.stop(log=False)
-            time.sleep(0.04)
-            # Marcha atrás con contraviraje violento para enderezar el chasis respecto a la pared lateral
+            time.sleep(0.03)
             if memoria_lado == "IZQUIERDA":
-                LNM.move_backward(angle=120, speed=95) 
+                LNM.move_backward(angle=115, speed=90) # Saca la trompa con cuidado hacia la derecha
             else:
-                LNM.move_backward(angle=40, speed=95)  
-                
-            time.sleep(0.6) 
+                LNM.move_backward(angle=45, speed=90)  # Saca la trompa hacia la izquierda
+            time.sleep(0.5)
             LNM.turn_center(log=False)
-            prev_error = 0.0
-            integral = 0.0
-            tiempo_perdida = 0.0
-            estado_carrera = "REBASANDO" # Retorna a rebase controlado para seguir adelante alejado del muro
-            time.sleep(0.05)
+            estado_carrera = "REBASANDO"
             continue
 
         # --- ESTADO 1: LINEAL ---
         elif estado_carrera == "LINEAL":
+            # Filtro visual de entrada: Priorizamos el pilar que tenga mayor área visible en la ROI central
             if datos_verde[0] > 350 and datos_verde[0] >= datos_rojo[0]:
-                print("🟢 ¡Pilar Verde Detectado! Cambiando a ESQUIVANDO.")
+                print("🟢 Transición -> ESQUIVANDO (Pilar Verde).")
                 estado_carrera = "ESQUIVANDO"
-                memoria_lado = "IZQUIERDA" 
+                memoria_lado = "IZQUIERDA"
                 prev_error = 0.0
                 tiempo_perdida = 0.0
-                girando = False 
             elif datos_rojo[0] > 300 and datos_rojo[0] > datos_verde[0]:
-                print("🔴 ¡Pilar Rojo Detectado! Cambiando a ESQUIVANDO.")
+                print("🔴 Transición -> ESQUIVANDO (Pilar Rojo).")
                 estado_carrera = "ESQUIVANDO"
-                memoria_lado = "DERECHA"   
+                memoria_lado = "DERECHA"
                 prev_error = 0.0
                 tiempo_perdida = 0.0
-                girando = False 
 
             if estado_carrera == "LINEAL":
-                if front_dist < 90 and not girando and LNM.black_area > 8000 and LNM.turning_direction != 0:
-                    LNM.turn_direction()
-                    girando = True
-                    
-                elif LNM.black_area < 8000 and girando and front_dist > 80:
+                # Centrado de líneas convencional
+                error = black_areas[1] - black_areas[0]
+                integral += error
+                integral = max(-MAX_INTEGRAL, min(MAX_INTEGRAL, integral))
+                derivative = error - prev_error
+                correction = (Kp_vision * error) + (Ki_vision * integral) + (Kd_vision * derivative)
+                prev_error = error
+                
+                steering_angle = int(80 + correction)
+                steering_angle = max(45, min(115, steering_angle))
+                
+                if abs(error) < UMBRAL_PIXELES_MUERTO:
                     LNM.turn_center()
-                    girando = False
                     steering_angle = 80
+                elif steering_angle > 80:
+                    LNM.turn_right(angle=steering_angle, speed=VELOCIDAD_BASE)
+                elif steering_angle < 80:
+                    LNM.turn_left(angle=steering_angle, speed=VELOCIDAD_BASE)
 
-                if not girando:
-                    error = black_areas[1] - black_areas[0]
-                    integral += error
-                    integral = max(-MAX_INTEGRAL, min(MAX_INTEGRAL, integral))
-                    derivative = error - prev_error
-                    correction = (Kp_vision * error) + (Ki_vision * integral) + (Kd_vision * derivative)
-                    prev_error = error
-                    
-                    steering_angle = int(80 + correction)
-                    steering_angle = max(40, min(120, steering_angle))
-                    
-                    if abs(error) < UMBRAL_PIXELES_MUERTO or abs(steering_angle - 80) <= TOLERANCIA_ANGULO:
-                        LNM.turn_center()
-                        steering_angle = 80
-                    elif steering_angle > 80:
-                        LNM.turn_right(angle=steering_angle, speed=VELOCIDAD_BASE)
-                    elif steering_angle < 80:
-                        LNM.turn_left(angle=steering_angle, speed=VELOCIDAD_BASE)
-
-        # --- ESTADO 2: ESQUIVANDO (Controlado por Visión PID) ---
+        # --- ESTADO 2: ESQUIVANDO ---
         elif estado_carrera == "ESQUIVANDO":
             SETPOINT_VERDE = 548
             SETPOINT_ROJO = 51
             
-            # Corrección de lectura: Usamos ToF reales para saltar a Rebozado si nos acercamos de manera estándar a un muro
+            # Interrupción por proximidad a pared: Si nos acercamos a los muros, pasamos de inmediato al control de rebase por ToF
             if memoria_lado == "IZQUIERDA" and 1.0 < tof_izq < DIST_MIN_PARED:
-                print("⚠️ Proximidad lateral izquierda regular detectada por ToF. Transición a REBASANDO.")
                 estado_carrera = "REBASANDO"
                 continue
             elif memoria_lado == "DERECHA" and 1.0 < tof_der < DIST_MIN_PARED:
-                print("⚠️ Proximidad lateral derecha regular detectada por ToF. Transición a REBASANDO.")
                 estado_carrera = "REBASANDO"
                 continue
-            
-            if memoria_lado == "IZQUIERDA": 
+                
+            if memoria_lado == "IZQUIERDA":
                 if datos_verde[0] == 0:
                     if tiempo_perdida == 0.0:
-                        tiempo_perdida = time.time()  
+                        tiempo_perdida = time.time()
                     elif (time.time() - tiempo_perdida) > TIEMPO_GRACIA:
                         estado_carrera = "REBASANDO"
                         tiempo_perdida = 0.0
                         continue
-                    error_obs = prev_error  
+                    error_obs = prev_error
                 else:
-                    tiempo_perdida = 0.0  
+                    tiempo_perdida = 0.0
                     error_obs = datos_verde[1] - SETPOINT_VERDE
-                
-            else: 
+            else:
                 if datos_rojo[0] == 0:
                     if tiempo_perdida == 0.0:
-                        tiempo_perdida = time.time()  
+                        tiempo_perdida = time.time()
                     elif (time.time() - tiempo_perdida) > TIEMPO_GRACIA:
                         estado_carrera = "REBASANDO"
                         tiempo_perdida = 0.0
                         continue
-                    error_obs = prev_error  
+                    error_obs = prev_error
                 else:
-                    tiempo_perdida = 0.0  
+                    tiempo_perdida = 0.0
                     error_obs = datos_rojo[1] - SETPOINT_ROJO
-            
+
             derivative_obs = error_obs - prev_error
             correction_obs = (Kp_obstaculo * error_obs) + (Kd_obstaculo * derivative_obs)
             prev_error = error_obs
@@ -273,33 +257,40 @@ while running:
             elif steering_angle < 80:
                 LNM.turn_left(angle=steering_angle, speed=VELOCIDAD_BASE)
 
-        # --- ESTADO 3: REBASANDO (Guiado por los sensores ToF Láser) ---
+        # --- ESTADO 3: REBASANDO PROPORCIONAL (ENFOQUE MEJORADO BASADO EN SENSORES LÁSER/PARED) ---
         elif estado_carrera == "REBASANDO":
+            print(f"🧱 [REBASE SEGURO] Guiado por muros. ToF Izq: {tof_izq:.1f}cm | ToF Der: {tof_der:.1f}cm")
+            
             if memoria_lado == "IZQUIERDA":
-                if 1.0 < tof_izq < DIST_MIN_PARED:
-                    LNM.turn_right(angle=86, speed=VELOCIDAD_BASE) # Abre levemente a la derecha si sigue muy cerca del muro izq
-                else:
-                    LNM.turn_left(angle=74, speed=VELOCIDAD_BASE)  # Retorna de forma sutil al centro
+                # Calculamos un error respecto a la distancia que queremos mantener de la pared izquierda
+                error_muro = DIST_DESEADA_PARED - tof_izq
+                # Si el error es positivo significa que estamos más cerca de lo ideal -> Girar a la derecha (ángulo > 80)
+                ajuste_direccion = int(80 + (error_muro * Kp_pared))
+                steering_angle = max(80, min(110, ajuste_direccion)) # Limitamos el ángulo para que no derrape la cola
+                LNM.turn_right(angle=steering_angle, speed=VELOCIDAD_BASE)
                 
-                # Criterio de liberación: El ToF derecho lee espacio libre y ya pasó el pilar
-                if tof_der > 42: 
-                    print("✅ Obstáculo verde dejado atrás de manera segura.")
+                # Criterio de liberación definitivo: El sensor derecho (externo) ve pista libre,
+                # y no tenemos un pilar verde pegado enfrente en la cámara.
+                if tof_der > 45 and datos_verde[0] < 200:
+                    print("✅ Pared izquierda y obstáculo verde superados de forma estable.")
                     estado_carrera = "LINEAL"
                     prev_error = 0.0
             
             elif memoria_lado == "DERECHA":
-                if 1.0 < tof_der < DIST_MIN_PARED:
-                    LNM.turn_left(angle=74, speed=VELOCIDAD_BASE)  # Abre levemente a la izquierda si sigue muy cerca del muro der
-                else:
-                    LNM.turn_right(angle=86, speed=VELOCIDAD_BASE) # Retorna sutilmente
+                # Calculamos error respecto a la pared derecha
+                error_muro = DIST_DESEADA_PARED - tof_der
+                # Si estamos muy cerca, error_muro es positivo -> Restamos a 80 para girar a la izquierda
+                ajuste_direccion = int(80 - (error_muro * Kp_pared))
+                steering_angle = max(50, min(80, ajuste_direccion))
+                LNM.turn_left(angle=steering_angle, speed=VELOCIDAD_BASE)
                 
-                if tof_izq > 42: 
-                    print("✅ Obstáculo rojo dejado atrás de manera segura.")
+                if tof_izq > 45 and datos_rojo[0] < 200:
+                    print("✅ Pared derecha y obstáculo rojo superados de forma estable.")
                     estado_carrera = "LINEAL"
                     prev_error = 0.0
 
     except Exception as e:
-        print("Exception en el bucle principal:", e)
+        print("Error crítico ejecutando el bucle:", e)
         break
 
 LNM.stop()
