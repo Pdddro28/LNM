@@ -158,6 +158,7 @@ class VisionController():
 
 
 if "__main__" == __name__:
+    pass
     # vision = VisionController()
 
     # # Definición de ROIs
