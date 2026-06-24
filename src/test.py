@@ -103,13 +103,24 @@ while running:
         
         black_areas = obtener_areas_lineas()
         datos_rojo, datos_verde = procesar_obstaculos()
-        print(datos_rojo[0], datos_verde[0])
+        #print(datos_rojo[0], datos_verde[0])
         
-        print(f"LeftL: {black_areas[0]} | RightL: {black_areas[1]} | Left chiquito {black_areas[2]} ")
+        #print(f"LeftL: {black_areas[0]} | RightL: {black_areas[1]} | Left chiquito {black_areas[2]} ")
+        print(estado_carrera)
         draw_all_rois(datos_rojo, datos_verde)
         cv2.imshow('Vision HD - Obstacle Challenge', LNM.vision.frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
+        #TRACK TYPE DETECTION
+
+        if LNM.turning_direction == 0: 
+            if LNM.orange_area > 1200:
+                 LNM.turning_direction = 2
+            elif LNM.blue_area > 1200:
+                 LNM.turning_direction = 1
+
+        # FRENO DE MANO
 
         if front_dist < DIST_MIN_CHOQUE and front_dist > 1.0:
             current_time = time.time()
@@ -151,6 +162,11 @@ while running:
         # --- ESTADO 1: LINEAL ---
         if estado_carrera == "LINEAL":
             # Filtro visual de entrada: Priorizamos el pilar que tenga mayor área visible en la ROI central
+            if front_dist < 55 and LNM.black_area > 6000 and LNM.turning_direction != 0:
+                # estado_carrera = "GIRANDO"
+                # memoria_lado = ""
+                pass
+
             if datos_verde[0] > 350 and datos_verde[0] >= datos_rojo[0]:
                 print("🟢 Transición -> ESQUIVANDO (Pilar Verde).")
                 estado_carrera = "ESQUIVANDO"
@@ -160,7 +176,7 @@ while running:
                 print("🔴 Transición -> ESQUIVANDO (Pilar Rojo).")
                 estado_carrera = "ESQUIVANDO"
                 memoria_lado = "DERECHA"
-                
+
 
             if estado_carrera == "LINEAL":
                 # Centrado de líneas convencional
@@ -199,7 +215,7 @@ while running:
                 error_obs = datos_rojo[1] - SETPOINT_ROJO
                 if tiempo_perdida == 0.0:
                     tiempo_perdida = time.time()
-                elif (time.time() - tiempo_perdida) > TIEMPO_GRACIA:
+                elif (time.time() - tiempo_perdida) > 0.51:
                     estado_carrera = "LINEAL"
                     tiempo_perdida = 0.0
                     memoria_lado = ""
