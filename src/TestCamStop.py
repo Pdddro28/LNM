@@ -12,7 +12,7 @@ def comprobar_atasco_visual():
     time.sleep(1)
     
     # 1. Arrancar el movimiento del carro
-    LNM.move_forward(speed=65)
+    LNM.move_forward(speed=35)
     
     # 2. Capturar el primer fotograma de referencia
     LNM.vision.receive_image()
@@ -71,14 +71,14 @@ def comprobar_atasco_visual():
                     break
             
             # Dibujar un feed visual para calibrar la sensibilidad
-            cv.imshow("Diferencia de Movimiento (Binaria)", thresh)
+            #cv.imshow("Diferencia de Movimiento (Binaria)", thresh)
             
             # Actualizar el frame anterior para la siguiente iteración
             prev_frame = current_frame
             
             # Salida segura con 'q'
-            if cv.waitKey(1) & 0xFF == ord('q'):
-                break
+            #if cv.waitKey(1) & 0xFF == ord('q'):
+                #break
                 
     except KeyboardInterrupt:
         print("\nPrueba interrumpida por el usuario.")
