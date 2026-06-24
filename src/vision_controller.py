@@ -52,8 +52,8 @@ class VisionController():
         self.image_lab = cv2.GaussianBlur(self.image_lab, (7, 7), 0)
 
     # --- DRAWING UTILITIES ---
-    def draw_roi(self, roi):
-        cv2.rectangle(self.frame, (roi.x1, roi.y1), (roi.x2, roi.y2), (0,255,0), 2)
+    def draw_roi(self, roi,color = (0,255,0)):
+        cv2.rectangle(self.frame, (roi.x1, roi.y1), (roi.x2, roi.y2), color, 2)
 
     def draw_contours(self, cnt, roi, color):
         cv2.drawContours(self.frame[roi.y1:roi.y2, roi.x1:roi.x2], cnt, -1, color, 2)

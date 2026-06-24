@@ -20,8 +20,8 @@ class ROI:
 
 class VisionController():
     def __init__(self):
-        self.image_width  = 1080
-        self.image_height = 480
+        self.image_width  = 640
+        self.image_height = 370
         self.image_lab = None
         self.frame = None
         

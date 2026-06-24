@@ -26,6 +26,7 @@ class MegaPiController:
             
             # --- Sensores de Distancia (Actualizados a la nueva configuración) ---
             self.dist_front = 0   # Ultrasónico Frontal
+            self.dist_right = 0    # Ultrasónico Izquierdo
             self.dist_left = 0    # Ultrasónico Izquierdo
             self.dist_laser1 = 0  # NUEVO: Sensor Láser ToF 1 (0x30)
             self.dist_laser2 = 0  # NUEVO: Sensor Láser ToF 2 (0x29)
@@ -87,8 +88,8 @@ class MegaPiController:
                         
                     else:
                         line = self.ser.readline().decode('ascii', errors='ignore').strip()
-                        if line:
-                            print(f"   [MegaPi Debug]: {line}")
+                        #if line:
+                            #print(f"   [MegaPi Debug]: {line}")
             except Exception as e:
                 print(f"Telemetry Error: {e}")
             
@@ -163,29 +164,29 @@ class MegaPiController:
         self._send_command(1, v1=speed)
         if log: self.log_step(self.ACTION_FORWARD)
 
-    def move_backward(self, angle, speed, log=True):
-        self._send_command(2, v1=speed, v2=angle)
+    def move_backward(self, angle, speed, log = True):
+        self._send_command(2, v1 = speed, v2 = angle)
         if log: self.log_step(self.ACTION_FORWARD)
 
     def turn_direction(self):
         if self.turning_direction == 1:
-            self.turn_left(angle=40, speed=80, log=True) 
+            self.turn_left(angle = 40, speed = 80, log = True) 
         elif self.turning_direction == 2:
-            self.turn_left(angle=120, speed=80, log=True) 
+            self.turn_left(angle = 120, speed = 80, log = True) 
 
-    def turn_left(self, angle, speed, log=True):
-        self._send_command(3, v1=angle, v2=speed)
+    def turn_left(self, angle, speed, log = True):
+        self._send_command(3, v1 = angle, v2 = speed)
         if log: self.log_step(self.ACTION_LEFT)
 
-    def turn_right(self, angle, speed, log=True):
-        self._send_command(4, v1=angle, v2=speed)
+    def turn_right(self, angle, speed, log = True):
+        self._send_command(4, v1 = angle, v2 = speed)
         if log: self.log_step(self.ACTION_RIGHT)
 
-    def turn_center(self, log=True):
+    def turn_center(self, log = True):
         self._send_command(6)
         if log: self.log_step(self.ACTION_FORWARD)
 
-    def stop(self, log=True):
+    def stop(self, log = True):
         self._send_command(5)
 
     # REVISADO: Retorna los 4 sensores activos actuales
@@ -196,14 +197,14 @@ class MegaPiController:
         return self.button_value == 1
 
     # --- SYSTEM EXITS AND RESOURCE MANAGEMENT ---
-    def save_data_to_csv(self, filename='training_data.csv'):
+    def save_data_to_csv(self, filename = 'training_data.csv'):
         if not self.data_log:
             print("⚠️ No data collected to save.")
             return
 
         try:
             df = pd.DataFrame(self.data_log)
-            df.set_index('index', inplace=True)
+            df.set_index('index', inplace = True)
             df.to_csv(filename, index=True)
             print(f"\n✅ Success: Saved {len(df)} records to '{filename}'")
             print(df.head())
@@ -212,6 +213,13 @@ class MegaPiController:
 
     def close(self):
         self.running = False
-        self.stop(log=False)
+        self.stop(log = False)
         if hasattr(self, 'ser') and self.ser.is_open:
             self.ser.close()
+
+if __name__ == "__main__":
+    LNM = MegaPiController("/dev/ttyUSB0", 115200)
+    LNM.turn_left(40,0)
+    time.sleep(0.5)
+    LNM.turn_center()
+    
