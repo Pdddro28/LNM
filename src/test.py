@@ -45,7 +45,7 @@ DIST_MIN_CHOQUE = 15.0
 steering_angle = 80     
 
 UMBRAL_PIXELES_MUERTO = 150  
-TOLERANCIA_ANGULO = 3       
+TOLERANCIA_ANGULO = 3        
 
 # --- UMBRALES DE DISTANCIA (Muros Fijos) ---
 DIST_DESEADA_PARED = 22.0  # El robot intentará mantenerse idealmente a esta distancia del muro lateral
@@ -103,25 +103,45 @@ while running:
         
         black_areas = obtener_areas_lineas()
         datos_rojo, datos_verde = procesar_obstaculos()
-        #print(datos_rojo[0], datos_verde[0])
         
-        #print(f"LeftL: {black_areas[0]} | RightL: {black_areas[1]} | Left chiquito {black_areas[2]} ")
         print(estado_carrera)
         draw_all_rois(datos_rojo, datos_verde)
         cv2.imshow('Vision HD - Obstacle Challenge', LNM.vision.frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-        #TRACK TYPE DETECTION
-
+        # TRACK TYPE DETECTION
         if LNM.turning_direction == 0: 
             if LNM.orange_area > 1200:
                  LNM.turning_direction = 2
             elif LNM.blue_area > 1200:
                  LNM.turning_direction = 1
 
-        # FRENO DE MANO
+        # ---------------------------------------------------------------------
+        # 🚨 NUEVO: GATILLO FRENO DE MANO POR ATASQUE VISUAL (STALL DETECTION)
+        # ---------------------------------------------------------------------
+        if LNM.vision.check_if_stuck():
+            print("\n🚨 ¡FRENO DE MANO ACTIVADO! El carro está físicamente atrapado (Entorno estático).")
+            LNM.stop(log=False)
+            
+            # Maniobra de liberación: Retroceder recto para desencajarse de la pared/obstáculo invisible
+            print("🌀 [SISTEMA ANTI-ATASQUE] Retrocediendo RECTO de emergencia para liberar chasis.")
+            LNM.move_backward(angle=80, speed=85)
+            time.sleep(1.0)
+            
+            # Limpieza de estados y continuación segura
+            LNM.turn_center(log=False)
+            prev_error = 0.0
+            integral = 0.0
+            estado_carrera = "LINEAL" 
+            tiempo_perdida = 0.0 
+            LNM.vision.reset_stuck_timer() # Limpiamos historial para no re-activar al salir
+            time.sleep(0.1)
+            continue
 
+        # ---------------------------------------------------------------------
+        # FRENO DE MANO CONVENCIONAL POR DISTANCIA FRONTAL
+        # ---------------------------------------------------------------------
         if front_dist < DIST_MIN_CHOQUE and front_dist > 1.0:
             current_time = time.time()
             LNM.stop(log=False)
@@ -155,28 +175,29 @@ while running:
             integral = 0.0
             estado_carrera = "LINEAL" 
             tiempo_perdida = 0.0 
+            LNM.vision.reset_stuck_timer() # Evita falsos positivos tras haber estado detenido en la maniobra
             time.sleep(0.1)
             continue
 
+        # NAVEGACIÓN ACTIVA
         LNM.move_forward(VELOCIDAD_BASE)
+        
         # --- ESTADO 1: LINEAL ---
         if estado_carrera == "LINEAL":
-            # Filtro visual de entrada: Priorizamos el pilar que tenga mayor área visible en la ROI central
             if front_dist < 55 and LNM.black_area > 6000 and LNM.turning_direction != 0:
-                # estado_carrera = "GIRANDO"
-                # memoria_lado = ""
                 pass
 
             if datos_verde[0] > 350 and datos_verde[0] >= datos_rojo[0]:
                 print("🟢 Transición -> ESQUIVANDO (Pilar Verde).")
                 estado_carrera = "ESQUIVANDO"
                 memoria_lado = "IZQUIERDA"
+                LNM.vision.reset_stuck_timer() # Reset al cambiar bruscamente de estado
                 
             elif datos_rojo[0] > 250 and datos_rojo[0] >= datos_verde[0]:
                 print("🔴 Transición -> ESQUIVANDO (Pilar Rojo).")
                 estado_carrera = "ESQUIVANDO"
                 memoria_lado = "DERECHA"
-
+                LNM.vision.reset_stuck_timer()
 
             if estado_carrera == "LINEAL":
                 # Centrado de líneas convencional
@@ -211,6 +232,7 @@ while running:
                     estado_carrera = "LINEAL"
                     tiempo_perdida = 0.0
                     memoria_lado = ""
+                    LNM.vision.reset_stuck_timer()
             else:
                 error_obs = datos_rojo[1] - SETPOINT_ROJO
                 if tiempo_perdida == 0.0:
@@ -219,6 +241,7 @@ while running:
                     estado_carrera = "LINEAL"
                     tiempo_perdida = 0.0
                     memoria_lado = ""
+                    LNM.vision.reset_stuck_timer()
 
             derivative_obs = error_obs - prev_error
             correction_obs = (Kp_obstaculo * error_obs) + (Kd_obstaculo * derivative_obs)
@@ -237,6 +260,10 @@ while running:
                     
             elif steering_angle < 80:
                 LNM.turn_left(angle = steering_angle, speed = VELOCIDAD_BASE)
+                
     except Exception as e:
         print("Error crítico ejecutando el bucle:", e)
         break
+
+LNM.stop()
+cv2.destroyAllWindows()
