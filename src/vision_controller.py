@@ -24,7 +24,7 @@ class VisionController():
         self.prev_gray_frame = None
         self.ultima_vez_con_movimiento = time.time()
         self.UMBRAL_CAMBIO_PIXELS = 150000  # Ajustar sensibilidad según pruebas
-        self.TIEMPO_MAXIMO_ESTATICO = 1.5   # Segundos permitidos antes del freno
+        self.TIEMPO_MAXIMO_ESTATICO = 5  # Segundos permitidos antes del freno
 
         self.camera = Picamera2()
         self.camera.resolution = (self.image_width, self.image_height)

@@ -41,7 +41,7 @@ memoria_lado = None
 
 # --- CONFIGURACIÓN DE VELOCIDAD Y AJUSTES ---
 VELOCIDAD_BASE = 75  # Bajamos levemente a 70 para ganar control en zonas densas
-DIST_MIN_CHOQUE = 15.0  
+DIST_MIN_CHOQUE = 10.0  
 steering_angle = 80     
 
 UMBRAL_PIXELES_MUERTO = 150  
