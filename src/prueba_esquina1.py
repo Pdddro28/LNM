@@ -16,6 +16,10 @@ running = True
 tiempo_perdida = 0.0
 TIEMPO_GRACIA = 0.2  # Aumentado para dar margen de seguridad en transiciones seguidas
 
+# --- CONTROLLER DE BLOQUEO (ANTI-VOLTEO) ---
+ultimo_freno_time = 0.0
+frenos_consecutivos = 0
+
 # --- PARÁMETROS PID NAVEGACIÓN ---
 Kp_vision = 0.015    
 Ki_vision = 0.0
@@ -105,36 +109,65 @@ while running:
         #print(f"LeftL: {black_areas[0]} | RightL: {black_areas[1]} | Left chiquito {black_areas[2]} ")
         print(estado_carrera)
         draw_all_rois(datos_rojo, datos_verde)
-        print(f"Right: {right_dist}, Left: {left_dist}, Front: {front_dist}")
-        # cv2.imshow('Vision HD - Obstacle Challenge', LNM.vision.frame)
-        # if cv2.waitKey(1) & 0xFF == ord('q'):
-        #     break
+        cv2.imshow('Vision HD - Obstacle Challenge', LNM.vision.frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+        #TRACK TYPE DETECTION
 
         if LNM.turning_direction == 0: 
             if LNM.orange_area > 1200:
                  LNM.turning_direction = 2
-                 estado_carrera = "PRE_GIRO_NARANJA"
             elif LNM.blue_area > 1200:
                  LNM.turning_direction = 1
-                 estado_carrera = "PRE_GIRO_AZUL"
 
-        if estado_carrera != "PRE_GIRO_NARANJA" and estado_carrera != "PRE_GIRO_AZUL":
-            LNM.move_forward(VELOCIDAD_BASE)
+        # FRENO DE MANO
 
-        # Si el giro es azul
-        if estado_carrera == "PRE_GIRO_AZUL":
-            LNM.move_forward(VELOCIDAD_BASE - 15)
-            if front_dist < 15 and LNM.black_area > 4000:
-                estado_carrera = "RETRO_GIRO"
+        if front_dist < DIST_MIN_CHOQUE and front_dist > 1.0:
+            current_time = time.time()
+            LNM.stop(log=False)
+            
+            # Verificamos si los impactos frontales son repetitivos en ráfaga (ciclo errático)
+            if (current_time - ultimo_freno_time) < 3.0:
+                frenos_consecutivos += 1
+            else:
+                frenos_consecutivos = 1
+                
+            ultimo_freno_time = current_time
+            print(f"🚨 FRENO DE MANO N°{frenos_consecutivos}! Distancia frontal: {front_dist:.1f} cm.")
+            
+            if frenos_consecutivos >= 2:
+                # TRATAMIENTO ANTIBLOQUEO: Salir en línea recta hacia atrás de forma controlada sin rotar el coche
+                print("🌀 [SISTEMA ANTI-VOLTEO] Bloqueo cíclico detectado. Retrocediendo RECTO para salvar orientación.")
+                LNM.move_backward(angle=80, speed=85)
+                time.sleep(0.9)
+                frenos_consecutivos = 0
+            else:
+                # Escape angular normal si es un evento aislado
+                angulo_escape_opuesto = 160 - steering_angle
+                angulo_escape_opuesto = max(45, min(115, angulo_escape_opuesto))
+                if angulo_escape_opuesto == 80: 
+                    angulo_escape_opuesto = 65
+                LNM.move_backward(angle=angulo_escape_opuesto, speed=85)
+                time.sleep(0.7)
+                
+            LNM.turn_center(log=False)
+            prev_error = 0.0
+            integral = 0.0
+            estado_carrera = "LINEAL" 
+            tiempo_perdida = 0.0 
+            time.sleep(0.1)
+            continue
 
-        if estado_carrera == "RETRO_GIRO_AZUL":
-            LNM.move_backward(120 , VELOCIDAD_BASE + 20)
-            if left_dist > 150 and right_dist > 50:
-                estado_carrera = "LINEAL"
-                LNM.turn_center()
-
+        LNM.move_forward(VELOCIDAD_BASE)
+        # --- ESTADO 1: LINEAL ---
         if estado_carrera == "LINEAL":
-            LNM.move_forward(VELOCIDAD_BASE)
+            # Filtro visual de entrada: Priorizamos el pilar que tenga mayor área visible en la ROI central
+            if front_dist < 55 and LNM.black_area > 6000 and LNM.turning_direction != 0:
+                # estado_carrera = "GIRANDO"
+                # memoria_lado = ""
+                pass
+
             if datos_verde[0] > 350 and datos_verde[0] >= datos_rojo[0]:
                 print("🟢 Transición -> ESQUIVANDO (Pilar Verde).")
                 estado_carrera = "ESQUIVANDO"
@@ -145,10 +178,27 @@ while running:
                 estado_carrera = "ESQUIVANDO"
                 memoria_lado = "DERECHA"
 
-            elif LNM.blue_area > 1200 and estado_carrera == "LINEAL":
-                print("🔵 Transición -> PRE_GIRO_AZUL.")
-                estado_carrera = "PRE_GIRO_AZUL"
 
+            if estado_carrera == "LINEAL":
+                # Centrado de líneas convencional
+                error = black_areas[1] - black_areas[0]
+                integral += error
+                integral = max(-MAX_INTEGRAL, min(MAX_INTEGRAL, integral))
+                derivative = error - prev_error
+                correction = (Kp_vision * error) + (Ki_vision * integral) + (Kd_vision * derivative)
+                prev_error = error
+                
+                steering_angle = int(80 + correction)
+                steering_angle = max(45, min(115, steering_angle))
+                
+                if abs(error) < UMBRAL_PIXELES_MUERTO:
+                    LNM.turn_center()
+                    steering_angle = 80
+                elif steering_angle > 80:
+                    LNM.turn_right(angle = steering_angle, speed = VELOCIDAD_BASE)
+                elif steering_angle < 80:
+                    LNM.turn_left(angle = steering_angle, speed = VELOCIDAD_BASE)
+        
         # --- ESTADO 2: ESQUIVANDO ---
         elif estado_carrera == "ESQUIVANDO":
             SETPOINT_VERDE = 548
@@ -158,14 +208,12 @@ while running:
                 error_obs = datos_verde[1] - SETPOINT_VERDE
                 if tiempo_perdida == 0.0:
                     tiempo_perdida = time.time()
-                    
                 elif (time.time() - tiempo_perdida) > TIEMPO_GRACIA:
                     estado_carrera = "LINEAL"
                     tiempo_perdida = 0.0
                     memoria_lado = ""
-            elif memoria_lado == "DERECHA":
+            else:
                 error_obs = datos_rojo[1] - SETPOINT_ROJO
-
                 if tiempo_perdida == 0.0:
                     tiempo_perdida = time.time()
                 elif (time.time() - tiempo_perdida) > 0.51:
@@ -190,8 +238,6 @@ while running:
                     
             elif steering_angle < 80:
                 LNM.turn_left(angle = steering_angle, speed = VELOCIDAD_BASE)
-
     except Exception as e:
         print("Error crítico ejecutando el bucle:", e)
         break
-

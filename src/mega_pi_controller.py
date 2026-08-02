@@ -165,7 +165,7 @@ class MegaPiController:
         if log: self.log_step(self.ACTION_FORWARD)
 
     def move_backward(self, angle, speed, log = True):
-        self._send_command(2, v1 = speed, v2 = angle)
+        self._send_command(2, v1 = angle, v2 = speed)
         if log: self.log_step(self.ACTION_FORWARD)
 
     def turn_direction(self):
@@ -219,7 +219,7 @@ class MegaPiController:
 
 if __name__ == "__main__":
     LNM = MegaPiController("/dev/ttyUSB0", 115200)
-    LNM.turn_left(40,0)
+    LNM.turn_left(120,60)
     time.sleep(0.5)
     LNM.turn_center()
     
