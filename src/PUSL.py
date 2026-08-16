@@ -164,12 +164,13 @@ while True:
 
         elif cnt_black_max[0] > 1000 and ESTADO_CARRERA == "INICIANDO":
             LNM.turn_left(angle=50, speed=80, log=False)
-            kk
+        
 
         print(f"front: {front_dist}")
 
         print(f"Estado Carrera: {ESTADO_CARRERA}")
 
     except Exception as e:
-            print("Error crítico ejecutando el bucle:", e)
-            break
+        print("Error crítico ejecutando el bucle:", e)
+        break
+LNM.stop()
