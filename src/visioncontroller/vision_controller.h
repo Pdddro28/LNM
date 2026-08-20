@@ -42,8 +42,6 @@ public:
     void receive_image();
     
     // --- ANTI-STUCK DETECTION ALGORITHM ---
-    bool check_if_stuck();
-    void reset_stuck_timer();
     
     // --- DRAWING UTILITIES ---
     void draw_roi(const ROI& roi, const cv::Scalar& color = cv::Scalar(0, 255, 0));

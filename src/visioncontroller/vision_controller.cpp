@@ -27,10 +27,10 @@ VisionController::VisionController() {
 }
 
 VisionController::~VisionController() {
-    // TODO: Liberar recursos de la cámara
-    // if (camera.isOpened()) {
-    //     camera.release();
-    // }
+    // Liberar recursos de la cámara
+    if (camera.isOpened()) {
+        camera.release();
+    }
 }
 
 // ============================================
@@ -38,96 +38,35 @@ VisionController::~VisionController() {
 // ============================================
 
 void VisionController::receive_image() {
-    // TODO: Capturar frame de la cámara
-    // camera.read(frame);
+    // Capturar frame de la cámara
+    camera.read(frame);
     
-    // TODO: Verificar que el frame no está vacío
-    // if (frame.empty()) {
-    //     std::cerr << "No se pudo obtener imagen" << std::endl;
-    //     return;
-    // }
+    // Verificar que el frame no está vacío
+    if (frame.empty()) {
+        std::cerr << "No se pudo obtener imagen" << std::endl;
+        return;
+    }
     
-    // TODO: Aplicar flip vertical y horizontal
-    // cv::flip(frame, frame, 0);  // 0 = flip vertical
-    // cv::flip(frame, frame, 1);  // 1 = flip horizontal
+    // Aplicar flip vertical y horizontal
+    //cv::flip(frame, frame, 0);  // 0 = flip vertical
+    //cv::flip(frame, frame, 1);  // 1 = flip horizontal
     
-    // TODO: Convertir a espacio de color LAB
-    // cv::cvtColor(frame, image_lab, cv::COLOR_BGR2LAB);
+    // Convertir a espacio de color LAB
+    cv::cvtColor(frame, image_lab, cv::COLOR_BGR2Lab);
     
-    // TODO: Separar canales L, A, B
-    // std::vector<cv::Mat> lab_channels;
-    // cv::split(image_lab, lab_channels);
+    // Separar canales L, A, B
+    std::vector<cv::Mat> lab_channels;
+    cv::split(image_lab, lab_channels);
     
-    // TODO: Aplicar CLAHE al canal L
-    // cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(3.0, cv::Size(8, 8));
-    // clahe->apply(lab_channels[0], lab_channels[0]);
+    // Aplicar CLAHE al canal L
+    cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(3.0, cv::Size(8, 8));
+    clahe->apply(lab_channels[0], lab_channels[0]);
     
-    // TODO: Unir canales de nuevo
-    // cv::merge(lab_channels, image_lab);
+    // Unir canales de nuevo
+    cv::merge(lab_channels, image_lab);
     
-    // TODO: Aplicar Gaussian Blur
-    // cv::GaussianBlur(image_lab, image_lab, cv::Size(7, 7), 0);
-}
-
-// ============================================
-// ANTI-STUCK DETECTION
-// ============================================
-
-bool VisionController::check_if_stuck() {
-    // TODO: Verificar que hay frame
-    // if (frame.empty()) return false;
-    
-    // TODO: Convertir a escala de grises
-    // cv::Mat current_gray;
-    // cv::cvtColor(frame, current_gray, cv::COLOR_BGR2GRAY);
-    
-    // TODO: Si es la primera vez, inicializar prev_gray_frame
-    // if (prev_gray_frame.empty()) {
-    //     prev_gray_frame = current_gray.clone();
-    //     ultima_vez_con_movimiento = std::chrono::steady_clock::now();
-    //     return false;
-    // }
-    
-    // TODO: Calcular diferencia absoluta
-    // cv::Mat frame_diff;
-    // cv::absdiff(current_gray, prev_gray_frame, frame_diff);
-    
-    // TODO: Aplicar umbral para binarizar
-    // cv::Mat thresh;
-    // cv::threshold(frame_diff, thresh, 25, 255, cv::THRESH_BINARY);
-    
-    // TODO: Contar píxeles que cambiaron
-    // int pixels_cambiados = cv::countNonZero(thresh);
-    
-    // TODO: Obtener tiempo actual
-    // auto tiempo_actual = std::chrono::steady_clock::now();
-    
-    // TODO: Calcular tiempo transcurrido
-    // auto duracion = std::chrono::duration_cast<std::chrono::seconds>(
-    //     tiempo_actual - ultima_vez_con_movimiento
-    // ).count();
-    
-    // TODO: Lógica de detección
-    // bool is_stuck = false;
-    // if (pixels_cambiados > UMBRAL_CAMBIO_PIXELS) {
-    //     ultima_vez_con_movimiento = tiempo_actual;
-    // } else if (duracion > TIEMPO_MAXIMO_ESTATICO) {
-    //     is_stuck = true;
-    // }
-    
-    // TODO: Actualizar prev_gray_frame
-    // prev_gray_frame = current_gray.clone();
-    
-    // return is_stuck;
-    return false;
-}
-
-void VisionController::reset_stuck_timer() {
-    // TODO: Reiniciar timestamp
-    // ultima_vez_con_movimiento = std::chrono::steady_clock::now();
-    
-    // TODO: Limpiar frame previo
-    // prev_gray_frame.release();
+    // Aplicar Gaussian Blur
+    cv::GaussianBlur(image_lab, image_lab, cv::Size(7, 7), 0);
 }
 
 // ============================================
@@ -135,23 +74,23 @@ void VisionController::reset_stuck_timer() {
 // ============================================
 
 void VisionController::draw_roi(const ROI& roi, const cv::Scalar& color) {
-    // TODO: Dibujar rectángulo en el frame
-    // cv::rectangle(frame, 
-    //               cv::Point(roi.x1, roi.y1), 
-    //               cv::Point(roi.x2, roi.y2), 
-    //               color, 2);
+    // Dibujar rectángulo en el frame
+    cv::rectangle(frame, 
+                   cv::Point(roi.x1, roi.y1), 
+                   cv::Point(roi.x2, roi.y2), 
+                   color, 2);
 }
 
 void VisionController::draw_contours(const std::vector<std::vector<cv::Point>>& cnt, 
                                      const ROI& roi, 
                                      const cv::Scalar& color) {
-    // TODO: Extraer región ROI del frame
-    // cv::Mat roi_region = frame(cv::Rect(roi.x1, roi.y1, 
-    //                                      roi.x2 - roi.x1, 
-    //                                      roi.y2 - roi.y1));
+    // Extraer región ROI del frame
+    cv::Mat roi_region = frame(cv::Rect(roi.x1, roi.y1, 
+                                          roi.x2 - roi.x1, 
+                                          roi.y2 - roi.y1));
     
-    // TODO: Dibujar contornos en la región ROI
-    // cv::drawContours(roi_region, cnt, -1, color, 2);
+    // Dibujar contornos en la región ROI
+    cv::drawContours(roi_region, cnt, -1, color, 2);
 }
 
 // ============================================
