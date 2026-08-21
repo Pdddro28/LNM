@@ -18,8 +18,8 @@ int main() {
         }
 
         vision.draw_roi(main_roi, cv::Scalar(255, 0, 0)); // Dibujar ROI de prueba
-        cv::imshow("Frame", vision.get_frame());
-        if (cv::waitKey(1) == 27) { // Salir si se presiona 'Esc'
+        char key = (char)cv::waitKey(1);
+        if (key == 'q') { // Salir si se presiona 'Esc'
             break;
         }
     }
