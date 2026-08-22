@@ -5,7 +5,7 @@ int main() {
     std::cout << "=== PRUEBA DEL CONSTRUCTOR ===" << std::endl;
     std::cout << "A punto de crear VisionController..." << std::endl;
 
-    VisionController vision;
+    VisionController vision(CameraBackend::V4L2);
     ROI main_roi = {220, 85, 420, 285}; 
 
     std::cout << "VisionController creado exitosamente." << std::endl;

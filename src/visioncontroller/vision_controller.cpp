@@ -6,20 +6,48 @@
 // CONSTRUCTOR Y DESTRUCTOR
 // ============================================
 
-VisionController::VisionController() {
-    image_width = 640;
-    image_height = 370;
+VisionController::VisionController(CameraBackend backend) 
+    : image_width(640), image_height(480), backend_type(backend) {
     
-    camera.open(0, cv::CAP_V4L2);
-    camera.set(cv::CAP_PROP_FRAME_WIDTH, image_width);
-    camera.set(cv::CAP_PROP_FRAME_HEIGHT, image_height);
-    camera.set(cv::CAP_PROP_FPS, 32);
+    // ✅ Configurar pipeline según el backend seleccionado
+    if (backend_type == CameraBackend::GSTREAMER) {
+        // Pipeline para Raspberry Pi con libcamera
+        gstreamer_pipeline = "libcamerasrc ! "
+                            "video/x-raw, width=" + std::to_string(image_width) + 
+                            ", height=" + std::to_string(image_height) + 
+                            ", framerate=30/1 ! "
+                            "videoconvert ! video/x-raw, format=BGR ! "
+                            "appsink drop=true sync=false";
+        
+        std::cout << "Abriendo cámara con GStreamer (libcamera)..." << std::endl;
+        std::cout << "Pipeline: " << gstreamer_pipeline << std::endl;
+        
+        camera.open(gstreamer_pipeline, cv::CAP_GSTREAMER);
+    } 
+    else if (backend_type == CameraBackend::V4L2) {
+        // Método tradicional V4L2
+        std::cout << "Abriendo cámara con V4L2..." << std::endl;
+        
+        camera.open(0, cv::CAP_V4L2);
+        camera.set(cv::CAP_PROP_FRAME_WIDTH, image_width);
+        camera.set(cv::CAP_PROP_FRAME_HEIGHT, image_height);
+        camera.set(cv::CAP_PROP_FPS, 32);
+    }
     
+    // Verificar que la cámara se abrió correctamente
     if (!camera.isOpened()) {
-        std::cerr << "Error: No se pudo abrir la cámara" << std::endl;
+        std::cerr << "❌ Error: No se pudo abrir la cámara con el backend seleccionado." << std::endl;
+        std::cerr << "Backend intentado: " 
+                  << (backend_type == CameraBackend::GSTREAMER ? "GSTREAMER" : "V4L2") 
+                  << std::endl;
         return;
     }
     
+    std::cout << "✅ Cámara abierta correctamente con " 
+              << (backend_type == CameraBackend::GSTREAMER ? "GStreamer" : "V4L2") 
+              << std::endl;
+    
+    // Pequeña pausa para inicialización
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
@@ -116,7 +144,7 @@ std::vector<std::pair<int, cv::Mat>> VisionController::max_contour(
         if (area > 100 && area > max_area) {
             max_area = area;
             
-            // ✅ Momentos: más rápido que boundingRect
+            // ✅ Usar momentos en lugar de boundingRect (más eficiente)
             cv::Moments m = cv::moments(c);
             if (m.m00 != 0) {
                 max_x = static_cast<int>(m.m10 / m.m00) + roi.x1;

@@ -8,6 +8,14 @@
 #include <vector>
 #include <cstdint>
 
+// ============================================
+// TIPO DE CÁMARA (FLAG PARA CAMBIAR FÁCILMENTE)
+// ============================================
+enum class CameraBackend {
+    V4L2,           // Para cámaras USB o con driver legacy
+    GSTREAMER       // Para Raspberry Pi con libcamera (recomendado)
+};
+
 // --- DATA STRUCTURES ---
 struct ROI {
     int x1, y1;
@@ -25,18 +33,17 @@ private:
     
     // Camera object
     cv::VideoCapture camera;
+    
+    CameraBackend backend_type;
+    
+    std::string gstreamer_pipeline;
 
 public:
-    // --- INITIALIZATION AND CAMERA SETUP ---
-    VisionController();
+    explicit VisionController(CameraBackend backend = CameraBackend::GSTREAMER);
     ~VisionController();
     
     // --- IMAGE ACQUISITION AND PROCESSING ---
     void receive_image();
-    
-    // --- ANTI-STUCK DETECTION ALGORITHM ---
-    bool check_if_stuck();
-    void reset_stuck_timer();
     
     // --- DRAWING UTILITIES ---
     void draw_roi(const ROI& roi, const cv::Scalar& color = cv::Scalar(0, 255, 0));
@@ -57,6 +64,7 @@ public:
     cv::Mat get_frame() const { return frame; }
     int get_width() const { return image_width; }
     int get_height() const { return image_height; }
+    CameraBackend get_backend() const { return backend_type; }
 };
 
 #endif // VISION_CONTROLLER_H
