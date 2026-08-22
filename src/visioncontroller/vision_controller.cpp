@@ -113,20 +113,17 @@ std::vector<std::pair<int, cv::Mat>> VisionController::max_contour(
     for (const auto& c : contours) {
         double area = cv::contourArea(c);
         
-        if (area > 100) {
-            std::vector<cv::Point> approx;
-            cv::approxPolyDP(c, approx, 0.01 * cv::arcLength(c, true), true);
+        if (area > 100 && area > max_area) {
+            max_area = area;
             
-            cv::Rect bounding_box = cv::boundingRect(approx);
-            int x = bounding_box.x + roi.x1 + bounding_box.width / 2;
-            int y = bounding_box.y + roi.y1 + bounding_box.height / 2;
-            
-            if (area > max_area) {
-                max_area = area;
-                max_x = x;
-                max_y = y;
-                max_cnt = cv::Mat(c);
+            // ✅ Momentos: más rápido que boundingRect
+            cv::Moments m = cv::moments(c);
+            if (m.m00 != 0) {
+                max_x = static_cast<int>(m.m10 / m.m00) + roi.x1;
+                max_y = static_cast<int>(m.m01 / m.m00) + roi.y1;
             }
+            
+            max_cnt = cv::Mat(c);
         }
     }
     
