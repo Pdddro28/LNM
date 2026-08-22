@@ -378,15 +378,15 @@ Esta configuración nos permite operar con la máxima seguridad, garantizando qu
 
 | Componentes | Cantidad | Voltaje de Operación | Consumo Nominal/Pico | Consumo Total |
 |---|---|---|---|---|
-| **Raspberry Pi 4 B** | 1 | 5.0 V | 600 mA / 1250 mA | 1250 mA |
-| **Arducam 8MP IMX219 (175°)** | 1 | 3.3 V (vía RPi) | 250 mA | 250 mA |
-| **Makeblock MegaPi (Lógica)** | 1 | 5.0 V | 100 mA | 100 mA |
-| **Sensores Ultrasonido HC-SR04** | 3 | 5.0 V | 45 mA (15 mA c/u) | 45 mA |
-| **Módulo Sensor de Colisión (Crash)** | 1 | 5.0 V | 10 mA | 10 mA |
-| **Módulo Semáforo LED (Traffic Light)** | 1 | 5.0 V | 30 mA | 30 mA |
-| **Servomotor de Dirección MG996R** | 1 | 5.0 V | 500 mA / 2500 mA | 2500 mA |
-| **Motor de Tracción RS380** | 1 | 6.0 V (vía Driver) | 1200 mA | 2000 mA |
-| Total | | | 2,735 mA (2.73 A) mA | 6,185 mA (6.18 A) |
+| **Raspberry Pi Zero 2W** | 1 | 5.0 V | 100 mA / 350 mA | 350 mA |
+| **Servo MG90S** | 1 | 4.8 V / 6.0 V | 200 mA / 700 mA | 700 mA |
+| **Mini Micro N20 Motor** | 1 | 3 V / 12 V | 60 mA / 750 mA | 750 mA |
+| **DRV8833 Dual Motor Driver** | 1 | 2.7 V / 10.8 V | 750 | 750 mA |
+| **Arducam 8MP IMX219 Camera Module** | 1 | 3.3 V | 200 mA / 300 mA | 300 mA |
+| **Mini360 Mini 360 3A DC-DC** | 1 | 4.75 V / 23 V | 15 mA (reposo) / 3000 mA (Límite) | 15 mA |
+| **VL53L0X Time of Flight** | 2 |  2.6 V / 5.5 V | 10 mA / 20 mA (c/u) | 20 mA |
+| **Gikfun in Touch Switch** | 1 |  2.0 V / 5.5 V | 4 mA / 8 mA | 8 mA |
+| Total | | |  589 mA / 2173 mA (2.17 A) | 2173 mA (2.17 A) |
 
 </div>
 
