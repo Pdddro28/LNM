@@ -273,7 +273,7 @@ El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más peq
 | Cantidad | Productos | Precio | Total |
 |---|---|---|---|
 | 1 | [Raspberry Pi Zero 2W](https://www.amazon.com/-/es/Raspberry-Pi-Zero-2W-inal%C3%A1mbrico/dp/B0C9TW4BNK) | $90 | $90 |
-| 1 | [URGENEX Lithium-ion Battery]([https://yfrobot.com/products/steering-gear-robot](https://www.amazon.com/URGENEX-2000mAh-Battery-Rechargeable-Helicopter/dp/B0CJNNMST2)) | $22 | $22 |
+| 1 | [URGENEX Lithium-ion Battery](https://www.amazon.com/URGENEX-2000mAh-Battery-Rechargeable-Helicopter/dp/B0CJNNMST2) | $22 | $22 |
 | 2 | [Servo SG90](https://www.amazon.com/engranaje-direcci%C3%B3n-adecuado-control-helic%C3%B3ptero/dp/B09J86CD22) | $8 | $8 |
 | 1 | [Mini Micro N20 Motor](https://www.amazon.com/-/es/Acxico-unids-engranajes-velocidad-completo/dp/B09DG3GCGK) | $10 | $10 |
 | 4 | [DRV8833 Dual Motor Driver](http://pololu.com/product/2130) | $11 | $11|
