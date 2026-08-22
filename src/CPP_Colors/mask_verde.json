@@ -1,0 +1,8 @@
+{
+  "color_bounds": {
+    "lower": [0, 0, 145],
+    "upper": [255, 121, 255]
+  },
+  "min_area": 500,
+  "roi": { "x": 100, "y": 50, "width": 440, "height": 270 }
+}
