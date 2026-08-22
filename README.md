@@ -31,7 +31,8 @@ Bienvenidos al repositorio de GitHub del **Equipo LNM**, anteriormente conocido 
 ## **Estructura de carpetas** <a id="estructura-de-carpetas"></a>
 
 Esta es la estructura de carpetas de nuestro repositorio:
-
+<div align="center">
+	
 | Carpeta | Contenido técnico | Documentación detallada |
 |---|---|---|
 | **models** | **Diseños 3D**<br>• Piezas del carro| [Explora los modelos 3D](models/README.md) |
@@ -40,6 +41,8 @@ Esta es la estructura de carpetas de nuestro repositorio:
 | **t-photos** | **Documentación del equipo**<br>• Perfiles de los miembros | [Explora la documentación de fotos del equipo](t-photos/README.md) |
 | **v-photos** | **Documentación del vehículo**<br>• Vistas desde múltiples ángulos | [Explora la documentación de fotos del vehículo](v-photos/README.md) |
 | **video** | **Validación del rendimiento**<br>• Demostraciones del desafío<br>• Pruebas de ingeniería | [Explora la documentación de los vídeos de rendimiento](video/README.md) |
+
+</div>
 
 ---
 
@@ -52,32 +55,14 @@ Esta es la estructura de carpetas de nuestro repositorio:
 </div>
 
 ### **Miembros:**
+<div align="center">
 
-- **David Wang**
-   
-	Nacido en: 01/04/2011 (15 años)
+| **Miembro** | **Miembro** | **Coach** |
+| :---: | :---: | :---: |
+| 👤 **David Wang** | 👤 **Pedro Catamo** | 👤 **Jesús Alcalá** |
+| 📅 **Nacido en:** 01/04/2011 (15 años)<br>🏫 **Estudio:** 4º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [davidwangwu104@gmail.com](mailto:davidwangwu104@gmail.com) | 📅 **Nacido en:** 28/01/2009 (17 años)<br>🏫 **Estudio:** 5º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [pedrocatamo.2009@gmail.com](mailto:pedrocatamo.2009@gmail.com) | 📅 **Nacido en:** 18/11/2005 (21 años) <br> 🏫 **Estudio:** Ingenieria en computación & Ingenieria informática <br> 📧 **Gmail:** [Jdam50002@gmail.com](mailto:Jdam50002@gmail.com) |
 
-	Estudio: 3º año en la U.E.C. Eduardo Blanco
-
-  	Gmail: davidwangwu104@gmail.com
-  	  
-- **Pedro Catamo**
-   
- 	Nacido en: 28/01/2009 (17 años)
-   
-  	Estudio: 5º año en la U.E.C. Eduardo Blanco
-   
- 	 Gmail: pedrocatamo.2009@gmail.com
-
-- ### **Coach:**
-
-- **Jesús Alcalá**
-   
-  Nacido en: 18/11/2005 (21 Años)
-   
-  Estudio: Ingenieria en computación & Ingenieria informática
-   
-  Gmail: Jdam50002@gmail.com
+</div>
 
 ---
 
@@ -278,7 +263,27 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 - ### Precios:
 
+
+El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más pequeño a diferencia del que utilizamos a principio de año y de esta forma podemos comparar precios
+
 <div align="center">
+
+**Versión Actual**
+
+| Cantidad | Productos | Precio | Total |
+|---|---|---|---|
+| 1 | [Raspberry Pi Zero 2W](https://www.amazon.com/-/es/Raspberry-Pi-Zero-2W-inal%C3%A1mbrico/dp/B0C9TW4BNK) | $90 | $90 |
+| 1 | [URGENEX Lithium-ion Battery]([https://yfrobot.com/products/steering-gear-robot](https://www.amazon.com/URGENEX-2000mAh-Battery-Rechargeable-Helicopter/dp/B0CJNNMST2)) | $22 | $22 |
+| 2 | [Servo SG90](https://www.amazon.com/engranaje-direcci%C3%B3n-adecuado-control-helic%C3%B3ptero/dp/B09J86CD22) | $8 | $8 |
+| 1 | [Mini Micro N20 Motor](https://www.amazon.com/-/es/Acxico-unids-engranajes-velocidad-completo/dp/B09DG3GCGK) | $10 | $10 |
+| 4 | [DRV8833 Dual Motor Driver](http://pololu.com/product/2130) | $11 | $11|
+| 1 | [Arducam 8MP IMX219 Camera Module](https://www.amazon.com/-/es/Arducam-M%C3%B3dulo-Raspberry-distorsi%C3%B3n-compatible/dp/B09VSRH14M?th=1) | $20 | $20 |
+| 1 | [Mini360 Mini 360 3A DC-DC)](https://www.amazon.com/-/es/Mini360-Aumento-Convertidor-Potencia-Boost-Down/dp/B0D3QSYRFT) | $15 | $15 |
+| 1 | [Crash Collision Sensor Module](https://www.amazon.com/-/es/Generic-detecci%C3%B3n-colisi%C3%B3n-interruptor-Arduino/dp/B0D6GZDV95) | $5.54 | $5.54 |
+| 1 | [Gikfun in Touch Switch](https://www.amazon.com/-/es/Gikfun-Interruptor-0-472x0-472x0-287-moment%C3%A1neo-colores/dp/B01E38OS7K/) | $10| $10 |
+| | | | **$191.54** |
+
+**Antigua previa**
 
 | Cantidad | Productos | Precio | Total |
 |---|---|---|---|
