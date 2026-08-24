@@ -232,14 +232,16 @@ int main() {
     std::cout << " - LIMPIAR: Borra todos los ROIs de la pantalla" << std::endl;
     std::cout << " - Presiona 'q' o 'ESC' para salir" << std::endl;
 
-    cv::VideoCapture cap(0, cv::CAP_V4L2);
+    std::string pipeline = "libcamerasrc ! video/x-raw, format=RGB, width=640, height=480, framerate=30/1 ! "
+                           "queue ! videoconvert ! video/x-raw, format=BGR ! "
+                           "appsink drop=true sync=false";
+
+    cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
+
     if (!cap.isOpened()) {
         std::cerr << "Error: No se pudo acceder a la cámara" << std::endl;
         return -1;
     }
-
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 370);
 
     std::string window_name = "ROI Detector";
     cv::namedWindow(window_name, cv::WINDOW_NORMAL);

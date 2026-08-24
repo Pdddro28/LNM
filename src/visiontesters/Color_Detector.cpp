@@ -66,6 +66,7 @@ std::string exec_command(const char* cmd) {
 std::string getColorsFolderPath() {
     const char* home = getenv("HOME");
     if (home) {
+        // NOTA: Si en tu Raspberry la carpeta se llama "Desktop" en lugar de "Escritorio", cámbialo aquí.
         return std::string(home) + "/Escritorio/LNM/src/Colors/";
     }
     return "./";
@@ -219,14 +220,31 @@ int main() {
     std::cout << "=== SISTEMA DE VISIÓN TODO EN UNA VENTANA ===" << std::endl;
     std::cout << "Carpeta de trabajo: " << getColorsFolderPath() << std::endl;
     
-    cv::VideoCapture cap(0, cv::CAP_V4L2);
+    // ==========================================================
+    // ADAPTACIÓN PARA RASPBERRY PI (IMX219)
+    // Se usa GStreamer con libcamerasrc. 
+    // NOTA: Se usa height=480 porque 370 no es un formato estándar 
+    // que el hardware de la RPi acepte, lo que causaba frames vacíos.
+    // ==========================================================
+    std::string pipeline = "libcamerasrc ! video/x-raw, format=NV12, width=640, height=480, framerate=30/1 ! "
+                           "queue ! videoconvert ! video/x-raw, format=BGR ! "
+                           "appsink drop=true sync=false";
+
+    std::cout << "Abriendo cámara con GStreamer (libcamerasrc)..." << std::endl;
+    cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
+    
     if (!cap.isOpened()) {
-        std::cerr << "Error: No se pudo abrir la cámara" << std::endl;
+        std::cerr << "Error: No se pudo abrir la cámara con GStreamer." << std::endl;
+        std::cerr << "Asegúrate de que OpenCV esté compilado con soporte GStreamer." << std::endl;
         return -1;
     }
     
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 370);
+    // NO USAR cap.set() con GStreamer, la resolución ya está fija en el string de arriba.
+    
+    // "Calentar" la cámara: en la RPi los primeros ~10 frames suelen venir vacíos o verdes.
+    for (int i = 0; i < 15; ++i) {
+        cap.grab();
+    }
     
     cv::Rect my_roi = createROI(100, 50, 440, 270);
     cv::Mat frame, lab_frame, mask;
@@ -235,7 +253,8 @@ int main() {
     // UNA SOLA VENTANA
     // ==========================================
     std::string win_vision = "Vision";
-    cv::namedWindow(win_vision, cv::WINDOW_AUTOSIZE);
+    cv::namedWindow(win_vision, cv::WINDOW_NORMAL); // WINDOW_NORMAL es más seguro en RPi para evitar desbordamiento de pantalla
+    cv::resizeWindow(win_vision, 1280, 480);
     cv::moveWindow(win_vision, 0, 0);
     
     // Trackbars en la ventana principal
@@ -249,13 +268,27 @@ int main() {
     cv::setMouseCallback(win_vision, onMouse, nullptr);
     
     std::cout << "Haz clic en los botones del panel derecho." << std::endl;
-    std::cout << "El explorador se abrirá directamente en: ~/Escritorio/LNM/src/Colors/" << std::endl;
+    std::cout << "El explorador se abrirá directamente en: " << getColorsFolderPath() << std::endl;
     std::cout << "Presiona 'q' o ESC para salir." << std::endl;
     
+    int empty_count = 0;
     while (true) {
         cap.read(frame);
-        if (frame.empty()) break;
         
+        // Tolerancia a frames vacíos iniciales o intermitentes de la RPi
+        if (frame.empty()) {
+            empty_count++;
+            if (empty_count > 30) {
+                std::cerr << "\n[ERROR CRÍTICO] La cámara dejó de enviar frames. Verifica que no esté ocupada." << std::endl;
+                break;
+            }
+            continue;
+        }
+        empty_count = 0;
+        
+        // ==========================================
+        // TU LÓGICA DE VISIÓN ORIGINAL (INTACTA)
+        // ==========================================
         cv::flip(frame, frame, 1);
         cv::cvtColor(frame, lab_frame, cv::COLOR_BGR2Lab);
         
@@ -320,7 +353,7 @@ int main() {
         // ==========================================
         int panel_width = 300;
         int canvas_width = PANEL_X + panel_width;  // 1580
-        int canvas_height = frame.rows;            // 370
+        int canvas_height = frame.rows;            
         cv::Mat canvas(canvas_height, canvas_width, CV_8UC3, cv::Scalar(0, 0, 0));
         
         // Copiar frame original a la izquierda

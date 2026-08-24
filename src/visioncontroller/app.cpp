@@ -5,7 +5,7 @@ int main() {
     std::cout << "=== PRUEBA DEL CONSTRUCTOR ===" << std::endl;
     std::cout << "A punto de crear VisionController..." << std::endl;
 
-    VisionController vision(CameraBackend::V4L2);
+    VisionController vision(CameraBackend::GSTREAMER);
     ROI main_roi = {220, 85, 420, 285}; 
 
     std::cout << "VisionController creado exitosamente." << std::endl;
@@ -47,7 +47,7 @@ int main() {
                       << std::endl;
         }
         
-        //cv::imshow("Frame", vision.get_frame());
+        cv::imshow("Frame", vision.get_frame());
         
         char key = (char)cv::waitKey(1);
         if (key == 'q') {
