@@ -415,7 +415,8 @@ Alimentado por la batería dedicada a la Raspberry Pi, este bus es eléctricamen
 
 <div align="center">
 
-<img width="2960" height="1625" alt="L-N-M@1 25x" src="https://github.com/user-attachments/assets/13e15df3-6f13-4d22-9dfd-a9a075e6561c" />
+<img width="1320" height="552" alt="ElectricDiagramLNMmini" src="https://github.com/user-attachments/assets/80d0a87e-5b5d-4501-8b80-1597dfc30bc8" />
+
 
 </div>
 
