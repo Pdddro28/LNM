@@ -180,7 +180,7 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 	</div>
 
-	Transformando las revoluciones por minuto del eje secundario de la transmisión a revoluciones por segundo y multiplicando por el desarrollo de la circunferencia, obtenemos la velocidad de avance del chasis:
+	Transformando las revoluciones por minuto(rpm) del eje secundario de la transmisión a revoluciones por segundo y multiplicando por el desarrollo de la circunferencia, obtenemos la velocidad de avance del chasis:
 
 	<div align="center">
 	
