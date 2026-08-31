@@ -101,8 +101,8 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 	- ### Especificaciones mecánicas principales: <a id="sistemas-mecanicos"></a>
 
-		- **Dimensiones totales: 24.4 cm (largo) × 15.4 cm (ancho) × 15.9 cm (alto).**
-		- **Peso del carro: aproximadamente 1.2kg.**
+		- **Dimensiones totales: 14 cm (largo) × 12 cm (ancho) × 10.3 cm (alto).**
+		- **Peso del carro: aproximadamente 346g.**
 		- **Sistema de tracción: Tracción Trasera Mecánica Bifásica.**
 		- **Sistema de dirección: Geometría Ackermann.**
 	
