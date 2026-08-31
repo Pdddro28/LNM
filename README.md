@@ -76,6 +76,7 @@ Esta es la estructura de carpetas de nuestro repositorio:
 | <img width="920" height="920" alt="front2" src="https://github.com/user-attachments/assets/ce130237-cc0b-4aa9-a620-0aea287408c2" /> | **Cooper** | En 2024 desarrollamos un chasis con piezas 3D estructurado en dos niveles. El nivel inferior albergaba los sensores y la electrónica de bajo nivel, mientras que el superior sostenía las baterías y la Raspberry Pi 3 para optimizar el espacio. Aunque logramos un gran avance estético y funcional, sufrimos lecciones duras en pista: el peso excesivo provocó la flexión de los acoples en la transmisión trasera, lo cual, a su vez, generó problemas severos de fricción mecánica entre las piezas impresas en 3D. |
 | <img width="920" height="920" alt="front" src="https://github.com/user-attachments/assets/804b3d7f-3500-4351-a917-ccf781029804" /> | **Halbi** | En 2025 teniendo en cuenta los recursos de los que disponíamos en ese momento, nuestra idea principal era rediseñar el Cybercooper, modificando la base y la estrategia existentes y utilizando mejores componentes electrónicos; empezamos a imprimir las nuevas piezas con material blanco y a pensar en mejores formas de montar el sistema de dirección del coche. Al final, decidimos utilizar una base prefabricada para el chasis; la razón principal fue ahorrar tiempo (y dolores de cabeza) con el diseño mecánico, lo que nos permitía dedicar más tiempo a la electrónica y la programación. |
 | <img width="920" height="920" alt="WhatsApp Image 2026-06-18 at 7 39 40 PM" src="https://github.com/user-attachments/assets/ca9f62ff-7b8b-452a-97de-95ebf12dc0ef" /> | **The Fridge** | En 2025 a diferencia de los modelos anteriores que pertenecían a nuestro coach, "The Fridge" fue un diseño construido enteramente por nosotros. Aquí dimos el salto a la geometría Ackermann e imprimimos la gran mayoría de las piezas en 3D. A nivel motriz, usamos un motor DC con un engranaje acoplado para traccionar ambas ruedas. Físicamente le instalamos 3 sensores ultrasónicos, una Raspberry Pi 4 y un giroscopio MPU6050, pero por falta de tiempo y severos problemas de configuración, la Raspberry y el IMU quedaron como peso muerto y terminamos controlando todo únicamente desde la MegaPi. Sufrimos muchísimo: las piezas de la dirección impresas en 3D se rompían constantemente por el estrés, y programar la navegación autónoma en Arduino dependiendo de puros rebotes ultrasónicos fue casi imposible. Siendo sinceros, terminó siendo el peor proyecto de los tres. |
+| <img width="920" height="920" alt="604735892-f1dc12a1-dbfc-46f3-9a21-a679aa1aa3db" src="https://github.com/user-attachments/assets/2101e66c-5b43-4e2d-938d-b143c6c9f9ed" /> | **Halbi the Green** | Este es el primer modelo que hemos fabricamos como LNM, siendo el carro con el cual competimos en las primeras regionales de WRO Venezuela 2026, este lograba realizar la ronda abierta de manera perfecta en un tiempo de alrededor de 20seg pero a la hora de la ronda de obstaculos este se veia frenado por diversas limitaciones tales como; Su tamaño debido a que el ancho de este le dificultaba atravesar los obstaculos de manera precisa, limitaciones del sistema de direccion el cual no podia realizar giros cerrados, otra de las dificultades que se presentaron fue que algunos de los cables del robot y sensores de los laterales tumbaban los obstaculos de manera ocacional, en resumen el principal problema de Halbi The Green fue su tamaño y su incapacidad de hacer giros cerrados. |
 
 </div>
 
@@ -92,9 +93,9 @@ Esta es la estructura de carpetas de nuestro repositorio:
 	| | **Diferentes ángulos del carro** | |
 	|---|---|---|
 	| **Superior** | **Derecha** | **Izquierda** |
-	| <img width="560" height="580" alt="Upper-Pov" src="https://github.com/user-attachments/assets/74863cc8-5128-49cf-845e-0f087c50bcf1" /> | <img width="560" height="580" alt="RightSide-Pov" src="https://github.com/user-attachments/assets/8b9c2020-cc18-441f-9152-c86d9a233b10" /> | <img width="560" height="580" alt="LeftSide-Pov" src="https://github.com/user-attachments/assets/cdbabe27-6e45-4dab-98e6-e63b24ed7371" /> |
-	|**Frontal** | **Trasero** | **Libre** |
-	| <img width="560" height="580" alt="Front-Pov" src="https://github.com/user-attachments/assets/d9b65dd5-ca97-4087-ba20-77f7cbeb4bf6" /> | <img width="560" height="580" alt="Back-Pov" src="https://github.com/user-attachments/assets/dd1737be-1173-4cae-9229-25821f05dc22" /> | <img width="560" height="580" alt="604003001-cc130bf0-8547-48cc-847e-28dbd9029fba" src="https://github.com/user-attachments/assets/f1dc12a1-dbfc-46f3-9a21-a679aa1aa3db" /> |
+	| <img width="1080" height="1080" alt="Upper-view" src="https://github.com/user-attachments/assets/2a0562c0-60e4-4d0a-a93d-6cc70a388efa" /> | <img width="1080" height="1080" alt="Right-view" src="https://github.com/user-attachments/assets/336adf6b-3f85-432b-8a5c-26227200b8f9" /> | <img width="1080" height="1080" alt="Left-view" src="https://github.com/user-attachments/assets/d6df94f0-d30b-46f6-812e-c9d6f7930e63" /> |
+	|**Frontal** | **Trasera** | **Inferior** |
+	| <img width="1080" height="1080" alt="Front-view" src="https://github.com/user-attachments/assets/ef03746f-1543-4490-8521-824d5e7d0d57" /> | <img width="1080" height="1080" alt="Back-view" src="https://github.com/user-attachments/assets/150ab54f-12d3-4e58-a0bc-a9be14865f2c" /> | <img width="1080" height="1080" alt="Bottom-view" src="https://github.com/user-attachments/assets/a253c009-53f8-4fcc-a485-942bfddd27fd" /> |
 	
     </div>
 
@@ -419,7 +420,8 @@ Alimentado por la batería dedicada a la Raspberry Pi, este bus es eléctricamen
 
 <div align="center">
 
-<img width="2960" height="1625" alt="L-N-M@1 25x" src="https://github.com/user-attachments/assets/13e15df3-6f13-4d22-9dfd-a9a075e6561c" />
+<img width="1320" height="552" alt="ElectricDiagramLNMmini" src="https://github.com/user-attachments/assets/80d0a87e-5b5d-4501-8b80-1597dfc30bc8" />
+
 
 </div>
 
