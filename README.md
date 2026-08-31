@@ -108,9 +108,9 @@ Esta es la estructura de carpetas de nuestro repositorio:
 	| | **Diferentes ángulos del carro** | |
 	|---|---|---|
 	| **Superior** | **Derecha** | **Izquierda** |
-	| <img width="3060" height="4080" alt="Upper-view" src="https://github.com/user-attachments/assets/2a0562c0-60e4-4d0a-a93d-6cc70a388efa" /> | <img width="4080" height="3060" alt="Right-view" src="https://github.com/user-attachments/assets/336adf6b-3f85-432b-8a5c-26227200b8f9" /> | <img width="4080" height="3060" alt="Left-view" src="https://github.com/user-attachments/assets/d6df94f0-d30b-46f6-812e-c9d6f7930e63" /> |
+	| <img width="1080" height="1080" alt="Upper-view" src="https://github.com/user-attachments/assets/2a0562c0-60e4-4d0a-a93d-6cc70a388efa" /> | <img width="1080" height="1080" alt="Right-view" src="https://github.com/user-attachments/assets/336adf6b-3f85-432b-8a5c-26227200b8f9" /> | <img width="1080" height="1080" alt="Left-view" src="https://github.com/user-attachments/assets/d6df94f0-d30b-46f6-812e-c9d6f7930e63" /> |
 	|**Frontal** | **Trasera** | **Inferior** |
-	| <img width="3060" height="4080" alt="Front-view" src="https://github.com/user-attachments/assets/ef03746f-1543-4490-8521-824d5e7d0d57" /> | <img width="3060" height="4080" alt="Back-view" src="https://github.com/user-attachments/assets/150ab54f-12d3-4e58-a0bc-a9be14865f2c" /> | <img width="3060" height="4080" alt="Bottom-view" src="https://github.com/user-attachments/assets/a253c009-53f8-4fcc-a485-942bfddd27fd" /> |
+	| <img width="1080" height="1080" alt="Front-view" src="https://github.com/user-attachments/assets/ef03746f-1543-4490-8521-824d5e7d0d57" /> | <img width="1080" height="1080" alt="Back-view" src="https://github.com/user-attachments/assets/150ab54f-12d3-4e58-a0bc-a9be14865f2c" /> | <img width="1080" height="1080" alt="Bottom-view" src="https://github.com/user-attachments/assets/a253c009-53f8-4fcc-a485-942bfddd27fd" /> |
 	
     </div>
 
