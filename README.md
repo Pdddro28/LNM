@@ -118,7 +118,7 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 	<div align="center">
 
-	Imagen
+	<img width="1280" height="576" alt="Ackerman" src="https://github.com/user-attachments/assets/b7252526-1fb0-4340-9039-a15a9050c84f" />
 
 	</div>
 
