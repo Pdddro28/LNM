@@ -344,18 +344,19 @@ Situado inmediatamente arriba de la transmisión, este nivel alberga el núcleo 
 
 	Esta distribución en tres dimensiones complementa la estrategia de nuestro sistema de percepción mixto, asegurando zonas de cobertura óptimas sin interferencias mutuas:
 
-	- Distribución de Visión Artificial (3rd Level):
+	- Distribución de Visión Artificial (2nd Level):
 	La cámara Arducam IMX219 se posiciona en el punto más alto y adelantado del tercer nivel, sostenida por un brazo articulado impreso en 3D con un ángulo de inclinación fijo hacia abajo de 15 grados. Esta elevación es crítica para expandir la línea de visión del lente de 175°, permitiendo al algoritmo abarcar una Región de Interés (ROI) más amplia de la pista para identificar los códigos de color (semáforos) y líneas guía sin que la propia estructura del carro obstruya el encuadre.
 
-	- Distribución Ultrasónica Frontal (1st Level):
-	El sensor ultrasónico delantero (Front-US) se monta directamente sobre la placa base del chasis en una posición baja y avanzada, justo por debajo de la línea de proyección de la cámara. Esta sincronización geométrica permite que, mientras la cámara procesa las decisiones lógicas en el nivel superior, el ultrasonido actúe en el nivel inferior como un bypass de seguridad de hardware en tiempo real, detectando la presencia física de obstáculos de forma matemática y directa para activar frenados de emergencia.
+	- Distribución de sensor Frontal (1st Level):
+	En el modelo actual se utiliza un sensor de tiempo de vuelo que se monta directamente sobre la base del chasis en una posición baja y avanzada, justo por debajo de la cámara. Esta sincronización geométrica permite que, mientras la cámara procesa las decisiones lógicas en el nivel superior, el ultrasonido actúe en el nivel inferior como un bypass de seguridad de hardware en tiempo real, detectando la presencia física de obstáculos de forma matemática y directa para activar frenados de emergencia.
 
-	- Distribución Ultrasónica Lateral (1st Level):
-	Los dos sensores ultrasónicos de flanco (Left-US y Right-US) están anclados rígidamente a los costados izquierdo y derecho del primer nivel, posicionados de forma longitudinal entre ambos ejes de ruedas y alineados verticalmente a la altura exacta de los neumáticos. Ubicarlos en el piso bajo, simétricos respecto al centro de masa, minimiza drásticamente las lecturas falsas causadas por el cabeceo (frenada) o el balanceo (giro) del chasis. Esto asegura que el algoritmo de estabilización reciba datos limpios y constantes de la distancia real hacia las paredes de la pista para mantener una trayectoria perfectamente recta.
+	- Distribución de sensores Laterales (1st Level):
+	Los dos sensores de tiempo de vuelo de flanco están anclados rígidamente a los costados izquierdo y derecho del primer nivel, posicionados de forma longitudinal entre ambos ejes de ruedas y alineados verticalmente levemente sobre la altura de los neumáticos. Ubicarlos en el piso bajo, simétricos respecto al centro de masa, minimiza drásticamente las lecturas falsas causadas por el cabeceo (frenada) o el balanceo (giro) del chasis. Esto asegura que el algoritmo de estabilización reciba datos limpios y constantes de la distancia real hacia las paredes de la pista para mantener una trayectoria perfectamente recta.
 
 <div align="center">
 
-<img width="1600" height="1200" alt="WhatsApp Image 2026-06-18 at 11 34 59 PM" src="https://github.com/user-attachments/assets/5bea7abe-f434-4bbd-9ce3-3c26d1443c42" />
+<img width="4080" height="3060" alt="20260829_205432" src="https://github.com/user-attachments/assets/14a58644-2533-4508-8e80-18146f99838e" />
+NOTA: en esta imagen los sensores de tiempo de vuelo no estan acoplados. 
 
 </div>
 
