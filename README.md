@@ -328,33 +328,33 @@ El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más peq
 
 	- Arquitectura del Chasis por Niveles:
 
-	- 1st Level (Planta Baja):
-	Constituye la base estructural y el tren de rodaje del vehículo. En este nivel se ubica el Motor de Tracción RS380, el mecanismo de dirección asistido por el servomotor, y los tres sensores ultrasónicos HC-SR04 (Front-US y los sensores laterales Left-US / Right-US).
+	- 1er nivel (Planta Baja):
+	Constituye la base estructural y el tren de rodaje del vehículo. En este nivel se ubica el Traction System (tracción trasera 2WD con transmisión de engranajes internos impulsada por el micromotor N20), el Steering System asistido por el servomotor metálico MG90S en el eje delantero, y el arreglo de sensores láser de tiempo de vuelo VL53L0X (frontal y laterales).
 
-		- Justificación Técnica: Colocar los actuadores más pesados y el sistema de tracción en la planta baja garantiza un centro de gravedad lo más cercano posible al suelo, proporcionando estabilidad cinemática y tracción máxima en las ruedas traseras durante aceleraciones bruscas.
+		- Justificación Técnica: Colocar los actuadores mecánicos y el sistema de tracción en la planta baja garantiza un centro de gravedad pegado al suelo. Al utilizar un sistema 2WD trasero, se asegura una transferencia de peso óptima hacia el eje motriz durante las aceleraciones, mientras que el servo MG90S proporciona robustez direccional directa.
+    
+	- 2do nivel (Planta Intermedia):
+	Situado sobre el tren de tracción, este nivel alberga el suministro energético y la etapa de control de hardware. Aquí se encuentra encapsulada la Batería LiPo URGENEX de 7.4V. Justo por encima de ella, se ubica la Custom PCB que consolida el driver DRV8833 y el Buck Converter Mini360. En la parte posterior de este nivel se integra el interruptor principal (SW Gikfun).
 
-	- 2nd Level (Planta Intermedia):
-Situado inmediatamente arriba de la transmisión, este nivel alberga el núcleo de control de bajo nivel y la distribución eléctrica principal. Aquí se encuentran fijadas la placa de expansión Makeblock MegaPi, el Buck Converter (3A 15W) y la jaula vertical contenedora de las Baterías LiPo.
+		- Justificación Técnica: Centralizar la batería LiPo en el piso medio alinea la mayor masa del vehículo con el centro geométrico, reduciendo los momentos de inercia polares para evitar subvirajes o sobrevirajes. La Custom PCB actúa como puente intermedio de distribución: agrupa la reducción de voltaje (Mini360) y la etapa de potencia (DRV8833) manteniendo rutas de cableado muy cortas hacia los motores del primer nivel y protegiendo de ruido electromagnético al nivel superior. El interruptor trasero permite cortes de energía rápidos y accesibles.
 
-		- Justificación Técnica: La MegaPi actúa como puente físico intermedio para acortar las trayectorias del cableado hacia los motores del primer nivel. Al centralizar las baterías pesadas en este piso medio y alineadas horizontalmente con el centro de masa, se reducen los momentos de inercia polares, evitando subvirajes o sobrevirajes en las curvas cerradas de la pista. El Buck Converter se sitúa estratégicamente al lado de la MegaPi para reducir y estabilizar el voltaje proveniente de las celdas antes de enviarlo al nivel superior.
+	- 3er nivel (Planta Superior):
+	Corresponde a la cúspide de la estructura, dedicada de forma exclusiva al procesamiento lógico y la percepción geométrica. Contiene la computadora a bordo Raspberry Pi Zero 2W y el conjunto elevado de la cámara Arducam IMX219 (Cam).
 
-	- 3rd Level (Planta Superior):
-	Corresponde a la cúspide de la estructura, dedicada de forma exclusiva al procesamiento de alto nivel y la percepción geométrica. Contiene la computadora a bordo Raspberry Pi 4 B (equipada con su disipador térmico y ventilador activo) y el conjunto elevado de la cámara de visión artificial Arducam IMX219.
-
-		- Justificación Técnica: Elevar la Raspberry Pi 4 la aísla por completo de las vibraciones mecánicas directas del motor de tracción y de los bucles de corriente del chasis inferior. Asimismo, la posición superior favorece la convección térmica del ventilador para evitar el estrangulamiento térmico (thermal throttling) del CPU durante la ejecución de los algoritmos de detección.
-
+		- Justificación Técnica: Elevar la Pi Zero 2W la aísla por completo de las vibraciones mecánicas de la reductora del N20 y de los bucles de corriente del chasis inferior. El factor de forma ultracompacto de la Pi Zero reduce drásticamente el peso en la parte superior del péndulo invertido del chasis, manteniendo la agilidad del vehículo sin sacrificar la capacidad de procesamiento con OpenCV.
+    
 	- Sistema de Percepción y Orientación Espacial:
 
-	Esta distribución en tres dimensiones complementa la estrategia de nuestro sistema de percepción mixto, asegurando zonas de cobertura óptimas sin interferencias mutuas:
+	Esta distribución tridimensional complementa la estrategia de navegación autónoma, asegurando zonas de cobertura óptimas:
 
-	- Distribución de Visión Artificial (2nd Level):
-	La cámara Arducam IMX219 se posiciona en el punto más alto y adelantado del tercer nivel, sostenida por un brazo articulado impreso en 3D con un ángulo de inclinación fijo hacia abajo de 15 grados. Esta elevación es crítica para expandir la línea de visión del lente de 175°, permitiendo al algoritmo abarcar una Región de Interés (ROI) más amplia de la pista para identificar los códigos de color (semáforos) y líneas guía sin que la propia estructura del carro obstruya el encuadre.
+	- Distribución de Visión Artificial (3er nivel):
+	La cámara Arducam de 8MP se posiciona en un brazo articulado impreso en 3D que se proyecta hacia adelante y arriba, con un ángulo de inclinación fijo hacia la pista. Esta elevación es crítica para expandir el campo de visión del sensor, permitiendo al algoritmo abarcar una Región de Interés (ROI) amplia para identificar límites de pista y códigos de color de forma anticipada sin que la propia trompa del carro obstruya el encuadre.
 
-	- Distribución de sensor Frontal (1st Level):
-	En el modelo actual se utiliza un sensor de tiempo de vuelo que se monta directamente sobre la base del chasis en una posición baja y avanzada, justo por debajo de la cámara. Esta sincronización geométrica permite que, mientras la cámara procesa las decisiones lógicas en el nivel superior, el ultrasonido actúe en el nivel inferior como un bypass de seguridad de hardware en tiempo real, detectando la presencia física de obstáculos de forma matemática y directa para activar frenados de emergencia.
+	- Distribución de sensor Frontal (1er nivel):
+	Se utiliza un sensor ToF VL53L0X montado directamente sobre la base del chasis en una posición baja y avanzada. Esta sincronización geométrica permite que el láser actúe como un bypass de seguridad de hardware en tiempo real: mientras la cámara toma decisiones lógicas a nivel macro, el VL53L0X inferior detecta obstáculos físicos de forma absoluta y sin depender de la iluminación para ejecutar rutinas de evasión o frenado.
 
-	- Distribución de sensores Laterales (1st Level):
-	Los dos sensores de tiempo de vuelo de flanco están anclados rígidamente a los costados izquierdo y derecho del primer nivel, posicionados de forma longitudinal entre ambos ejes de ruedas y alineados verticalmente levemente sobre la altura de los neumáticos. Ubicarlos en el piso bajo, simétricos respecto al centro de masa, minimiza drásticamente las lecturas falsas causadas por el cabeceo (frenada) o el balanceo (giro) del chasis. Esto asegura que el algoritmo de estabilización reciba datos limpios y constantes de la distancia real hacia las paredes de la pista para mantener una trayectoria perfectamente recta.
+	- Distribución de sensores Laterales (1er nivel):
+	Los sensores ToF de flanco están posicionados simétricamente en el primer nivel, leyendo distancias milimétricas hacia las paredes de la pista. Ubicarlos cerca del suelo y simétricos respecto al centro de masa minimiza las lecturas erróneas causadas por el cabeceo del chasis en aceleraciones o frenadas. Al utilizar tecnología de tiempo de vuelo en lugar de ultrasonidos, se garantiza que los algoritmos de estabilización y centrado reciban datos inmunes al ruido acústico de los motores y a los reflejos de las paredes.
 
 <div align="center">
 
