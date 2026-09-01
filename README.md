@@ -329,7 +329,7 @@ El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más peq
 	- Arquitectura del Chasis por Niveles:
 
 	- 1er nivel (Planta Baja):
-	Constituye la base estructural y el tren de rodaje del vehículo. En este nivel se ubica el Traction System (tracción trasera 2WD con transmisión de engranajes internos impulsada por el micromotor N20), el Steering System asistido por el servomotor metálico MG90S en el eje delantero, y el arreglo de sensores láser de tiempo de vuelo VL53L0X (frontal y laterales).
+	Constituye la base estructural y el tren de rodaje del vehículo. En este nivel se ubica el Traction System (tracción trasera 2WD con transmisión de engranajes internos impulsada por el micromotor N20), el Steering System asistido por el servomotor metálico MG90S en el eje delantero, y el arreglo de sensores láser de tiempo de vuelo VL53L0X.
 
 		- Justificación Técnica: Colocar los actuadores mecánicos y el sistema de tracción en la planta baja garantiza un centro de gravedad pegado al suelo. Al utilizar un sistema 2WD trasero, se asegura una transferencia de peso óptima hacia el eje motriz durante las aceleraciones, mientras que el servo MG90S proporciona robustez direccional directa.
     
@@ -351,7 +351,7 @@ El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más peq
 	La cámara Arducam de 8MP se posiciona en un brazo articulado impreso en 3D que se proyecta hacia adelante y arriba, con un ángulo de inclinación fijo hacia la pista. Esta elevación es crítica para expandir el campo de visión del sensor, permitiendo al algoritmo abarcar una Región de Interés (ROI) amplia para identificar límites de pista y códigos de color de forma anticipada sin que la propia trompa del carro obstruya el encuadre.
 
 	- Distribución de sensor Frontal (1er nivel):
-	Se utiliza un sensor ToF VL53L0X montado directamente sobre la base del chasis en una posición baja y avanzada. Esta sincronización geométrica permite que el láser actúe como un bypass de seguridad de hardware en tiempo real: mientras la cámara toma decisiones lógicas a nivel macro, el VL53L0X inferior detecta obstáculos físicos de forma absoluta y sin depender de la iluminación para ejecutar rutinas de evasión o frenado.
+	Se utiliza un sensor ToF VL53L0X montado directamente sobre la base del chasis en una posición baja y avanzada. Esta sincronización geométrica permite que el láser actúe como un bypass de seguridad de hardware en tiempo real: mientras la cámara toma decisiones lógicas a nivel macro, el VL53L0X inferior detecta los paredes para los dos primeros retos de forma absoluta y sin depender de la iluminación para ejecutar rutinas de evasión o frenado.
 
 	- Distribución de sensores Laterales (1er nivel):
 	Los sensores ToF de flanco están posicionados simétricamente en el primer nivel, leyendo distancias milimétricas hacia las paredes de la pista. Ubicarlos cerca del suelo y simétricos respecto al centro de masa minimiza las lecturas erróneas causadas por el cabeceo del chasis en aceleraciones o frenadas. Al utilizar tecnología de tiempo de vuelo en lugar de ultrasonidos, se garantiza que los algoritmos de estabilización y centrado reciban datos inmunes al ruido acústico de los motores y a los reflejos de las paredes.
