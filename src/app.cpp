@@ -3,7 +3,7 @@
 
 int main() {
     // Pipeline optimizado con drop=true y sync=false para evitar bloqueos
-    std::string pipeline = "libcamerasrc ! video/x-raw, width=640, height=480, framerate=30/1 ! "
+    std::string pipeline = "libcamerasrc ! video/x-raw, width=640, height=370, framerate=30/1 ! "
                            "videoconvert ! video/x-raw, format=BGR ! "
                            "appsink drop=true sync=false";
 
