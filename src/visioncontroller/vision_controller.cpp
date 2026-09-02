@@ -7,7 +7,7 @@
 // ============================================
 
 VisionController::VisionController(CameraBackend backend) 
-    : image_width(640), image_height(480), backend_type(backend) {
+    : image_width(640), image_height(370), backend_type(backend) {
     
     // ✅ Configurar pipeline según el backend seleccionado
     if (backend_type == CameraBackend::GSTREAMER) {
@@ -70,6 +70,8 @@ void VisionController::receive_image() {
     }
     
     cv::flip(frame, frame, 1);
+    cv::flip(frame, frame, 0);
+
     cv::cvtColor(frame, image_lab, cv::COLOR_BGR2Lab);
     
     std::vector<cv::Mat> lab_channels;
