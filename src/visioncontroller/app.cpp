@@ -6,8 +6,8 @@ int main() {
     std::cout << "A punto de crear VisionController..." << std::endl;
 
     VisionController vision(CameraBackend::GSTREAMER); 
-    ROI roi1 = {0, 100, 320, 150};
-    ROI roi2 = {320, 100, 640, 150};
+    ROI roi1 = {0, 40, 320, 160};
+    ROI roi2 = {320, 40, 640, 160};
     ROI roi3 = {200, 20, 430, 200};
     ROI roi4 = {200, 300, 440, 350};
     
