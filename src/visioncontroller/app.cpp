@@ -5,9 +5,12 @@ int main() {
     std::cout << "=== PRUEBA DEL CONSTRUCTOR ===" << std::endl;
     std::cout << "A punto de crear VisionController..." << std::endl;
 
-    VisionController vision(CameraBackend::GSTREAMER);
-    ROI main_roi = {220, 85, 420, 285}; 
-
+    VisionController vision(CameraBackend::GSTREAMER); 
+    ROI roi1 = {0, 100, 320, 150};
+    ROI roi2 = {320, 100, 640, 150};
+    ROI roi3 = {200, 20, 430, 200};
+    ROI roi4 = {200, 300, 440, 350};
+    
     std::cout << "VisionController creado exitosamente." << std::endl;
     
     std::vector<std::vector<cv::Point>> red;
@@ -22,13 +25,18 @@ int main() {
             std::cerr << "No se pudo obtener imagen" << std::endl;
             continue;
         }
-        
+    	 
         // Llamar find_contours con la firma original
-        red = vision.find_contours({{18, 157, 0}, {255, 255, 255}}, main_roi);
-        max_contour_result = vision.max_contour(red, main_roi);
+        red = vision.find_contours({{18, 157, 0}, {255, 255, 255}}, roi1);
+        max_contour_result = vision.max_contour(red, roi1);
 
-        vision.draw_contours(red, main_roi, cv::Scalar(0, 0, 255));
-        vision.draw_roi(main_roi, cv::Scalar(255, 0, 0));
+        vision.draw_contours(red, roi1, cv::Scalar(0, 0, 255));
+        vision.draw_roi(roi1, cv::Scalar(255, 0, 0));
+	vision.draw_roi(roi2, cv::Scalar(255, 0, 0));
+	vision.draw_roi(roi3, cv::Scalar(255, 0, 0));
+	vision.draw_roi(roi4, cv::Scalar(255, 0, 0));
+	
+	// 
         
         // Texto con información
         cv::putText(vision.get_frame(), 
@@ -40,14 +48,14 @@ int main() {
                     2);
         
         // Monitoreo de RAM cada 60 frames
-        if (++frame_count % 60 == 0) {
-            std::cout << "RAM: " << vision.get_memory_usage_kb() / 1024.0 
-                      << " MB | Contornos: " << red.size() 
+        
+            std::cout << " Contornos: " << red.size() 
                       << " | MaxArea: " << max_contour_result[0].first 
                       << std::endl;
-        }
         
-        cv::imshow("Frame", vision.get_frame());
+        
+       
+	cv::imshow("Frame", vision.get_frame());
         
         char key = (char)cv::waitKey(1);
         if (key == 'q') {
