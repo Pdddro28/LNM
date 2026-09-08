@@ -620,7 +620,7 @@ PID de Evasión de Obstáculos: Configurado con una respuesta altamente agresiva
 
 		<div align="center">
 	
-		$$\text{Ángulo Escapatoria} = 160^\circ - \text{steering\_angle}$$
+		$$\text{Ángulo Escapatoria} = 160^\circ - \text{steering}_{\text{angle}}$$
 
 		</div>
 	
@@ -652,7 +652,7 @@ PID de Evasión de Obstáculos: Configurado con una respuesta altamente agresiva
 
 	- **Espacio ocupado por las baterías:**
 
-		- * *Problema:* Ocupaban demasiado volumen en el chasis y no dejaban espacio para ubicar los componentes de forma cómoda.
+		- *Problema:* Ocupaban demasiado volumen en el chasis y no dejaban espacio para ubicar los componentes de forma cómoda.
 
     	- *Solución:* Se les diseñó una base a medida para ubicarlas en el centro del robot y, sobre esta estructura, se construyó el piso superior.
        
