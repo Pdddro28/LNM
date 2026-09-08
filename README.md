@@ -668,12 +668,3 @@ PID de Evasión de Obstáculos: Configurado con una respuesta altamente agresiva
   
     	* *Solución:* Sobre la base de las baterías se diseñó un soporte dedicado para la Raspberry Pi y la cámara. Esta última incluye una base con ángulo graduable para poder ajustar el punto de vista del lente de manera cómoda y precisa.
 
-	### Problemas con las conexiones (Cableado)
-
-	* **Problema:** Al tener cables sueltos y expuestos, estos se quedaban atascados constantemente con el entorno e incluso se llevaban por delante los obstáculos del circuito en algunas ocasiones.
-  
-	* **Solución:** Se reorganizaron por completo las conexiones para eliminar los bucles y partes sobresalientes del cableado.
-  
-- ### Problemas de Software:
-
-	- a
