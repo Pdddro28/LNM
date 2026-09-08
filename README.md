@@ -566,11 +566,11 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 		- **Diagrama de Flujo:**
 
-	<div align="center">
+		<div align="center">
 
-	<img width="3505" height="4877" alt="untitled (1)" src="https://github.com/user-attachments/assets/94f21db8-a8a3-445f-988f-bbd1e25d0978" />
+		<img width="3505" height="4877" alt="untitled (1)" src="https://github.com/user-attachments/assets/94f21db8-a8a3-445f-988f-bbd1e25d0978" />
 
-	</div>
+		</div>
 
 	- **Obstacle Challenge:**
 
@@ -591,22 +591,19 @@ PID de Evasión de Obstáculos: Configurado con una respuesta altamente agresiva
 		- Estado 1: LINEAL (Navegación Base y Curvas Cerradas)
 		Es el estado por defecto del robot. Mientras se encuentra en este modo, el vehículo ejecuta de forma prioritaria el centrado geométrico calculando el error entre las áreas negras laterales (error = black_areas[1] - black_areas[0]). Si el sensor de ultrasonido frontal detecta una pared a corta distancia (front_dist < 90 cm) en copresencia con una alta densidad de pixeles negros de pista (LNM.black_area > 8000), el estado se bloquea temporalmente bajo la bandera girando = True para forzar un giro de esquina cerrada de 90°. De manera simultánea, el método procesar_obstaculos() analiza los contornos máximos filtrados bajo las máscaras mask_red y mask_green. La transición hacia el estado de evasión se activa inmediatamente cuando el área de un contorno supera los umbrales de ruido calibrados:
 
-		<div align="center">
-		
+  
 		**Pilar Verde: Área $> 350 \text{ px} \rightarrow$ Transición a ESQUIVANDO | memoria_lado = "IZQUIERDA" (El pilar se debe dejar a la izquierda).**
 		**Pilar Rojo: Área $> 300 \text{ px} \rightarrow$ Transición a ESQUIVANDO | memoria_lado = "DERECHA" (El pilar se debe dejar a la derecha).**
-
-		</div>
+   
 		
 		- Estado 2: ESQUIVANDO (Lazo de Control de Evasión)
 		Al entrar en este modo, el PID de líneas se suspende y el control de dirección pasa al lazo PID de obstáculos. El algoritmo persigue un Setpoint o punto de consigna absoluto en los extremos del cuadro visual para forzar al carro a abrirse hacia el carril libre:
 
-		<div align="center">
-		
+	
 		**Para pilares verdes (dejar a la izquierda), se busca el SETPOINT_VERDE = 549 (extremo derecho del marco).**
-
 		**Para pilares rojos (dejar a la derecha), se busca el SETPOINT_ROJO = 50 (extremo izquierdo del marco).**
-
+   
+  
 		- Mecanismo de Tiempo de Gracia: Debido a la agresividad del giro, es común que el pilar salga del campo visual de la cámara antes de que el vehículo lo haya superado físicamente.
 
 		Para evitar que el robot regrese prematuramente al centro de la pista y colisione con el obstáculo, se implementó un temporizador de inercia (TIEMPO_GRACIA = 0.2 segundos). Si el área del pilar cae a cero, el sistema mantiene el cálculo del último error registrado (error_obs = prev_error), sosteniendo el ángulo de giro por hardware durante el tiempo de gracia antes de conmutar al estado REBASANDO.
@@ -630,11 +627,11 @@ PID de Evasión de Obstáculos: Configurado con una respuesta altamente agresiva
 
 		- **Diagrama de Flujo:**
  
-	<div align="center">
+		<div align="center">
 
-	<img width="3533" height="5354" alt="untitled" src="https://github.com/user-attachments/assets/9ba2ee32-f8ed-4207-aa86-ce3b5ed009fa" />
+		<img width="3533" height="5354" alt="untitled" src="https://github.com/user-attachments/assets/9ba2ee32-f8ed-4207-aa86-ce3b5ed009fa" />
 
-	</div>
+		</div>
 
 # 4. Challenges
 
