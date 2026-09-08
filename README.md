@@ -217,7 +217,7 @@ Esta es la estructura de carpetas de nuestro repositorio:
 		
 		- #### Muestra ensamble de componentes 3D:
 
-   		![Muestra 3D](https://ibb.co/FbZJ65Lr)
+   		<img src="https://i.ibb.co/https://ibb.co/FbZJ65Lr.gif" width="500" alt="Demo">
    
 		- #### **Impresora:** Se usó las impresoras Creality Hi y Creality K1
 
