@@ -13,7 +13,8 @@ const int MOTOR_IN1 = 19; // GPIO Digital (DRV8833)
 const int MOTOR_IN2 = 13; // GPIO Digital (DRV8833)
 const int BUTTON_PIN = 25; // GPIO Boton
 
-// Bandera
+
+// Bandera atómica: segura para modificarse dentro de una interrupción
 std::atomic<bool> ejecutando(true);
 std::string ESTADO_CARRERA = "INICIANDO";
 
@@ -27,7 +28,7 @@ ROI roi5 = {200, 70, 430, 140}; // ROI superior naranja
 
 enum class Sentido { PARAR, ADELANTE, ATRAS };
 
-// Función de interrupción asíncrona sin operaciones de I/O (std::cout eliminado)
+// CORRECCIÓN 1: Función de interrupción asíncrona sin operaciones de I/O (std::cout eliminado)
 void capturar_ctrl_c(int senal) {
     ejecutando = false;
 }
@@ -97,8 +98,6 @@ double obtener_tiempo_actual() {
     return std::chrono::duration<double>(ahora.time_since_epoch()).count();
 }
 
-std::chrono::steady_clock::time_point ultimoTiempoDetectado;
-
 // Variables de cronómetro
 double current_timer = 0.0;
 double stop_timer = 0.0;
@@ -108,13 +107,13 @@ double tiempo_inicio_giro = 0.0;
 
 // Booleans
 bool stop_triggered = false; // Bandera para activar el cronómetro de la vuelta 12 una sola vez
-bool esperandoCD = false;
 
 // PID
 float error;
 float correccion;
 float kp;
 float angulo;
+
 
 int main() {
     std::cout << "=== PRUEBA DEL CONSTRUCTOR ===" << std::endl;
@@ -131,7 +130,7 @@ int main() {
         return -1;
     }
 
-    // Uso del gestor de señales nativo de pigpio para evitar conflictos de hilos
+    // CORRECCIÓN 2: Uso del gestor de señales nativo de pigpio para evitar conflictos de hilos
     gpioSetSignalFunc(SIGINT, capturar_ctrl_c);
 
     // Configurar pines como salidas
@@ -139,16 +138,12 @@ int main() {
     gpioSetMode(MOTOR_IN1, PI_OUTPUT);
     gpioSetMode(MOTOR_IN2, PI_OUTPUT);
 
-    // CONFIGURACIÓN DEL BOTÓN
+    // --- CONFIGURACIÓN DEL BOTÓN ---
     gpioSetMode(BUTTON_PIN, PI_INPUT);
     gpioSetPullUpDown(BUTTON_PIN, PI_PUD_UP); // Activa resistencia pull-up interna
 
     // Posición inicial segura
     mover_motor(Sentido::PARAR,0);
-    mover_servo(90);
-    pausa_segura(500);
-    mover_servo(120);
-    pausa_segura(500);
     mover_servo(90);
 
     std::cout << "\n==================================================\n";
@@ -156,8 +151,8 @@ int main() {
     std::cout << "🔘 ESPERANDO PULSACIÓN DEL BOTÓN EN GPIO " << BUTTON_PIN << "...\n";
     std::cout << "==================================================\n\n";
 
-    // BUCLE DE ESPERA DEL BOTÓN
-    while (ejecutando && gpioRead(BUTTON_PIN) == PI_HIGH) { // Button PI_HIGH/PI_LOW
+    // --- BUCLE DE ESPERA DEL BOTÓN ---
+    while (ejecutando && gpioRead(BUTTON_PIN) == PI_LOW) {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
@@ -167,12 +162,11 @@ int main() {
         return 0;
     }
 
-    std::cout << "🚀 ¡BOTÓN PRESIONADO! ARANCANDO EN 0.5 SEGUNDOs...\n\n";
-    pausa_segura(500);
+    std::cout << "🚀 ¡BOTÓN PRESIONADO! ARANCANDO EN 1 SEGUNDO...\n\n";
+    pausa_segura(1000);
     
     // Ejecución del carro
     while (ejecutando) {
-        auto ahora = std::chrono::steady_clock::now();
         current_timer = obtener_tiempo_actual();
         vision.receive_image();
         const cv::Mat& current_frame = vision.get_frame();
@@ -199,9 +193,9 @@ int main() {
 
         // Texto con información
         std::cout << "Orange Max Area: " << down_orange << "\n"
-                  << "Blue Max Area: "   << down_blue   << "\n"
                   << "transicion " << transicion << "\n"
                   << "Black central chiqui Max Area: " << central_blkt << "\n"
+                  << "Blue Max Area: "   << down_blue   << "\n"
                   << "BlackC Max Area: " << central_blk << "\n"
                   << "BlackL Max Area: " << left_blk << "\n"
                   << "BlackR Max Area: " << right_blk << std::endl;
@@ -216,97 +210,88 @@ int main() {
             }
         }
 
-        if (esperandoCD) {
-            std::chrono::duration<double> transcurrido = ahora - ultimoTiempoDetectado;
-
-            if (transcurrido.count() >= 0.8) {
-                esperandoCD = false;
-            }
-        }
-
+        
         if (ESTADO_CARRERA == "INICIANDO") {
             if (transicion == 1) transicion = 0;
-            mover_motor(Sentido::ADELANTE, 210);
+            mover_motor(Sentido::ADELANTE, 200); //200
             error = left_blk - right_blk;
             correccion = 0.001 * error;
             angulo = 90 + correccion;
             
             if (angulo < 70) {
                 angulo = 70;
-            } else if (angulo > 110) {
+            }
+            else if (angulo > 110) {
                 angulo = 110;
             }
             
             mover_servo((int)angulo);
             
-            if (turning_direction == 2 && central_blkt > 700 && central_blkt < 1600) {
+            
+            if (down_orange > 500 && turning_direction == 2) {
                 ESTADO_CARRERA = "GIRANDO";
-            } else if (turning_direction == 1 && central_blkt > 700 && central_blkt < 1600){
+            } else if (turning_direction == 1 && central_blkt > 200 && central_blkt < 1500){
                 ESTADO_CARRERA = "GIRANDO";
+
             }
 
         } else if (ESTADO_CARRERA == "GIRANDO") {
-            if (turning_direction == 2) {
+            if (turning_direction == 2){
                 mover_motor(Sentido::ADELANTE, 140); //150
                 mover_servo(110);
-            } else if (turning_direction == 1) {
+            }    
+            else if (turning_direction == 1){
                 mover_motor(Sentido::ADELANTE, 120); //130
                 mover_servo(80);
+                
             }
             
             if (turning_direction == 2 && central_blk < 8000) {
                 ESTADO_CARRERA = "INICIANDO";
             }
-
-            if (turning_direction == 1 && central_blk < 8000) {
+            if (turning_direction == 1 && (central_blk < 8400  || central_blkt > 5000)){
                 ESTADO_CARRERA = "INICIANDO";
             }
-        }
+        }   
 
         std::cout << ESTADO_CARRERA << std::endl;
         std::cout << (int)angulo << std::endl;
-        std::cout << loops << std::endl;
+        std::cout << loops <<std::endl;
         
-        if (turning_direction == 2 && down_orange > 1500 && !esperandoCD) {
+        if (ESTADO_CARRERA == "GIRANDO" && transicion == 0) {
             loops++;
-            ultimoTiempoDetectado = ahora;
-            esperandoCD = true;
+            transicion = 1;
         }
 
-        if (turning_direction == 1 && down_blue > 1500 && !esperandoCD) {
-            loops++;
-            ultimoTiempoDetectado = ahora;
-            esperandoCD = true;
-        }
-
-        // LÓGICA DE LOS 5 SEGUNDOS EXTRA TRAS LA VUELTA 12
-        if (loops == 12 && !stop_triggered && turning_direction == 1) {
+        // --- LÓGICA DE LOS 5 SEGUNDOS EXTRA TRAS LA VUELTA 12 ---
+        if (loops >= 12 && !stop_triggered && turning_direction == 2) {
             stop_timer = current_timer; // Guarda el momento exacto en que llegó a la 12
             stop_triggered = true;      // Activa la bandera para que no se reinicie
-        }  else if (loops == 12 && !stop_triggered && turning_direction == 2) {
+            std::cout << "🏁 ¡Vuelta 12 alcanzada! Avanzando 5 segundos más..." << std::endl;
+        }  /*else if (loops >=  && !stop_triggered && turning_direction == 2) {
             stop_timer = current_timer; // Guarda el momento exacto en que llegó a la 12
             stop_triggered = true;      // Activa la bandera para que no se reinicie
-        }
+            std::cout << "🏁 ¡Vuelta 12 alcanzada! Avanzando 5 segundos más..." << std::endl;
+        }td::cout << "🏁 ¡Vuelta 12 alcanzada! Avanzando 5 segundos más..." << std::endl;
+        }*/
         
+        // Si ya se activó el cronómetro, evaluamos si han pasado los 5.0 segundos
         if (stop_triggered) {
-            if (turning_direction == 2 && current_timer - stop_timer >= 4) {
-                break;
-            } else if (turning_direction == 1 && current_timer - stop_timer >= 2) {
-                break;
+            if (current_timer - stop_timer >= 4.5) {
+                break; // Rompe el bucle para ir al apagado seguro
             }
         }
-    } // Fin del while (ejecutando)
 
-        // pausa_segura(2000);
+        //pausa_segura(2000);
         /*cv::imshow("Frame", current_frame);
         char key = (char)cv::waitKey(1);   
         if (key == 'q') {
             break;        
                 ESTADO_CARRERA = "GIRANDO";
-        } 
-    }*/
+        } */
+    }
 
-    // APAGADO SEGURO GARANTIZADO
+    // --- APAGADO SEGURO GARANTIZADO ---
     // CORRECCIÓN 3: Impresión del mensaje de aborto movido al hilo principal
     std::cout << "\n[!] Interrupción detectada. Abortando y limpiando recursos...\n";
     std::cout << "Apagando motor, cortando pulso del servo y liberando memoria...\n";
