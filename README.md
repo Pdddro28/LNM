@@ -217,7 +217,8 @@ Esta es la estructura de carpetas de nuestro repositorio:
 		
 		- #### Muestra ensamble de componentes 3D:
 
-
+   		![Muestra 3D](https://ibb.co/FbZJ65Lr)
+   
 		- #### **Impresora:** Se usó las impresoras Creality Hi y Creality K1
 
    			- **Creality Hi:** Es una de las propuestas más recientes de Creality, diseñada con un fuerte enfoque en competir directamente en el mercado de impresión multicolor accesible.
@@ -273,7 +274,6 @@ Esta es la estructura de carpetas de nuestro repositorio:
 # 2. Componentes <a id="sistemas-electronicos"></a>
 
 - ### Precios:
-
 
 El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más pequeño a diferencia del que utilizamos a principio de año y de esta forma podemos comparar precios
 
