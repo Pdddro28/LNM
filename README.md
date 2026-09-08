@@ -211,7 +211,14 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 		</div>
 
-		- #### **Impresora:** Se usó las impresoras Creality Hi y Creality K1.
+ 		- #### Muestra de los modelos del sistema Ackermann:
+
+   		<img width="1920" height="1080" alt="0001-0100" src="https://github.com/user-attachments/assets/ac5a9cf8-e236-4da2-8057-b28e798af2ff" />
+		
+		- #### Muestra ensamble de componentes 3D:
+
+
+		- #### **Impresora:** Se usó las impresoras Creality Hi y Creality K1
 
    			- **Creality Hi:** Es una de las propuestas más recientes de Creality, diseñada con un fuerte enfoque en competir directamente en el mercado de impresión multicolor accesible.
         
