@@ -164,6 +164,14 @@ Esta es la estructura de carpetas de nuestro repositorio:
 		<img width="515" height="218" alt="Sistema de transmision de 2 velocidades K-O-M-R-A-D" src="https://github.com/user-attachments/assets/da8175e6-313d-42d6-bd3b-b1318082536f" />
 		
 		</div>
+  
+		<div align="center">
+  
+		Prueba con la rueda modificada:
+
+		https://github.com/user-attachments/assets/6a3b29c5-9f95-493b-9bc6-b4ed8efe8bf0
+
+		</div>
 
 		* **Especificaciones Técnicas de los Motores (RS380):** El bloque motriz confía en motores de CC con escobillas imantadas, seleccionados específicamente por su curva de respuesta dinámica y tolerancia a picos transitorios de carga.
 
