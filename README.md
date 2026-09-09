@@ -166,10 +166,8 @@ Esta es la estructura de carpetas de nuestro repositorio:
 		</div>
   
 		<div align="center">
-  
-		Prueba con la rueda modificada:
 
-		https://github.com/user-attachments/assets/6a3b29c5-9f95-493b-9bc6-b4ed8efe8bf0
+		https://github.com/user-attachments/assets/042841d2-482d-409c-a0ef-2fa391119745
 
 		</div>
 
