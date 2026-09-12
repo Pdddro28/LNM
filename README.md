@@ -377,7 +377,7 @@ Esta configuración nos permite operar con la máxima seguridad, garantizando qu
 | **Raspberry Pi Zero 2W** | 1 | 5.0 V | 100 mA / 350 mA | 350 mA |
 | **Servo MG90S** | 1 | 4.8 V / 6.0 V | 200 mA / 700 mA | 700 mA |
 | **Mini Micro N20 Motor** | 1 | 3 V / 12 V | 60 mA / 750 mA | 750 mA |
-| **DRV8833 Dual Motor Driver** | 1 | 2.7 V / 10.8 V | 750 | 750 mA |
+| **DRV8833 Dual Motor Driver** | 1 | 2.7 V / 10.8 V | 750 mA | 750 mA |
 | **Arducam 8MP IMX219 Camera Module** | 1 | 3.3 V | 200 mA / 300 mA | 300 mA |
 | **Mini360 Mini 360 3A DC-DC** | 1 | 4.75 V / 23 V | 15 mA (reposo) / 3000 mA (Límite) | 15 mA |
 | **VL53L0X Time of Flight** | 2 |  2.6 V / 5.5 V | 10 mA / 20 mA (c/u) | 20 mA |
