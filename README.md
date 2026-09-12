@@ -66,7 +66,7 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 | **Miembro** | **Miembro** | **Coach** |
 | :---: | :---: | :---: |
 | 👤 **David Wang** | 👤 **Pedro Catamo** | 👤 **Jesús Alcalá** |
-| 📅 **Nacido en:** 01/04/2011 (15 años)<br>🏫 **Estudio:** 4º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [davidwangwu104@gmail.com](mailto:davidwangwu104@gmail.com) | 📅 **Nacido en:** 28/01/2009 (17 años)<br>🏫 **Estudio:** 5º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [pedrocatamo.2009@gmail.com](mailto:pedrocatamo.2009@gmail.com) | 📅 **Nacido en:** 18/11/2005 (21 años) <br> 🏫 **Estudio:** Ingenieria en computación & Ingenieria informática <br> 📧 **Gmail:** [Jdam50002@gmail.com](mailto:Jdam50002@gmail.com) |
+| 📅 **Nacido en:** 04/01/2011 (15 años)<br>🏫 **Estudio:** 4º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [davidwangwu104@gmail.com](mailto:davidwangwu104@gmail.com) | 📅 **Nacido en:** 28/01/2009 (17 años)<br>🏫 **Estudio:** 5º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [pedrocatamo.2009@gmail.com](mailto:pedrocatamo.2009@gmail.com) | 📅 **Nacido en:** 18/11/2005 (21 años) <br> 🏫 **Estudio:** Ingenieria en computación & Ingenieria informática <br> 📧 **Gmail:** [Jdam50002@gmail.com](mailto:Jdam50002@gmail.com) |
 
 </div>
 
