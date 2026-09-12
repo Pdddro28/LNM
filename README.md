@@ -10,27 +10,36 @@
 
 </div>
 
-Bienvenidos al repositorio de GitHub del **Equipo LNM**, anteriormente conocido como Ars Machina, que compite en la categoría **World Robot Olympiad™ (WRO®) Future Engineers 2026**. Nuestro equipo está formado por David Wang y Pedro Catamo que han diseñado un vehículo autónomo compacto e innovador para hacer frente a los retos dinámicos de la competición WRO 2026.
-
 ## **Índice**
 
-**1. [Estructura de carpetas](#estructura-de-carpetas)**
-
-**2. [El equipo](#el-equipo)**
-
-**3. [Nuestro robot](#nuestro-robot)**
-
-**4. [Sistemas electrónicos](#sistemas-electronicos)**
-
-**5. [Sistemas mecánicos](#sistemas-mecanicos)**
-
-**5. [Arquitectura de software](#arquitectura-de-software)**
+1. **[Introducción](#1-introduccion)**
+   - 1.1. **[Miembros](#11-miembros)**
+2. **[Proyectos anteriores](#2-proyectos-anteriores)**
+3. **[Diseño y mobilidad](#3-diseño-y-mobilidad)**
+   - 3.1. **[Fotos del vehiculo](#31-fotos-del-vehiculo)**
+   - 3.2. **[Especificaciones del vehiculo](#32-especificaciones-del-vehiculo)**
+   - 3.3. **[Mecanismo ackermann](#33-mecanismo-ackermann)**
+   - 3.4. **[Tracción trasera](#34-tracción-trasera)**
+   - 3.5. **[Partes 3D, proceso de desarollo y recomendaciones](#35-partes-3d-proceso-de-desarollo-y-recomendaciones)**
+4. **[Componentes](#4-componentes)**
+   - 4.1. **[Disposicion y justificacion](#41-disposicion-y-justificacion)**
+5. **[Presupuesto de energia](#5-presupuesto-de-energia)**
+   - 5.1. **[Diagrama de cableado](#51-diagrama-de-cableado)**
+6. **[Software](#6-software)**
+   - 6.1. **[Herramientas de apoyo](#61-herramientas-de-apoyo)**
+   - 6.2. **[Megapi controller(Deprecated)](#62-megapi-controllerdeprecated)**
+      - 6.3.1. **[Ronda abierta(Open challenge)](#631-ronda-abiertaopen-challenge)**
+      - 6.3.2. **[Ronda de obstaculos(Obstacel challenge)](#632-ronda-de-obstaculosobstacel-challenge)**
+7. **[Problemas y soluciones durante el desarollo](#7-problemas-y-soluciones-durante-el-desarollo)**
 
 ---
 
-## **Estructura de carpetas** <a id="estructura-de-carpetas"></a>
+## 1. Introducción <a id="1-introduccion"></a>
 
-Esta es la estructura de carpetas de nuestro repositorio:
+Bienvenidos al repositorio de GitHub del **Equipo LNM**, anteriormente conocido como Ars Machina, que compite en la categoría **World Robot Olympiad™ (WRO®) Future Engineers 2026**. Nuestro equipo ha diseñado un vehículo autónomo compacto e innovador para hacer frente a los retos dinámicos de la competición WRO 2026.
+
+Esta es la estructura general de carpetas de nuestro repositorio:
+
 <div align="center">
 	
 | Carpeta | Contenido técnico | Documentación detallada |
@@ -44,9 +53,7 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 </div>
 
----
-
-## **El Equipo** <a id="el-equipo"></a>
+### 1.1. Miembros <a id="11-miembros"></a>
 
 <div align="center">
 	
@@ -54,7 +61,6 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 </div>
 
-### **Miembros:**
 <div align="center">
 
 | **Miembro** | **Miembro** | **Coach** |
@@ -66,8 +72,8 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 ---
 
-### Diseños anteriores:
-  
+## 2. Proyectos anteriores <a id="2-proyectos-anteriores"></a>
+
 <div align="center">
 	
 | Foto | Nombre | Descripción |
@@ -82,207 +88,186 @@ Esta es la estructura de carpetas de nuestro repositorio:
 
 ---
 
-# 1- Mobilidad y diseño
+## 3. Diseño y mobilidad <a id="3-diseño-y-mobilidad"></a>
 
- - ### Halbi The Green: <a id="nuestro-robot"></a>
+A continuación se detalla la construcción y funcionamiento dinámico de nuestro robot **Halbi The Green**:
 
-    - ### Fotos del vehiculo:
+### 3.1. Fotos del vehiculo <a id="31-fotos-del-vehiculo"></a>
 
-	<div align="center">
+<div align="center">
 
-	| | **Diferentes ángulos del carro** | |
-	|---|---|---|
-	| **Superior** | **Derecha** | **Izquierda** |
-	| <img width="1080" height="1080" alt="Upper-view" src="https://github.com/user-attachments/assets/2a0562c0-60e4-4d0a-a93d-6cc70a388efa" /> | <img width="1080" height="1080" alt="Right-view" src="https://github.com/user-attachments/assets/336adf6b-3f85-432b-8a5c-26227200b8f9" /> | <img width="1080" height="1080" alt="Left-view" src="https://github.com/user-attachments/assets/d6df94f0-d30b-46f6-812e-c9d6f7930e63" /> |
-	|**Frontal** | **Trasera** | **Inferior** |
-	| <img width="1080" height="1080" alt="Front-view" src="https://github.com/user-attachments/assets/ef03746f-1543-4490-8521-824d5e7d0d57" /> | <img width="1080" height="1080" alt="Back-view" src="https://github.com/user-attachments/assets/150ab54f-12d3-4e58-a0bc-a9be14865f2c" /> | <img width="1080" height="1080" alt="Bottom-view" src="https://github.com/user-attachments/assets/a253c009-53f8-4fcc-a485-942bfddd27fd" /> |
-	
-    </div>
+| | **Diferentes ángulos del carro** | |
+|---|---|---|
+| **Superior** | **Derecha** | **Izquierda** |
+| <img width="1080" height="1080" alt="Upper-view" src="https://github.com/user-attachments/assets/2a0562c0-60e4-4d0a-a93d-6cc70a388efa" /> | <img width="1080" height="1080" alt="Right-view" src="https://github.com/user-attachments/assets/336adf6b-3f85-432b-8a5c-26227200b8f9" /> | <img width="1080" height="1080" alt="Left-view" src="https://github.com/user-attachments/assets/d6df94f0-d30b-46f6-812e-c9d6f7930e63" /> |
+|**Frontal** | **Trasera** | **Inferior** |
+| <img width="1080" height="1080" alt="Front-view" src="https://github.com/user-attachments/assets/ef03746f-1543-4490-8521-824d5e7d0d57" /> | <img width="1080" height="1080" alt="Back-view" src="https://github.com/user-attachments/assets/150ab54f-12d3-4e58-a0bc-a9be14865f2c" /> | <img width="1080" height="1080" alt="Bottom-view" src="https://github.com/user-attachments/assets/a253c009-53f8-4fcc-a485-942bfddd27fd" /> |
 
-	- ### Especificaciones mecánicas principales: <a id="sistemas-mecanicos"></a>
+</div>
 
-		- **Dimensiones totales: 14 cm (largo) × 12 cm (ancho) × 10.3 cm (alto).**
-		- **Peso del carro: aproximadamente 346g.**
-		- **Sistema de tracción: Tracción Trasera Mecánica Bifásica.**
-		- **Sistema de dirección: Geometría Ackermann.**
-	
-	- ### Mecanismo de Dirección Ackermann
+### 3.2. Especificaciones del vehiculo <a id="32-especificaciones-del-vehiculo"></a>
 
-		El vehículo utiliza una geometría precisa basada en el **Principio de Dirección Ackermann** para conquistar curvas cerradas con cero deslizamiento lateral y un desgaste mínimo de los neumáticos.
+* **Dimensiones totales:** 14 cm (largo) × 12 cm (ancho) × 10.3 cm (alto).
+* **Peso del carro:** aproximadamente 346g.
+* **Sistema de tracción:** Tracción Trasera Mecánica Bifásica.
+* **Sistema de dirección:** Geometría Ackermann.
 
-		* **La Física Detrás del Principio:** Cuando un vehículo entra en una curva, la rueda delantera interior sigue un radio concéntrico más cerrado y pequeño que la rueda exterior. Si ambas ruedas giraran exactamente al mismo ángulo, los neumáticos lucharían entre sí, provocando que el neumático exterior se arrastre, pierda agarre mecánico e introduzca vibraciones estructurales severas que arruinarían el seguimiento visual de los carriles. Para resolver esto, la geometría mecánica obliga a la rueda interior a pivotar a un ángulo más profundo que la rueda exterior, asegurando que las cuatro ruedas roten alrededor de un único centro instantáneo de curvatura (ICC) común.
+### 3.3. Mecanismo ackermann <a id="33-mecanismo-ackermann"></a>
 
-		* **La Ejecución Mecánica:** Un servo digital **MG996R** de alto par ($11 \text{ kg}\cdot\text{cm}$ de par) se ancla al mamparo delantero mediante un soporte de aluminio en forma de L mecanizado a medida para eliminar la deflexión estructural. El brazo del servo acciona una cremallera de dirección de doble enlace conectada a tirantes asimétricos y manguetas de dirección. Los brazos de dirección están angulados hacia el interior, apuntando al centro del eje trasero, completando el clásico "Trapezoide de Ackermann". Este diseño mecánico exacto convierte el desplazamiento lineal del servo en ángulos de rueda no lineales de forma automática.
+El vehículo utiliza una geometría precisa basada en el **Principio de Dirección Ackermann** para conquistar curvas cerradas con cero deslizamiento lateral y un desgaste mínimo de los neumáticos.
 
-		* **El Control Digital y Calibración:** El MG996R es controlado por un tren de pulsos PWM por hardware continuo y libre de fluctuaciones (*jitter*) a $50\text{Hz}$ directamente desde el microcontrolador MegaPi. La dirección está rígidamente mapeada y calibrada a una banda muerta de software donde los $80^\circ$ representan el centro geométrico absoluto. Los puntos finales mecánicos están limitados por software entre $40^\circ$ (Máximo Izquierda) y $105^\circ$ (Máximo Derecha) para evitar que los eslabones de la dirección alcancen un bloqueo mecánico o fuercen los límites de pérdida del motor.
+* **La Física Detrás del Principio:** Cuando un vehículo entra en una curva, la rueda delantera interior sigue un radio concéntrico más cerrado y pequeño que la rueda exterior. Si ambas ruedas giraran exactamente al mismo ángulo, los neumáticos lucharían entre sí, provocando que el neumático exterior se arrastre, pierda agarre mecánico e introduzca vibraciones estructurales severas que arruinarían el seguimiento visual de los carriles. Para resolver esto, la geometría mecánica obliga a la rueda interior a pivotar a un ángulo más profundo que la rueda exterior, asegurando que las cuatro ruedas roten alrededor de un único centro instantáneo de curvatura (ICC) común.
 
-	<div align="center">
+* **La Ejecución Mecánica:** Un servo digital **MG996R** de alto par ($11 \text{ kg}\cdot\text{cm}$ de par) se ancla al mamparo delantero mediante un soporte de aluminio en forma de L mecanizado a medida para eliminar la deflexión estructural. El brazo del servo acciona una cremallera de dirección de doble enlace conectada a tirantes asimétricos y manguetas de dirección. Los brazos de dirección están angulados hacia el interior, apuntando al centro del eje trasero, completando el clásico "Trapezoide de Ackermann". Este diseño mecánico exacto convierte el desplazamiento lineal del servo en ángulos de rueda no lineales de forma automática.
 
-	<img width="1280" height="576" alt="Ackerman" src="https://github.com/user-attachments/assets/b7252526-1fb0-4340-9039-a15a9050c84f" />
+* **El Control Digital y Calibración:** El MG996R es controlado por un tren de pulsos PWM por hardware continuo y libre de fluctuaciones (*jitter*) a $50\text{Hz}$ directamente desde el microcontrolador MegaPi. La dirección está rígidamente mapeada y calibrada a una banda muerta de software donde los $80^\circ$ representan el centro geométrico absoluto. Los puntos finales mecánicos están limitados por software entre $40^\circ$ (Máximo Izquierda) y $105^\circ$ (Máximo Derecha) para evitar que los eslabones de la dirección alcancen un bloqueo mecánico o fuercen los límites de pérdida del motor.
 
-	</div>
+<div align="center">
 
-	- ### ¿Qué es la Geometría Ackermann? 
+<img width="1280" height="576" alt="Ackerman" src="https://github.com/user-attachments/assets/b7252526-1fb0-4340-9039-a15a9050c84f" />
 
-		Entendiendo la Matemática y Cinemática Ackermann, en robótica móvil tradicional (como los robots de la categoría *RoboMission*), se utiliza la tracción diferencial porque es matemáticamente simple: varías la velocidad de dos motores y el robot gira sobre su propio eje. Sin embargo, a altas velocidades, la tracción diferencial es inestable e impredecible.
+</div>
 
-		**La Geometría Ackermann** resuelve esto mediante un principio puramente mecánico. Para que un vehículo gire sin deslizarse lateralmente, las líneas extendidas desde los ejes de todas las ruedas deben cruzarse en un único punto en el espacio: el **Centro Instantáneo de Rotación (CIR)** o ICC.
+#### Entendiendo la Matemática y Cinemática Ackermann
 
-		La ecuación matemática fundamental que gobierna esta cinemática es:
-		<div align="center">
-	
-		$$\cot(\theta_{\text{out}}) - \cot(\theta_{\text{in}}) = \frac{w}{L}$$
-		
-		</div>
-		
-		Donde:
-		
-		* $\theta_{\text{in}}$ es el ángulo de giro de la rueda interna.*
-		* $\theta_{\text{out}}$ es el ángulo de giro de la rueda externa.*
-		* $w$ es el ancho de la vía (*track width* o distancia entre las ruedas frontales).*
-		* $L$ es la batalla del carro (*wheelbase* o distancia entre el eje delantero y trasero).*
+En robótica móvil tradicional (como los robots de la categoría *RoboMission*), se utiliza la tracción diferencial porque es matemáticamente simple: varías la velocidad de dos motores y el robot gira sobre su propio eje. Sin embargo, a altas velocidades, la tracción diferencial es inestable e impredecible.
 
-		Dado que la cotangente crece más rápido a ángulos pequeños, esta relación obliga mecánicamente a que $\theta_{\text{in}} > \theta_{\text{out}}$ de forma automática en cualquier curva, abriendo el ángulo de la rueda exterior para que dibuje un círculo más grande.
+**La Geometría Ackermann** resuelve esto mediante un principio puramente mecánico. Para que un vehículo gire sin deslizarse lateralmente, las líneas extendidas desde los ejes de todas las ruedas deben cruzarse en un único punto en el espacio: el **Centro Instantáneo de Rotación (CIR)** o ICC.
 
-		<div align="center">
-  
-		<img width="567" height="600" alt="17523247_203569336801744_2788986523412924047_n" src="https://github.com/user-attachments/assets/c36a271c-b45c-492a-805e-b107851429cd" />
-		
-		</div>
+La ecuación matemática fundamental que gobierna esta cinemática es:
+<div align="center">
 
-	- ### Propulsión Electrónica 2WD con Transmisión Mecánica Bifásica 
+$$\cot(\theta_{\text{out}}) - \cot(\theta_{\text{in}}) = \frac{w}{L}$$
 
-		La fuerza motriz de la plataforma se genera mediante un sistema de tracción trasera (2WD) de alto rendimiento, el cual rompe con los esquemas tradicionales de acoplamiento directo al integrar una transmisión mecánica desmultiplicada de dos velocidades por engranajes cilíndricos rectos.
+</div>
 
-		* **Arquitectura del Sistema de Transmisión:** A diferencia de las configuraciones comunes que acoplan la rueda directamente a la caja reductora del motor, este diseño monta el motor N20 en una disposición paralela superior sobre un bloque de soporte rígido. La potencia se transfiere desde el eje primario del motor hacia un eje secundario de tracción inferior mediante un tren de engranajes expuesto con dentado recto. Este sistema de dos velocidades mecánicas intercambiables permite configurar el robot según las exigencias de la pista:
-  		1. **Relación de Fuerza/Torque (Primera Velocidad):** Optimiza el desmultiplique para obtener la máxima aceleración y un control milimétrico en curvas cerradas u obstáculos, ideal para tramos revirados. 
-  		2. **Relación de Velocidad Final (Segunda Velocidad):** Reduce la pérdida de revoluciones para aprovechar la inercia lineal en rectas largas, garantizando una alta velocidad de crucero sin saturar el consumo eléctrico.
-    	3. **Modificación al sistema de transmisión(cambio al eje y ruedas):** Habian limitaciones a la hora de girar a angulos mas cerrados con ambas ruedas fijas al motor, esto causaba un deslizamiento/derrape en el momento en el cual el carro giraba, debido a estos contratiempos se contemplaron 2 cambios posibles, cambiar la transmision acual por un sistema diferencial para que la velocidad de las ruedas se adecuaran al giro, o dejar una de las ruedas fija al eje del motor y la otra que girara libre, asi simulando uno de los efectos del diferencial, nos terminamos decantando por la 2da opcion la cual era mas rapida de implementar y termino funcionando bastante bien logrando que el carro pudiera girar mucho mejor.
+Donde:
+* $\theta_{\text{in}}$ es el ángulo de giro de la rueda interna.
+* $\theta_{\text{out}}$ es el ángulo de giro de la rueda externa.
+* $w$ es el ancho de la vía (*track width* o distancia entre las ruedas frontales).
+* $L$ es la batalla del carro (*wheelbase* o distancia entre el eje delantero y trasero).
 
-		<div align="center">
-  
-		<img width="515" height="218" alt="Sistema de transmision de 2 velocidades K-O-M-R-A-D" src="https://github.com/user-attachments/assets/da8175e6-313d-42d6-bd3b-b1318082536f" />
-		
-		</div>
-  
-		<div align="center">
+Dado que la cotangente crece más rápido a ángulos pequeños, esta relación obliga mecánicamente a que $\theta_{\text{in}} > \theta_{\text{out}}$ de forma automática en cualquier curva, abriendo el ángulo de la rueda exterior para que dibuje un círculo más grande.
 
-		https://github.com/user-attachments/assets/042841d2-482d-409c-a0ef-2fa391119745
+<div align="center">
 
-		</div>
+<img width="567" height="600" alt="17523247_203569336801744_2788986523412924047_n" src="https://github.com/user-attachments/assets/c36a271c-b45c-492a-805e-b107851429cd" />
 
-		* **Especificaciones Técnicas de los Motores (RS380):** El bloque motriz confía en motores de CC con escobillas imantadas, seleccionados específicamente por su curva de respuesta dinámica y tolerancia a picos transitorios de carga.
+</div>
 
-	    * **Voltaje Nominal:** $12\text{V}$ (Operando a un voltaje nominal de celda de $11.1\text{V}$ mediante una batería LiPo 3S para asegurar la estabilidad térmica).
-   
- 		* **Corriente de Vacío (No-load):** $0.3\text{A}$ | **Corriente de Arranque/Pérdida (Stall):** $3\text{A}$ de protección en el driver.
-   
- 		* **Velocidad de Rotación de Fábrica:** $15000\text{ RPM}$ en el núcleo del motor, reducida internamente y ajustada finalmente por el engranaje externo para entregar una velocidad final estimada de transferencia de aprox. $450\text{ RPM}$ en el eje de la rueda.
+### 3.4. Tracción trasera <a id="34-tracción-trasera"></a>
 
-		* **Análisis Cinemático y Cálculo de la Velocidad Teórica Absoluta:**
-		Para determinar el rendimiento del chasis en pista y calibrar las ventanas de tiempo por vuelta (como el parámetro de control `lap_time = 4.3`), se realiza el cálculo cinemático basado en el diámetro de las ruedas motrices de $6.5\text{ cm}$ ($0.065\text{ m}$). Evaluamos la circunferencia de rodadura ($C$) y la velocidad lineal máxima teórica ($V$):
+La fuerza motriz de la plataforma se genera mediante un sistema de tracción trasera (2WD) de alto rendimiento, el cual rompe con los esquemas tradicionales de acoplamiento directo al integrar una transmisión mecánica desmultiplicada de dos velocidades por engranajes cilíndricos rectos.
 
-	<div align="center">
-	
-	$$C = \pi \times 0.065\text{ m} \approx 0.2041\text{ m}$$
+* **Arquitectura del Sistema de Transmisión:** A diferencia de las configuraciones comunes que acoplan la rueda directamente a la caja reductora del motor, este diseño monta el motor N20 en una disposición paralela superior sobre un bloque de soporte rígido. La potencia se transfiere desde el eje primario del motor hacia un eje secundario de tracción inferior mediante un tren de engranajes expuesto con dentado recto. Este sistema de dos velocidades mecánicas intercambiables permite configurar el robot según las exigencias de la pista:
+  1. **Relación de Fuerza/Torque (Primera Velocidad):** Optimiza el desmultiplique para obtener la máxima aceleración y un control milimétrico en curvas cerradas u obstáculos, ideal para tramos revirados. 
+  2. **Relación de Velocidad Final (Segunda Velocidad):** Reduce la pérdida de revoluciones para aprovechar la inercia lineal en rectas largas, garantizando una alta velocidad de crucero sin saturar el consumo eléctrico.
+  3. **Modificación al sistema de transmisión(cambio al eje y ruedas):** Habian limitaciones a la hora de girar a angulos mas cerrados con ambas ruedas fijas al motor, esto causaba un deslizamiento/derrape en el momento en el cual el carro giraba, debido a estos contratiempos se contemplaron 2 cambios posibles, cambiar la transmision acual por un sistema diferencial para que la velocidad de las ruedas se adecuaran al giro, o dejar una de las ruedas fija al eje del motor y la otra que girara libre, asi simulando uno de los efectos del diferencial, nos terminamos decantando por la 2da opcion la cual era mas rapida de implementar y termino funcionando bastante bien logrando que el carro pudiera girar mucho mejor.
 
-	</div>
+<div align="center">
 
-	Transformando las revoluciones por minuto del eje secundario de la transmisión a revoluciones por segundo y multiplicando por el desarrollo de la circunferencia, obtenemos la velocidad de avance del chasis:
+<img width="515" height="218" alt="Sistema de transmision de 2 velocidades K-O-M-R-A-D" src="https://github.com/user-attachments/assets/da8175e6-313d-42d6-bd3b-b1318082536f" />
 
-	<div align="center">
-	
-	$$V = \frac{450\text{ RPM}}{60} \times 0.2041\text{ m} \approx 1.53\text{ m/s}$$
-		
-	</div>
+</div>
 
-	Este valor de $1.53\text{ m/s}$ representa la velocidad límite ideal de la plataforma. En condiciones reales de competencia, este vector se modula por software mediante los comandos de velocidad (`speed = 90` u `80`) para absorber la fricción estática del suelo, la resistencia al avance de los rodamientos y las demandas instantáneas de corriente solicitadas por la MegaPi al gestionar el cambio de inercias.
+<div align="center">
 
+https://github.com/user-attachments/assets/042841d2-482d-409c-a0ef-2fa391119745
 
-	- ### 3D Printed Parts:
+</div>
 
-   		- #### **Piezas:**
+* **Especificaciones Técnicas de los Motores (RS380):** El bloque motriz confía en motores de CC con escobillas imantadas, seleccionados específicamente por su curva de respuesta dinámica y tolerancia a picos transitorios de carga.
+  * **Voltaje Nominal:** $12\text{V}$ (Operando a un voltaje nominal de celda de $11.1\text{V}$ mediante una batería LiPo 3S para asegurar la estabilidad térmica).
+  * **Corriente de Vacío (No-load):** $0.3\text{A}$ | **Corriente de Arranque/Pérdida (Stall):** $3\text{A}$ de protección en el driver.
+  * **Velocidad de Rotación de Fábrica:** $15000\text{ RPM}$ en el núcleo del motor, reducida internamente y ajustada finalmente por el engranaje externo para entregar una velocidad final estimada de transferencia de aprox. $450\text{ RPM}$ en el eje de la rueda.
 
-		<div align="center">
-			
-		| Component & Preview | Design & Geometry | Engineering Purpose |
-		|---|---|---|
-		| **Base** <br><br><img width="792" height="667" alt="Screenshot 2026-08-31 202443" src="https://github.com/user-attachments/assets/a43d8427-49c6-4ba9-b476-d3507ed1c122" /> | Diseñado como una jaula de torre vertical estructurada con cuatro pilares reforzados en cada lado, integrada directamente sobre una base de montaje sólida con ojales para tornillos en las esquinas. Las paredes laterales cuentan con grandes recortes circulares para minimizar el peso del material mientras permiten un flujo de aire pasivo máximo para evitar el estrés térmico en las celdas LiPo durante altas tasas de descarga. El pilar superior incluye ojales de retención ranurados para una sujeción segura de las correas. | Centraliza la masa combinada de las celdas de la batería verticalmente a lo largo del eje geométrico central del chasis. Este diseño de jaula abierta garantiza un acceso rápido para el reemplazo de la batería entre carreras, al tiempo que proporciona una contención estructural rígida contra las fuerzas de inercia laterales durante giros a alta velocidad. |
-		| **Camera Case** <br><br><br><br><img width="685" height="621" alt="Screenshot 2026-09-07 215051" src="https://github.com/user-attachments/assets/0c08317a-1e44-4cd3-bab9-131de38c4b43" /> | Una carcasa protectora rectangular y compacta, diseñada específicamente para encapsular el sensor IMX219 (Arducam). Esta es la base de la camara, es una base de angulo fijo y elevada a la altura del robot | Esta se decidio dejar con un angulo fijo debido a que a lo largo del uso del 1er prototipo de carro para FE 2026 ("Halbi the green") nos dimos cuenta que ese era el angulo que mejor nos funcionaba para visualizar la pista desde el punto de vista del robot. |
-		| **Battery Case Holder** <br><br><img width="605" height="540" alt="Screenshot 2026-08-31 202626" src="https://github.com/user-attachments/assets/fb8e684a-ccae-4751-a0b8-2ddd3868f73f" /> | Una bandeja robusta de perfil bajo equipada con cuatro soportes verticales integrados de alta resistencia posicionados en las esquinas para asegurar el PCB principal. La placa base cuenta con guías de distribución internas y cortes de holgura estructural para evitar los componentes en la parte inferior de la placa, manteniendo el perfil lo más cercano posible al chasis. | Funciona como una cuna mecánica rígida para la electrónica de potencia de bajo nivel. Al elevar el PCB mediante los soportes integrados de 3 mm, evita cortocircuitos eléctricos con el chasis al tiempo que amortigua las vibraciones. El perímetro completamente abierto garantiza el acceso inmediato a los terminales de tornillo del motor, los rieles de alimentación y los puertos de sensores para el mantenimiento en campo. |
-		| **Rim** <br><br><img width="380" height="352" alt="Screenshot 2026-08-31 202820" src="https://github.com/user-attachments/assets/a630e90b-b8e5-4b55-93bc-9aa0c6145042" /> | Una plataforma modular plana de nivel medio que cuenta con cuatro soportes de esquina integrados para montar la Raspberry Pi 4 de forma segura. La sección frontal de la base integra un montaje de bisagra de doble oreja equipado con dientes de bloqueo internos que se acoplan directamente con la bisagra de la carcasa de la cámara (Camera Case). | Sirve como un puente estructural de doble propósito. Proporciona un montaje estable y elevado para la computadora de a bordo de alto nivel, asegurando una disipación óptima del calor a través de la convección natural para evitar el estrangulamiento térmico del CPU. Al mismo tiempo, su montaje engranado integrado bloquea firmemente el ensamblaje de la cámara en la parte delantera, eliminando la necesidad de componentes adicionales y ahorrando valioso espacio en el chasis.|
-		| **Motor DC Case** <br><br><img width="423" height="356" alt="Screenshot 2026-08-31 202852" src="https://github.com/user-attachments/assets/6c1eb648-30fb-4358-abad-df5134edbd21" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
-		| **Direccional** <br><br><img width="393" height="307" alt="Screenshot 2026-08-31 202722" src="https://github.com/user-attachments/assets/6c66220a-595f-4e60-8dd9-857fee6638fa" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
-		| **Triangulo Ackermann** <br><br><img width="705" height="572" alt="Screenshot 2026-08-31 202522" src="https://github.com/user-attachments/assets/32e2294f-8eb8-408a-979d-4f841066f1c7" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
-		| **Pillar** <br><br><img width="485" height="417" alt="Screenshot 2026-08-31 202741" src="https://github.com/user-attachments/assets/3de1f1a2-ce3a-4e5d-aaff-baba42a604d2" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
+* **Análisis Cinemático y Cálculo de la Velocidad Teórica Absoluta:**
+Para determinar el rendimiento del chasis en pista y calibrar las ventanas de tiempo por vuelta (como el parámetro de control `lap_time = 4.3`), se realiza el cálculo cinemático basado en el diámetro de las ruedas motrices de $6.5\text{ cm}$ ($0.065\text{ m}$). Evaluamos la circunferencia de rodadura ($C$) y la velocidad lineal máxima teórica ($V$):
 
-		</div>
+<div align="center">
 
- 		- #### Muestra de los modelos del sistema Ackermann:
+$$C = \pi \times 0.065\text{ m} \approx 0.2041\text{ m}$$
 
-   		<img width="1920" height="1080" alt="0001-0100" src="https://github.com/user-attachments/assets/ac5a9cf8-e236-4da2-8057-b28e798af2ff" />
-		
-		- #### Muestra ensamble de componentes 3D:
+</div>
 
-   		<img src="https://i.ibb.co/https://ibb.co/FbZJ65Lr.gif" width="500" alt="Demo">
-   
-		- #### **Impresora:** Se usó las impresoras Creality Hi y Creality K1
+Transformando las revoluciones por minuto del eje secundario de la transmisión a revoluciones por segundo y multiplicando por el desarrollo de la circunferencia, obtenemos la velocidad de avance del chasis:
 
-   			- **Creality Hi:** Es una de las propuestas más recientes de Creality, diseñada con un fuerte enfoque en competir directamente en el mercado de impresión multicolor accesible.
-        
-        		- **Volumen de construcción (lo que puedes imprimir):** $260 \times 260 \times 300\text{ mm}$. Es un tamaño intermedio-alto, excelente para robótica porque te permite hacer chasis completos en una sola pieza sin tener que segmentarlos.
-            
-          		- **Dimensiones de la máquina:** $409 \times 392 \times 477\text{ mm}$ (Peso: $8.75\text{ kg}$).
-  
-        		Es una impresora cartesiana de alta velocidad equipada con motores step-servo en los ejes X/Y para evitar la pérdida de pasos. Su gran fuerte es la compatibilidad nativa con el sistema CFS (Creality Filament System), un módulo externo tipo "banco de filamentos" que te permite alternar de forma automatizada hasta 4 colores diferentes (o hasta 16 si encadenas 4 módulos). Su velocidad máxima es de $500\text{ m/s}$ con una aceleración de $12,000\text{ mm/s}^2$ y alcanza los $300^\circ\text{C}$ en la boquilla.
-  
-        		- **¿Qué tan buena es?**
-  
-           			* **Puntos Fuertes:** Estructura de aluminio fundido extremadamente rígida, calibración y nivelación 100% automática por sensor de deformación, y detección inteligente de enredos o fin de filamento. Si compras la versión Combo (con el CFS), es una máquina brutal para piezas que necesitan soportes solubles o combinar materiales rígidos y flexibles.
-  
-       				* **Puntos Débiles:** Al no ser cerrada de fábrica (diseño abierto), imprimir materiales técnicos propensos a contraerse como el ABS o ASA de forma consistente puede ser complicado sin construirle una cabina externa.
-          
-	   			- **¿Se recomienda usarla a futuro?**
-  
-   					Sí, totalmente. Al ser una plataforma moderna, cuenta con el soporte de software más actualizado (Creality Print 5.1 / OrcaSlicer) y está diseñada bajo el ecosistema de cambio de filamento automático, que es hacia donde se mueve toda la industria. Es una excelente inversión a largo plazo para un taller.
+<div align="center">
 
-			- **Creality K1:** Lanzada originalmente como la respuesta directa de Creality a la serie P1 de Bambu Lab, es una máquina de nivel profesional diseñada para velocidad pura y materiales exigentes.
+$$V = \frac{450\text{ RPM}}{60} \times 0.2041\text{ m} \approx 1.53\text{ m/s}$$
 
-     			- **Volumen de construcción (lo que puedes imprimir):** $220 \times 220 \times 250\text{ mm}$. Es un espacio estándar (ligeramente más pequeña que la Creality Hi).
-        
-    			- **Dimensiones de la máquina:** $355 \times 355 \times 480\text{ mm}$ (Peso: $12.5\text{ kg}$).
-  
-        		Utiliza un sistema cinemático CoreXY donde el cabezal se mueve de forma ultraligera en los ejes X/Y usando correas cruzadas, mientras la cama solo baja en el eje Z. Al estar completamente cerrada con paneles de vidrio y acrílico, retiene el calor interno en la cámara de impresión. Alcanza una velocidad de $600\text{ mm/s}$ y una aceleración masiva de $20,000\text{ mm/s}^2$ gracias a su firmware basado en Klipper (Creality OS).
-  
-   				- **¿Qué tan buena es?**
-  
-   					* **Puntos Fuertes:** Es una bestia para materiales técnicos. Su cámara cerrada es perfecta para imprimir PETG, ABS, ASA y Nylon sin sufrir warping (despegue de bordes). Su aceleración es casi el doble que la de la Creality Hi, reduciendo los tiempos de impresión de piezas mecánicas complejas drásticamente.
-  
-       				* **Puntos Débiles:** Las primeras unidades que salieron al mercado (lotes de 2023) sufrieron de problemas en el extrusor (versión V1) y en el hotend. Creality corrigió esto en las versiones posteriores (extrusor con palanca brillante y boquilla tipo Unicorn), por lo que si adquieres una hoy, te aseguras de tener la versión corregida y madura.
-          
-	   			- **¿Se recomienda usarla a futuro?**
-  
-   					Sí, pero bajo ciertas condiciones. Sigue siendo una máquina excepcionalmente rápida y robusta para piezas de ingeniería. Sin embargo, debes tener en cuenta que la K1 original no es compatible con sistemas de impresión multicolor multihilo modernos de manera nativa (esa característica se reservó para la serie K2 con el nuevo CFS).
+</div>
 
-		- #### **PETG vs PLA:**
+Este valor de $1.53\text{ m/s}$ representa la velocidad límite ideal de la plataforma. En condiciones reales de competencia, este vector se modula por software mediante los comandos de velocidad (`speed = 90` u `80`) para absorber la fricción estática del suelo, la resistencia al avance de los rodamientos y las demandas instantáneas de corriente solicitadas por la MegaPi al gestionar el cambio de inercias.
 
-		<div align="center">
+### 3.5. Partes 3D, proceso de desarollo y recomendaciones <a id="35-partes-3d-proceso-de-desarollo-y-recomendaciones"></a>
 
-		|  | PETG | PLA |
-		|---|---|---|
-		| **Durabilidad y Resistencia** | Alta durabilidad y tenacidad superior: Al estar modificado con glicol, el PETG impide la cristalización del polímero, resultando en un material altamente tenaz. Bajo esfuerzos mecánicos por impacto, sus cadenas moleculares tienen la flexibilidad necesaria para deformarse elásticamente y absorber la energía cinética del choque. Esto evita la propagación de grietas, haciéndolo ideal para piezas expuestas a colisiones continuas. | Baja durabilidad ante cargas dinámicas: El PLA posee una estructura molecular rígida y cristalina que le otorga una alta dureza superficial, pero carece de la capacidad de disipar energía de forma elástica. Ante colisiones directas o impactos bruscos contra los bordes de la pista, el material estresa sus uniones de capa interlace y tiende a la fractura frágil, quebrándose de manera repentina y catastrófica en lugar de flexionarse. |
-		| **Resistencia y Estabilidad Térmica** | Excelente inmunidad térmica: Mantiene su integridad estructural y rigidez mecánica en entornos de trabajo de hasta 75°C a 80°C sin experimentar ablandamiento ni distorsión geométrica. Esta propiedad permite montarlo con total seguridad como soporte directo del tren motriz o de placas electrónicas, resistiendo el calor generado por la fricción mecánica y los picos de corriente sin ceder. | Vulnerable al estrés térmico: Su temperatura de transición vítrea (punto de ablandamiento) es críticamente baja, situándose entre los 50°C y 55°C. Si se utiliza en componentes en contacto directo con motores DC bajo carga pesada o reguladores de voltaje que disipan calor por conducción, el PLA pierde su rigidez rápidamente, sufriendo deformaciones geométricas permanentes que descalibran el chasis. |
-		| **Rigidez Estructural y Flexión** | Módulo elástico moderado (Flexibilidad elástica): Posee una naturaleza semirrígida que le permite soportar vibraciones mecánicas, torsiones y cargas dinámicas continuas sin sufrir fatiga de material. Si bien cede ligeramente ante fuerzas extremas antes de romperse, esta flexibilidad estructural absorbe las oscilaciones del terreno, protegiendo los componentes internos. | Módulo elástico muy elevado (Rigidez absoluta): Presenta una resistencia a la flexión superior, lo que significa que no se dobla ni se deforma bajo cargas estáticas moderadas. Esta ausencia de flexibilidad elástica es una ventaja técnica para piezas estáticas del robot que requieren mantener una posición fija e invariable, neutralizando cualquier flexión parasitaria o pandeo. |
-		| **Resistencia Química y Ambiental** |  Alta inercia química e hidrofobicidad: Es químicamente inerte y exhibe una resistencia sobresaliente ante aceites, grasas, lubricantes mecánicos y alcoholes de limpieza. Al ser completamente hidrofóbico, no se debilita por la humedad ambiental tras su impresión y su alta estabilidad frente a la radiación UV garantiza que las piezas mantengan sus propiedades mecánicas intactas. | Sensible a la degradación a largo plazo: Al ser un biopolímero derivado de fuentes orgánicas, es propenso a la degradación acelerada bajo la exposición continua a rayos UV o cambios de humedad drásticos. Además, su resistencia química frente a agentes externos como alcoholes, aceites o lubricantes de hardware es limitada, lo que puede debilitar las paredes de la pieza con el tiempo. |
-		| **Precisión Dimensional y Encajes** | Tolerancias moderadas y propenso a hilos: Al requerir temperaturas de extrusión más altas, el material experimenta una mayor contracción térmica al enfriarse, lo que exige calibrar el flujo para evitar variaciones dimensionales en encajes milimétricos. Además, su alta viscosidad tiende a generar stringing (hilos finos) que requieren postprocesado en zonas de movimiento mecánico fino. | Tolerancias geométricas perfectas: Debido a su bajísima contracción térmica al enfriarse, el PLA destaca por una estabilidad dimensional milimétrica. Permite imprimir roscas, encajes de rodamientos y uniones mecánicas finas con errores de tolerancia prácticamente nulos, asegurando que las piezas encajen de manera exacta y sin holguras desde el primer prototipo. |
-	
-		</div>
+#### **Piezas impresas:**
 
-# 2. Componentes <a id="sistemas-electronicos"></a>
+<div align="center">
 
-- ### Precios:
+| Component & Preview | Design & Geometry | Engineering Purpose |
+|---|---|---|
+| **Base** <br><br><img width="792" height="667" alt="Screenshot 2026-08-31 202443" src="https://github.com/user-attachments/assets/a43d8427-49c6-4ba9-b476-d3507ed1c122" /> | Diseñado como una jaula de torre vertical estructurada con cuatro pilares reforzados en cada lado, integrada directamente sobre una base de montaje sólida con ojales para tornillos en las esquinas. Las paredes laterales cuentan con grandes recortes circulares para minimizar el peso del material mientras permiten un flujo de aire pasivo máximo para evitar el estrés térmico en las celdas LiPo durante altas tasas de descarga. El pilar superior incluye ojales de retención ranurados para una sujeción segura de las correas. | Centraliza la masa combinada de las celdas de la batería verticalmente a lo largo del eje geométrico central del chasis. Este diseño de jaula abierta garantiza un acceso rápido para el reemplazo de la batería entre carreras, al tiempo que proporciona una contención estructural rígida contra las fuerzas de inercia laterales durante giros a alta velocidad. |
+| **Camera Case** <br><br><br><br><img width="685" height="621" alt="Screenshot 2026-09-07 215051" src="https://github.com/user-attachments/assets/0c08317a-1e44-4cd3-bab9-131de38c4b43" /> | Una carcasa protectora rectangular y compacta, diseñada específicamente para encapsular el sensor IMX219 (Arducam). Esta es la base de la camara, es una base de angulo fijo y elevada a la altura del robot | Esta se decidio dejar con un angulo fijo debido a que a lo largo del uso del 1er prototipo de carro para FE 2026 ("Halbi the green") nos dimos cuenta que ese era el angulo que mejor nos funcionaba para visualizar la pista desde el punto de vista del robot. |
+| **Battery Case Holder** <br><br><img width="605" height="540" alt="Screenshot 2026-08-31 202626" src="https://github.com/user-attachments/assets/fb8e684a-ccae-4751-a0b8-2ddd3868f73f" /> | Una bandeja robusta de perfil bajo equipada con cuatro soportes verticales integrados de alta resistencia posicionados en las esquinas para asegurar el PCB principal. La placa base cuenta con guías de distribución internas y cortes de holgura estructural para evitar los componentes en la parte inferior de la placa, manteniendo el perfil lo más cercano posible al chasis. | Funciona como una cuna mecánica rígida para la electrónica de potencia de bajo nivel. Al elevar el PCB mediante los soportes integrados de 3 mm, evita cortocircuitos eléctricos con el chasis al tiempo que amortigua las vibraciones. El perímetro completamente abierto garantiza el acceso inmediato a los terminales de tornillo del motor, los rieles de alimentación y los puertos de sensores para el mantenimiento en campo. |
+| **Rim** <br><br><img width="380" height="352" alt="Screenshot 2026-08-31 202820" src="https://github.com/user-attachments/assets/a630e90b-b8e5-4b55-93bc-9aa0c6145042" /> | Una plataforma modular plana de nivel medio que cuenta con cuatro soportes de esquina integrados para montar la Raspberry Pi 4 de forma segura. La sección frontal de la base integra un montaje de bisagra de doble oreja equipado con dientes de bloqueo internos que se acoplan directamente con la bisagra de la carcasa de la cámara (Camera Case). | Sirve como un puente estructural de doble propósito. Proporciona un montaje estable y elevado para la computadora de a bordo de alto nivel, asegurando una disipación óptima del calor a través de la convección natural para evitar el estrangulamiento térmico del CPU. Al mismo tiempo, su montaje engranado integrado bloquea firmemente el ensamblaje de la cámara en la parte delantera, eliminando la necesidad de componentes adicionales y ahorrando valioso espacio en el chasis.|
+| **Motor DC Case** <br><br><img width="423" height="356" alt="Screenshot 2026-08-31 202852" src="https://github.com/user-attachments/assets/6c1eb648-30fb-4358-abad-df5134edbd21" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
+| **Direccional** <br><br><img width="393" height="307" alt="Screenshot 2026-08-31 202722" src="https://github.com/user-attachments/assets/6c66220a-595f-4e60-8dd9-857fee6638fa" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
+| **Triangulo Ackermann** <br><br><img width="705" height="572" alt="Screenshot 2026-08-31 202522" src="https://github.com/user-attachments/assets/32e2294f-8eb8-408a-979d-4f841066f1c7" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
+| **Pillar** <br><br><img width="485" height="417" alt="Screenshot 2026-08-31 202741" src="https://github.com/user-attachments/assets/3de1f1a2-ce3a-4e5d-aaff-baba42a604d2" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
 
-El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más pequeño a diferencia del que utilizamos a principio de año y de esta forma podemos comparar precios
+</div>
+
+#### Muestra de los modelos del sistema Ackermann:
+
+<img width="1920" height="1080" alt="0001-0100" src="https://github.com/user-attachments/assets/ac5a9cf8-e236-4da2-8057-b28e798af2ff" />
+
+#### Muestra ensamble de componentes 3D:
+
+<img src="https://i.ibb.co/https://ibb.co/FbZJ65Lr.gif" width="500" alt="Demo">
+
+#### **Impresoras utilizadas:**
+
+Se usaron las impresoras Creality Hi y Creality K1:
+
+* **Creality Hi:** Es una de las propuestas más recientes de Creality, diseñada con un fuerte enfoque en competir directamente en el mercado de impresión multicolor accesible.
+  * **Volumen de construcción:** $260 \times 260 \times 300\text{ mm}$. Es un tamaño intermedio-alto, excelente para robótica porque te permite hacer chasis completos en una sola pieza sin tener que segmentarlos.
+  * **Dimensiones de la máquina:** $409 \times 392 \times 477\text{ mm}$ (Peso: $8.75\text{ kg}$).
+  * Es una impresora cartesiana de alta velocidad equipada con motores step-servo en los ejes X/Y para evitar la pérdida de pasos. Su gran fuerte es la compatibilidad nativa con el sistema CFS (Creality Filament System), un módulo externo tipo "banco de filamentos" que te permite alternar de forma automatizada hasta 4 colores diferentes (o hasta 16 si encadenas 4 módulos). Su velocidad máxima es de $500\text{ m/s}$ con una aceleración de $12,000\text{ mm/s}^2$ y alcanza los $300^\circ\text{C}$ en la boquilla.
+  * **¿Qué tan buena es?**
+    * *Puntos Fuertes:* Estructura de aluminio fundido extremadamente rígida, calibración y nivelación 100% automática por sensor de deformación, y detección inteligente de enredos o fin de filamento. Si compras la versión Combo (con el CFS), es una máquina brutal para piezas que necesitan soportes solubles o combinar materiales rígidos y flexibles.
+    * *Puntos Débiles:* Al no ser cerrada de fábrica (diseño abierto), imprimir materiales técnicos propensos a contraerse como el ABS o ASA de forma consistente puede ser complicado sin construirle una cabina externa.
+  * **¿Se recomienda usarla a futuro?** Sí, totalmente. Al ser una plataforma moderna, cuenta con el soporte de software más actualizado (Creality Print 5.1 / OrcaSlicer) y está diseñada bajo el ecosistema de cambio de filamento automático. Es una excelente inversión a largo plazo para un taller.
+
+* **Creality K1:** Lanzada originalmente como la respuesta directa de Creality a la serie P1 de Bambu Lab, es una máquina de nivel profesional diseñada para velocidad pura y materiales exigentes.
+  * **Volumen de construcción:** $220 \times 220 \times 250\text{ mm}$. Es un espacio estándar (ligeramente más pequeña que la Creality Hi).
+  * **Dimensiones de la máquina:** $355 \times 355 \times 480\text{ mm}$ (Peso: $12.5\text{ kg}$).
+  * Utiliza un sistema cinemático CoreXY donde el cabezal se mueve de forma ultraligera en los ejes X/Y usando correas cruzadas, mientras la cama solo baja en el eje Z. Al estar completamente cerrada con paneles de vidrio y acrílico, retiene el calor interno en la cámara de impresión. Alcanza una velocidad de $600\text{ mm/s}$ y una aceleración masiva de $20,000\text{ mm/s}^2$ gracias a su firmware basado en Klipper (Creality OS).
+  * **¿Qué tan buena es?**
+    * *Puntos Fuertes:* Es una bestia para materiales técnicos. Su cámara cerrada es perfecta para imprimir PETG, ABS, ASA y Nylon sin sufrir warping (despegue de bordes). Su aceleración es casi el doble que la de la Creality Hi, reduciendo los tiempos de impresión de piezas mecánicas complejas drásticamente.
+    * *Puntos Débiles:* Las primeras unidades que salieron al mercado (lotes de 2023) sufrieron de problemas en el extrusor (versión V1) y en el hotend. Creality corrigió esto en las versiones posteriores (extrusor con palanca brillante y boquilla tipo Unicorn), por lo que si adquieres una hoy, te aseguras de tener la versión corregida y madura.
+  * **¿Se recomienda usarla a futuro?** Sí, pero bajo ciertas condiciones. Sigue siendo una máquina excepcionalmente rápida y robusta para piezas de ingeniería. Sin embargo, debes tener en cuenta que la K1 original no es compatible con sistemas de impresión multicolor multihilo modernos de manera nativa.
+
+#### **Comparativa PETG vs PLA:**
+
+<div align="center">
+
+|  | PETG | PLA |
+|---|---|---|
+| **Durabilidad y Resistencia** | Alta durabilidad y tenacidad superior: Al estar modificado con glicol, el PETG impide la cristalización del polímero, resultando en un material altamente tenaz. Bajo esfuerzos mecánicos por impacto, sus cadenas moleculares tienen la flexibilidad necesaria para deformarse elásticamente y absorber la energía cinética del choque. Esto evita la propagación de grietas, haciéndolo ideal para piezas expuestas a colisiones continuas. | Baja durabilidad ante cargas dinámicas: El PLA posee una estructura molecular rígida y cristalina que le otorga una alta dureza superficial, pero carece de la capacidad de disipar energía de forma elástica. Ante colisiones directas o impactos bruscos contra los bordes de la pista, el material estresa sus uniones de capa interlace y tiende a la fractura frágil, quebrándose de manera repentina y catastrófica en lugar de flexionarse. |
+| **Resistencia y Estabilidad Térmica** | Excelente inmunidad térmica: Mantiene su integridad estructural y rigidez mecánica en entornos de trabajo de hasta 75°C a 80°C sin experimentar ablandamiento ni distorsión geométrica. Esta propiedad permite montarlo con total seguridad como soporte directo del tren motriz o de placas electrónicas, resistiendo el calor generado por la fricción mecánica y los picos de corriente sin ceder. | Vulnerable al estrés térmico: Su temperatura de transición vítrea (punto de ablandamiento) es críticamente baja, situándose entre los 50°C y 55°C. Si se utiliza en componentes en contacto directo con motores DC bajo carga pesada o reguladores de voltaje que disipan calor por conducción, el PLA pierde su rigidez rápidamente, sufriendo deformaciones geométricas permanentes que descalibran el chasis. |
+| **Rigidez Estructural y Flexión** | Módulo elástico moderado (Flexibilidad elástica): Posee una naturaleza semirrígida que le permite soportar vibraciones mecánicas, torsiones y cargas dinámicas continuas sin sufrir fatiga de material. Si bien cede ligeramente ante fuerzas extremas antes de romperse, esta flexibilidad estructural absorbe las oscilaciones del terreno, protegiendo los componentes internos. | Módulo elástico muy elevado (Rigidez absoluta): Presenta una resistencia a la flexión superior, lo que significa que no se dobla ni se deforma bajo cargas estáticas moderadas. Esta ausencia de flexibilidad elástica es una ventaja técnica para piezas estáticas del robot que requieren mantener una posición fija e invariable, neutralizando cualquier flexión parasitaria o pandeo. |
+| **Resistencia Química y Ambiental** | Alta inercia química e hidrofobicidad: Es químicamente inerte y exhibe una resistencia sobresaliente ante aceites, grasas, lubricantes mecánicos y alcoholes de limpieza. Al ser completamente hidrofóbico, no se debilita por la humedad ambiental tras su impresión y su alta estabilidad frente a la radiación UV garantiza que las piezas mantengan sus propiedades mecánicas intactas. | Sensible a la degradación a largo plazo: Al ser un biopolímero derivado de fuentes orgánicas, es propenso a la degradación acelerada bajo la exposición continua a rayos UV o cambios de humedad drásticos. Además, su resistencia química frente a agentes externos como alcoholes, aceites o lubricantes de hardware es limitada, lo que puede debilitar las paredes de la pieza con el tiempo. |
+| **Precisión Dimensional y Encajes** | Tolerancias moderadas y propenso a hilos: Al requerir temperaturas de extrusión más altas, el material experimenta una mayor contracción térmica al enfriarse, lo que exige calibrar el flujo para evitar variaciones dimensionales en encajes milimétricos. Además, su alta viscosidad tiende a generar stringing (hilos finos) que requieren postprocesado en zonas de movimiento mecánico fino. | Tolerancias geométricas perfectas: Debido a su bajísima contracción térmica al enfriarse, el PLA destaca por una estabilidad dimensional milimétrica. Permite imprimir roscas, encajes de rodamientos y uniones mecánicas finas con errores de tolerancia prácticamente nulos, asegurando que las piezas encajen de manera exacta y sin holguras desde el primer prototipo. |
+
+</div>
+
+---
+
+## 4. Componentes <a id="4-componentes"></a>
+
+El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más pequeño a diferencia del que utilizamos a principio de año, permitiendo comparar precios y eficiencias.
 
 <div align="center">
 
@@ -318,8 +303,6 @@ El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más peq
 
 </div>
 
-- ### Descripción:
-
 <div align="center">
 
 | Foto | Descripción |
@@ -336,60 +319,54 @@ El enfoque de nuestro prototipo es que el robot sea de bajo coste y sea más peq
 
 </div>
 
-- ### Disposición de Componentes y Justificación:
+### 4.1. Disposicion y justificacion <a id="41-disposicion-y-justificacion"></a>
 
-	El diseño de nuestro vehículo autónomo se fundamenta en una arquitectura modular de tres niveles verticales, optimizada para la gestión eficiente del centro de gravedad, el balance de masas y la mitigación de interferencias electromagnéticas y mecánicas. Esta configuración jerárquica por "pisos" permite aislar los elementos mecánicos de potencia frente a los módulos lógicos de procesamiento y visión artificial.
+El diseño de nuestro vehículo autónomo se fundamenta en una arquitectura modular de tres niveles verticales, optimizada para la gestión eficiente del centro de gravedad, el balance de masas y la mitigación de interferencias electromagnéticas y mecánicas. Esta configuración jerárquica por "pisos" permite aislar los elementos mecánicos de potencia frente a los módulos lógicos de procesamiento y visión artificial.
 
-	- Arquitectura del Chasis por Niveles:
+#### Arquitectura del Chasis por Niveles:
 
-	- 1er nivel (Planta Baja):
-	Constituye la base estructural y el tren de rodaje del vehículo. En este nivel se ubica el Traction System (tracción trasera 2WD con transmisión de engranajes internos impulsada por el micromotor N20), el Steering System asistido por el servomotor metálico MG90S en el eje delantero, y el arreglo de sensores láser de tiempo de vuelo VL53L0X.
+* **1er nivel (Planta Baja):**
+  Constituye la base estructural y el tren de rodaje del vehículo. En este nivel se ubica el Traction System (tracción trasera 2WD con transmisión de engranajes internos impulsada por el micromotor N20), el Steering System asistido por el servomotor metálico MG90S en el eje delantero, y el arreglo de sensores láser de tiempo de vuelo VL53L0X.
+  * *Justificación Técnica:* Colocar los actuadores mecánicos y el sistema de tracción en la planta baja garantiza un centro de gravedad pegado al suelo. Al utilizar un sistema 2WD trasero, se asegura una transferencia de peso óptima hacia el eje motriz durante las aceleraciones, mientras que el servo MG90S proporciona robustez direccional directa.
 
-		- Justificación Técnica: Colocar los actuadores mecánicos y el sistema de tracción en la planta baja garantiza un centro de gravedad pegado al suelo. Al utilizar un sistema 2WD trasero, se asegura una transferencia de peso óptima hacia el eje motriz durante las aceleraciones, mientras que el servo MG90S proporciona robustez direccional directa.
-    
-	- 2do nivel (Planta Intermedia):
-	Situado sobre el tren de tracción, este nivel alberga el suministro energético y la etapa de control de hardware. Aquí se encuentra encapsulada la Batería LiPo URGENEX de 7.4V. Justo por encima de ella, se ubica la Custom PCB que consolida el driver DRV8833 y el Buck Converter Mini360. En la parte posterior de este nivel se integra el interruptor principal (SW Gikfun).
+* **2do nivel (Planta Intermedia):**
+  Situado sobre el tren de tracción, este nivel alberga el suministro energético y la etapa de control de hardware. Aquí se encuentra encapsulada la Batería LiPo URGENEX de 7.4V. Justo por encima de ella, se ubica la Custom PCB que consolida el driver DRV8833 y el Buck Converter Mini360. En la parte posterior de este nivel se integra el interruptor principal (SW Gikfun).
+  * *Justificación Técnica:* Centralizar la batería LiPo en el piso medio alinea la mayor masa del vehículo con el centro geométrico, reduciendo los momentos de inercia polares para evitar subvirajes o sobrevirajes. La Custom PCB actúa como puente intermedio de distribución: agrupa la reducción de voltaje (Mini360) y la etapa de potencia (DRV8833) manteniendo rutas de cableado muy cortas hacia los motores del primer nivel y protegiendo de ruido electromagnético al nivel superior. El interruptor trasero permite cortes de energía rápidos y accesibles.
 
-		- Justificación Técnica: Centralizar la batería LiPo en el piso medio alinea la mayor masa del vehículo con el centro geométrico, reduciendo los momentos de inercia polares para evitar subvirajes o sobrevirajes. La Custom PCB actúa como puente intermedio de distribución: agrupa la reducción de voltaje (Mini360) y la etapa de potencia (DRV8833) manteniendo rutas de cableado muy cortas hacia los motores del primer nivel y protegiendo de ruido electromagnético al nivel superior. El interruptor trasero permite cortes de energía rápidos y accesibles.
+* **3er nivel (Planta Superior):**
+  Corresponde a la cúspide de la estructura, dedicada de forma exclusiva al procesamiento lógico y la percepción geométrica. Contiene la computadora a bordo Raspberry Pi Zero 2W y el conjunto elevado de la cámara Arducam IMX219 (Cam).
+  * *Justificación Técnica:* Elevar la Pi Zero 2W la aísla por completo de las vibraciones mecánicas de la reductora del N20 y de los bucles de corriente del chasis inferior. El factor de forma ultracompacto de la Pi Zero reduce drásticamente el peso en la parte superior del péndulo invertido del chasis, manteniendo la agilidad del vehículo sin sacrificar la capacidad de procesamiento con OpenCV.
 
-	- 3er nivel (Planta Superior):
-	Corresponde a la cúspide de la estructura, dedicada de forma exclusiva al procesamiento lógico y la percepción geométrica. Contiene la computadora a bordo Raspberry Pi Zero 2W y el conjunto elevado de la cámara Arducam IMX219 (Cam).
+#### Sistema de Percepción y Orientación Espacial:
 
-		- Justificación Técnica: Elevar la Pi Zero 2W la aísla por completo de las vibraciones mecánicas de la reductora del N20 y de los bucles de corriente del chasis inferior. El factor de forma ultracompacto de la Pi Zero reduce drásticamente el peso en la parte superior del péndulo invertido del chasis, manteniendo la agilidad del vehículo sin sacrificar la capacidad de procesamiento con OpenCV.
-    
-	- Sistema de Percepción y Orientación Espacial:
+Esta distribución tridimensional complementa la estrategia de navegación autónoma, asegurando zonas de cobertura óptimas:
 
-	Esta distribución tridimensional complementa la estrategia de navegación autónoma, asegurando zonas de cobertura óptimas:
+* **Distribución de Visión Artificial (3er nivel):**
+  La cámara Arducam de 8MP se posiciona en un brazo articulado impreso en 3D que se proyecta hacia adelante y arriba, con un ángulo de inclinación fijo hacia la pista. Esta elevación es crítica para expandir el campo de visión del sensor, permitiendo al algoritmo abarcar una Región de Interés (ROI) amplia para identificar límites de pista y códigos de color de forma anticipada sin que la propia trompa del carro obstruya el encuadre.
 
-	- Distribución de Visión Artificial (3er nivel):
-	La cámara Arducam de 8MP se posiciona en un brazo articulado impreso en 3D que se proyecta hacia adelante y arriba, con un ángulo de inclinación fijo hacia la pista. Esta elevación es crítica para expandir el campo de visión del sensor, permitiendo al algoritmo abarcar una Región de Interés (ROI) amplia para identificar límites de pista y códigos de color de forma anticipada sin que la propia trompa del carro obstruya el encuadre.
+* **Distribución de sensor Frontal (1er nivel):**
+  Se utiliza un sensor ToF VL53L0X montado directamente sobre la base del chasis en una posición baja y avanzada. Esta sincronización geométrica permite que el láser actúe como un bypass de seguridad de hardware en tiempo real: mientras la cámara toma decisiones lógicas a nivel macro, el VL53L0X inferior detecta los paredes para los dos primeros retos de forma absoluta y sin depender de la iluminación para ejecutar rutinas de evasión o frenado.
 
-	- Distribución de sensor Frontal (1er nivel):
-	Se utiliza un sensor ToF VL53L0X montado directamente sobre la base del chasis en una posición baja y avanzada. Esta sincronización geométrica permite que el láser actúe como un bypass de seguridad de hardware en tiempo real: mientras la cámara toma decisiones lógicas a nivel macro, el VL53L0X inferior detecta los paredes para los dos primeros retos de forma absoluta y sin depender de la iluminación para ejecutar rutinas de evasión o frenado.
-
-	- Distribución de sensores Laterales (1er nivel):
-	Los sensores ToF de flanco están posicionados simétricamente en el primer nivel, leyendo distancias milimétricas hacia las paredes de la pista. Ubicarlos cerca del suelo y simétricos respecto al centro de masa minimiza las lecturas erróneas causadas por el cabeceo del chasis en aceleraciones o frenadas. Al utilizar tecnología de tiempo de vuelo en lugar de ultrasonidos, se garantiza que los algoritmos de estabilización y centrado reciban datos inmunes al ruido acústico de los motores y a los reflejos de las paredes.
+* **Distribución de sensores Laterales (1er nivel):**
+  Los sensores ToF de flanco están posicionados simétricamente en el primer nivel, leyendo distancias milimétricas hacia las paredes de la pista. Ubicarlos cerca del suelo y simétricos respecto al centro de masa minimiza las lecturas erróneas causadas por el cabeceo del chasis en aceleraciones o frenadas. Al utilizar tecnología de tiempo de vuelo en lugar de ultrasonidos, se garantiza que los algoritmos de estabilización y centrado reciban datos inmunes al ruido acústico de los motores y a los reflejos de las paredes.
 
 <div align="center">
 
 <img width="4080" height="3060" alt="20260829_205432" src="https://github.com/user-attachments/assets/14a58644-2533-4508-8e80-18146f99838e" />
+
 NOTA: en esta imagen los sensores de tiempo de vuelo no estan acoplados. 
 
 </div>
 
-- ### Batería:
+---
 
-	La Zeee 3S LiPo 11.1V 2200mAh 50C es una batería de polímero de litio de alto rendimiento, diseñada específicamente para entusiastas del radiocontrol (RC) que buscan un equilibrio óptimo entre peso, tamaño y potencia. Con una configuración de 3 celdas (3S) y un voltaje nominal de 11.1V, este componente proporciona la energía constante y agresiva necesaria para impulsar una amplia variedad de modelos, desde drones de carreras y aviones a escala hasta vehículos terrestres RC. Su capacidad de 2200mAh asegura un tiempo de juego o vuelo sumamente competitivo, permitiendo exprimir al máximo el rendimiento del motor sin añadir un peso excesivo que pueda comprometer la agilidad del modelo.
+## 5. Presupuesto de energia <a id="5-presupuesto-de-energia"></a>
 
-	El verdadero punto fuerte de esta batería radica en su tasa de descarga de 50C, lo que significa que es capaz de entregar picos de corriente elevados de forma segura cuando el acelerador lo demanda, garantizando aceleraciones explosivas y una respuesta inmediata a los mandos. Fabricada con materiales de alta calidad y una baja resistencia interna, la Zeee 3S destaca por su ciclo de vida prolongado y su estabilidad térmica durante un uso intensivo. Viene equipada habitualmente con conectores de alta conductividad (como el Deans T o XT60) y un conector de equilibrado JST-XH, lo que facilita tanto una carga segura celda por celda como una compatibilidad directa con la mayoría de los cargadores inteligentes del mercado.
+Para garantizar la eficiencia y compacidad del vehículo, hemos implementado una arquitectura de alimentación centralizada utilizando una única batería URGENEX 2S LiPo de 7.4V y 2200mAh (50C). Esta configuración alimenta todos los subsistemas, empleando un módulo de regulación para proteger los componentes lógicos:
 
-- ### Presupuesto de Energía:
+* **Circuito de Potencia:** Alimentado desde la línea principal de la batería tras pasar por el interruptor, este bus suministra el voltaje directo a los actuadores de mayor consumo: el driver de motor DRV8833 (que controla el motor N20 de la transmisión 2WD) y el servomotor de dirección MG90S.
 
-	Para garantizar la eficiencia y compacidad del vehículo, hemos implementado una arquitectura de alimentación centralizada utilizando una única batería URGENEX 2S LiPo de 7.4V y 2200mAh (50C). Esta configuración alimenta todos los subsistemas, empleando un módulo de regulación para proteger los componentes lógicos:
-
-	- **Circuito de Potencia:** Alimentado desde la línea principal de la batería tras pasar por el interruptor, este bus suministra el voltaje directo a los actuadores de mayor consumo: el driver de motor DRV8833 (que controla el motor N20 de la transmisión 2WD) y el servomotor de dirección MG90S.
-
-	- **Circuito de Lógica y Visión:** Derivado de la línea principal, el voltaje pasa por un módulo Buck Converter Mini 360, el cual reduce y estabiliza el voltaje a 5.0V para alimentar de forma segura la Raspberry Pi Zero 2W. Esta separación protege a la computadora a bordo de las caídas de tensión (transitorios) provocadas por los arranques repentinos del motor de tracción, evitando que la interferencia electromagnética (EMI) induzca ruido en la señal de video o provoque reinicios del sistema.
+* **Circuito de Lógica y Visión:** Derivado de la línea principal, el voltaje pasa por un módulo Buck Converter Mini 360, el cual reduce y estabiliza el voltaje a 5.0V para alimentar de forma segura la Raspberry Pi Zero 2W. Esta separación protege a la computadora a bordo de las caídas de tensión (transitorios) provocadas por los arranques repentinos del motor de tracción, evitando que la interferencia electromagnética (EMI) induzca ruido en la señal de video o provoque reinicios del sistema.
 
 Esta configuración nos permite operar con la máxima seguridad, garantizando que, incluso bajo condiciones de estrés mecánico severo en la dirección y tracción, nuestro "cerebro" (Raspberry Pi) mantenga una alimentación constante y limpia para procesar la trayectoria con total precisión.
 
@@ -409,29 +386,23 @@ Esta configuración nos permite operar con la máxima seguridad, garantizando qu
 
 </div>
 
-- ### Conclusión del Presupuesto:
+#### Conclusión del Presupuesto:
 
 El consumo total del sistema alcanza los 2.17 A en condiciones de carga máxima (stall). La utilización de una única batería LiPo con una alta tasa de descarga (50C) está dimensionada holgadamente para soportar los picos de corriente del motor N20 y el servo MG90S de forma simultánea. El Buck Converter Mini 360 actúa como barrera protectora, asegurando que, aunque los actuadores alcancen su máximo esfuerzo mecánico en la pista, la Raspberry Pi Zero 2W mantenga un voltaje estable de 5.0V, garantizando el procesamiento ininterrumpido del algoritmo de visión.
 
-- ### Diagrama de Cableado:
+### 5.1. Diagrama de cableado <a id="51-diagrama-de-cableado"></a>
 
-	La arquitectura eléctrica de nuestro carro se basa en un diseño simplificado y directo para minimizar puntos de falla mecánicos. El cableado se divide de la siguiente manera:
+La arquitectura eléctrica de nuestro carro se basa en un diseño simplificado y directo para minimizar puntos de falla mecánicos. El cableado se divide de la siguiente manera:
 
-	- Distribución de Energía Principal:
- 
-		- Batería y Encendido: La energía proviene de la batería URGENEX LiPo de 7.4V, pasando por un interruptor principal que energiza todo el circuito simultáneamente.
+#### Distribución de Energía Principal:
+* **Batería y Encendido:** La energía proviene de la batería URGENEX LiPo de 7.4V, pasando por un interruptor principal que energiza todo el circuito simultáneamente.
+* **Dominio de Potencia (Bus de Fuerza):** Desde el interruptor, el voltaje directo (7.4V) se bifurca mediante cableado de mayor calibre hacia el driver DRV8833 (para el control del motor de tracción N20) y hacia el servomotor de dirección MG90S.
+* **Regulación de Voltaje:** En paralelo, la energía llega al Buck Converter Mini 360. Este módulo step-down se encarga de reducir de forma eficiente el voltaje de la batería y estabilizarlo a 5.0V constantes, actuando como filtro contra el ruido eléctrico generado por la tracción.
 
-		- Dominio de Potencia (Bus de Fuerza): Desde el interruptor, el voltaje directo (7.4V) se bifurca mediante cableado de mayor calibre hacia el driver DRV8833 (para el control del motor de tracción N20) y hacia el servomotor de dirección MG90S.
-
-		- Regulación de Voltaje: En paralelo, la energía llega al Buck Converter Mini 360. Este módulo step-down se encarga de reducir de forma eficiente el voltaje de la batería y estabilizarlo a 5.0V constantes, actuando como filtro contra el ruido eléctrico generado por la tracción.
-
-	- Dominio de Lógica y Control:
-
-		- Computadora a Bordo: La Raspberry Pi Zero 2W recibe los 5.0V regulados desde el Buck Converter a través de sus pines GPIO. Desde la Pi se envían las señales lógicas de control (PWM/Digitales) hacia el driver DRV8833 y el servo MG90S.
-
-		- Percepción Visual: La cámara Arducam se conecta directamente al puerto CSI de la Pi Zero 2W, asegurando un flujo de datos de baja latencia.
- 
-  		- Sensores de Distancia: Los tres sensores de tiempo de vuelo VL53L0X se comunican a través del bus I2C de la Raspberry Pi. Comparten las mismas líneas de reloj (SCL), datos (SDA), alimentación y tierra (GND), manteniendo rutas cortas para evitar la captación de interferencia electromagnética (EMI).
+#### Dominio de Lógica y Control:
+* **Computadora a Bordo:** La Raspberry Pi Zero 2W recibe los 5.0V regulados desde el Buck Converter a través de sus pines GPIO. Desde la Pi se envían las señales lógicas de control (PWM/Digitales) hacia el driver DRV8833 y el servo MG90S.
+* **Percepción Visual:** La cámara Arducam se conecta directamente al puerto CSI de la Pi Zero 2W, asegurando un flujo de datos de baja latencia.
+* **Sensores de Distancia:** Los tres sensores de tiempo de vuelo VL53L0X se comunican a través del bus I2C de la Raspberry Pi. Comparten las mismas líneas de reloj (SCL), datos (SDA), alimentación y tierra (GND), manteniendo rutas cortas para evitar la captación de interferencia electromagnética (EMI).
 
 <div align="center">
 
@@ -439,38 +410,35 @@ El consumo total del sistema alcanza los 2.17 A en condiciones de carga máxima 
 
 </div>
 
-# 3.  Software <a id="arquitectura-de-software"></a>
-
-- ### Herramientas de apoyo:
-
-	- **Color Detector:** Es una herramienta interactiva de calibración visual diseñada para segmentar y aislar colores específicos en tiempo real mediante el espacio de color LAB (Luminancia, A y B) y filtros de desenfoque gaussiano. El sistema captura el flujo de video de una Picamera2, aplica transformaciones morfológicas de erosión y dilatación para limpiar el ruido de la imagen, y genera una máscara binaria basada en umbrales máximos y mínimos ajustables por deslizadores en una interfaz gráfica (GUI) construida con CustomTkinter. Su función principal es preajustar firmas de color (como rojo, verde, azul o negro) y exportar estos rangos óptimos a un archivo de configuración JSON para que el robot pueda reconocer objetos o líneas de manera 	estable bajo diferentes condiciones de luz.
-
-   	<div align="center">
-
-	<img width="4080" height="3060" alt="1000267395" src="https://github.com/user-attachments/assets/61a42bbf-493c-4b45-b054-bdce386a2613" />
-
-	</div>
-
-	- **ROI Detector:** Es una utilidad de configuración espacial basada en OpenCV que permite delimitar "Regiones de Interés" (ROI) personalizadas sobre la transmisión de video de la cámara mediante clics y arrastres del mouse. El script escala el fotograma original de forma proporcional dentro de un lienzo centrado con bordes negros constantes, permitiendo al usuario dibujar múltiples cuadrantes, visualizando dinámicamente sus dimensiones en píxeles. Su propósito principal es limpiar la memoria caché con la tecla 'C' o finalizar la captura con la tecla 'ESC' para activar una ventana flotante de Tkinter que exporta de forma automatizada las coordenadas $(x_1, y_1, x_2, y_2)$ estructuradas como una lista de objetos en un archivo nativo de Python (.py), aislando las zonas específicas de análisis visual donde el robot debe procesar la información (como la línea del suelo) e ignorando el ruido del entorno.
-
-   	<div align="center">
-
-	<img width="4080" height="3060" alt="1000266075" src="https://github.com/user-attachments/assets/861c2725-2a80-4ced-9f3a-0248037ec576" />
-
-	</div>
-
-- ### MegaPiController:
-
-	Esta es una descripción completa de todos los atributos y métodos de la clase, junto con sus argumentos. Te recomendamos que la consultes primero antes de pasar a las demás secciones y que, cuando clones el repositorio, la utilices como guía para orientarte en nuestro código.
-
-  	Aquí tienes toda la documentación técnica completamente traducida al español, manteniendo exactamente el mismo formato y orden riguroso de las imágenes de referencia:
-
 ---
 
- **mega_pi_controller.py (clase MegaPiController)**
+## 6. Software <a id="6-software"></a>
 
- **Dependencias**
+### 6.1. Herramientas de apoyo <a id="61-herramientas-de-apoyo"></a>
 
+* **Color Detector:** Es una herramienta interactiva de calibración visual diseñada para segmentar y aislar colores específicos en tiempo real mediante el espacio de color LAB (Luminancia, A y B) y filtros de desenfoque gaussiano. El sistema captura el flujo de video de una Picamera2, aplica transformaciones morfológicas de erosión y dilatación para limpiar el ruido de la imagen, y genera una máscara binaria basada en umbrales máximos y mínimos ajustables por deslizadores en una interfaz gráfica (GUI) construida con CustomTkinter. Su función principal es preajustar firmas de color (como rojo, verde, azul o negro) y exportar estos rangos óptimos a un archivo de configuración JSON para que el robot pueda reconocer objetos o líneas de manera estable bajo diferentes condiciones de luz.
+
+  <div align="center">
+
+  <img width="4080" height="3060" alt="1000267395" src="https://github.com/user-attachments/assets/61a42bbf-493c-4b45-b054-bdce386a2613" />
+
+  </div>
+
+* **ROI Detector:** Es una utilidad de configuración espacial basada en OpenCV que permite delimitar "Regiones de Interés" (ROI) personalizadas sobre la transmisión de video de la cámara mediante clics y arrastres del mouse. El script escala el fotograma original de forma proporcional dentro de un lienzo centrado con bordes negros constantes, permitiendo al usuario dibujar múltiples cuadrantes, visualizando dinámicamente sus dimensiones en píxeles. Su propósito principal es limpiar la memoria caché con la tecla 'C' o finalizar la captura con la tecla 'ESC' para activar una ventana flotante de Tkinter que exporta de forma automatizada las coordenadas $(x_1, y_1, x_2, y_2)$ estructuradas como una lista de objetos en un archivo nativo de Python (.py), aislando las zonas específicas de análisis visual donde el robot debe procesar la información (como la línea del suelo) e ignorando el ruido del entorno.
+
+  <div align="center">
+
+  <img width="4080" height="3060" alt="1000266075" src="https://github.com/user-attachments/assets/861c2725-2a80-4ced-9f3a-0248037ec576" />
+
+  </div>
+
+### 6.2. Megapi controller(Deprecated) <a id="62-megapi-controllerdeprecated"></a>
+
+Esta es una descripción completa de todos los atributos y métodos de la clase `MegaPiController`, junto con sus argumentos. Te recomendamos que la consultes primero antes de pasar a las demás secciones y que, cuando clones el repositorio, la utilices como guía para orientarte en nuestro código.
+
+**mega_pi_controller.py (clase MegaPiController)**
+
+**Dependencias:**
 * `serial`
 * `time`
 * `threading`
@@ -481,7 +449,7 @@ El consumo total del sistema alcanza los 2.17 A en condiciones de carga máxima 
 * `src.vision_controller.VisionController`
 * `dataclasses.dataclass`
 
-**Descripción del método constructor**
+**Descripción del método constructor:**
 
 ```python
 def __init__(self, port='COM9', baudrate=115200):
@@ -489,7 +457,6 @@ def __init__(self, port='COM9', baudrate=115200):
     Inicializa la conexión serial con la placa MegaPi y registra los subsistemas.
     Si la conexión falla, termina el proceso con un mensaje de error crítico.
     """
-
 ```
 
 El constructor establece un canal de comunicación a través de puerto serial por hardware con el microcontrolador MegaPi. Inicia automáticamente un hilo de escucha en segundo plano (`_read_telemetry`) para capturar las métricas de hardware entrantes de forma asíncrona, inicializa el subsistema de visión artificial (`VisionController`), carga las máscaras de color predefinidas desde estructuras JSON específicas y prepara los registros internos, las variables de estado y las Regiones de Interés (ROIs) para el seguimiento espacial y de líneas.
@@ -515,7 +482,7 @@ El constructor establece un canal de comunicación a través de puerto serial po
 | `turning_direction` | `int` | Rastrea la configuración del diseño del carril ($0$: No asignado, $1$: Sentido horario/Azul, $2$: Sentido antihorario/Naranja). |
 | `rois` | `list[ROI]` | Define cuadros de procesamiento fijos en código para el análisis del área de la pared frontal y las líneas de la pista. |
 
-</div
+</div>
 
 **Descripción de métodos:**
 
@@ -547,128 +514,111 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 </div>
 
-- ### Arduino Controller:
+### 6.3.1. Ronda abierta(Open challenge) <a id="631-ronda-abiertaopen-challenge"></a>
 
-	- Open Challenge:
-  
-		- **Open Challenge Video:**
+* **Open Challenge Video:**
 
-		<div align="center">
-			
-		[![Open Challenge Video](https://img.youtube.com/vi/WPSj0BXfQ5U/0.jpg)](https://youtu.be/WPSj0BXfQ5U)
+  <div align="center">
+	
+  [![Open Challenge Video](https://img.youtube.com/vi/WPSj0BXfQ5U/0.jpg)](https://youtu.be/WPSj0BXfQ5U)
 
-		*Demonstrates autonomous navigation and speed control on a dynamic track.*
+  *Demonstrates autonomous navigation and speed control on a dynamic track.*
 
-		</div>
+  </div>
 
-		- **Estrategia:** Para cumplir con los desafíos del Open Challenge, se diseñó e implementó una arquitectura de software basada en un bucle de control de alta frecuencia. La estrategia central no depende de un solo sensor, sino de un Control Híbrido (Sensor Fusión) que alterna dinámicamente entre la Visión Artificial (cámara) y la Telemetría Acústica (sensores ultrasónicos) según las condiciones de la pista. El sistema se divide en cuatro pilares de ejecución: Detección de Sentido, Control de Trayectoria (PIDs independientes), Navegación en Esquinas y Seguridad Activa (Anticolisión).
-		
-		- **ROIS:** Para optimizar el procesamiento computacional, mantener un alto framerate y evitar falsos positivos con elementos externos a la pista, el campo de visión de la cámara se segmenta geométricamente:
- 
-			- ROI Principal (Búsqueda de Color): Un recuadro amplio (0, 50, width, height-100) dedicado exclusivamente a procesar máscaras de color (Rojo, Verde, Azul, Naranja) mediante la búsqueda de contornos.
+* **Estrategia:** Para cumplir con los desafíos del Open Challenge, se diseñó e implementó una arquitectura de software basada en un bucle de control de alta frecuencia. La estrategia central no depende de un solo sensor, sino de un Control Híbrido (Sensor Fusión) que alterna dinámicamente entre la Visión Artificial (cámara) y la Telemetría Acústica (sensores ultrasónicos) según las condiciones de la pista. El sistema se divide en cuatro pilares de ejecución: Detección de Sentido, Control de Trayectoria (PIDs independientes), Navegación en Esquinas y Seguridad Activa (Anticolisión).
 
-			- ROIs Laterales (Centrado Visual): El espacio inferior se divide en dos cuadrantes simétricos, roi_izq y roi_der. Estas regiones aplican una máscara negra (mask_black) para calcular en tiempo real el área en píxeles de las paredes laterales de la pista, permitiendo que el algoritmo sepa matemáticamente hacia qué lado está más inclinado el chasis.
+* **ROIs:** Para optimizar el procesamiento computacional, mantener un alto framerate y evitar falsos positivos con elementos externos a la pista, el campo de visión de la cámara se segmenta geométricamente:
+  * *ROI Principal (Búsqueda de Color):* Un recuadro amplio (0, 50, width, height-100) dedicado exclusivamente a procesar máscaras de color (Rojo, Verde, Azul, Naranja) mediante la búsqueda de contornos.
+  * *ROIs Laterales (Centrado Visual):* El espacio inferior se divide en dos cuadrantes simétricos, `roi_izq` y `roi_der`. Estas regiones aplican una máscara negra (`mask_black`) para calcular en tiempo real el área en píxeles de las paredes laterales de la pista, permitiendo que el algoritmo sepa matemáticamente hacia qué lado está más inclinado el chasis.
 
-		- **Contador de Loops:** En los instantes iniciales de la carrera, el robot ejecuta ciclos de evaluación (loops de detección) para procesar el área de los colores clave que dictan la dirección del circuito. Si en estos loops el sistema detecta un área mayor a un umbral crítico de 1200 píxeles de color Naranja, la variable de estado asume una orientación de giro a la derecha; si el umbral se rompe con el color Azul, el sistema bloquea la lógica para girar a la izquierda durante el resto de las vueltas.
+* **Contador de Loops:** En los instantes iniciales de la carrera, el robot ejecuta ciclos de evaluación (loops de detección) para procesar el área de los colores clave que dictan la dirección del circuito. Si en estos loops el sistema detecta un área mayor a un umbral crítico de 1200 píxeles de color Naranja, la variable de estado asume una orientación de giro a la derecha; si el umbral se rompe con el color Azul, el sistema bloquea la lógica para girar a la izquierda durante el resto de las vueltas.
 
-		- **Diagrama de Flujo:**
+* **Diagrama de Flujo:**
 
-		<div align="center">
+  <div align="center">
 
-		<img width="3505" height="4877" alt="untitled (1)" src="https://github.com/user-attachments/assets/94f21db8-a8a3-445f-988f-bbd1e25d0978" />
+  <img width="3505" height="4877" alt="untitled (1)" src="https://github.com/user-attachments/assets/94f21db8-a8a3-445f-988f-bbd1e25d0978" />
 
-		</div>
+  </div>
 
-	- **Obstacle Challenge:**
+### 6.3.2. Ronda de obstaculos(Obstacel challenge) <a id="632-ronda-de-obstaculosobstacel-challenge"></a>
 
-	La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (roi_izq y roi_der), la resolución de la cámara y los filtros de segmentación de color base.
-El núcleo de este reto radica en la interpretación semántica del entorno según las reglas oficiales de la competencia: los pilares actúan como señales direccionales que indican el carril de paso correcto. Para cumplir con esta lógica de navegación de manera robusta a una velocidad constante (VELOCIDAD_BASE = 68), el software se estructuró sobre tres pilares fundamentales:
-Base del Reto Abierto (Navegación Línea Base): Conserva el control de centrado mediante la diferencia de áreas de líneas y el fallback de seguridad asistido por ultrasonidos.
-Técnica de Selección de Carril (Visión Computacional): Segmentación por color a larga distancia mediante una nueva Región de Interés frontal expandida (ROI_OBSTACULOS).
-Máquina de Estados Asíncrona: Algoritmos de control dedicados para la evasión precisa y el retorno seguro al carril.
+La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
+El núcleo de este reto radica en la interpretación semántica del entorno según las reglas oficiales de la competencia: los pilares actúan como señales direccionales que indican el carril de paso correcto. Para cumplir con esta lógica de navegación de manera robusta a una velocidad constante (`VELOCIDAD_BASE = 68`), el software se estructuró sobre tres pilares fundamentales:
+1. Base del Reto Abierto (Navegación Línea Base): Conserva el control de centrado mediante la diferencia de áreas de líneas y el fallback de seguridad asistido por ultrasonidos.
+2. Técnica de Selección de Carril (Visión Computacional): Segmentación por color a larga distancia mediante una nueva Región de Interés frontal expandida (`ROI_OBSTACULOS`).
+3. Máquina de Estados Asíncrona: Algoritmos de control dedicados para la evasión precisa y el retorno seguro al carril.
 
-	Para anticipar la trayectoria de los pilares sin interferir con la lectura de las líneas guía del suelo, se implementó una zona de escaneo central denominada ROI_OBSTACULOS con dimensiones optimizadas en píxeles ROI(30, 30, 610, 320). Esta configuración permite procesar los objetos antes de que entren en el umbral crítico de colisión frontal.
+Para anticipar la trayectoria de los pilares sin interferir con la lectura de las líneas guía del suelo, se implementó una zona de escaneo central denominada `ROI_OBSTACULOS` con dimensiones optimizadas en píxeles ROI(30, 30, 610, 320). Esta configuración permite procesar los objetos antes de que entren en el umbral crítico de colisión frontal.
 Adicionalmente, el sistema implementa dos lazos de control PID independientes con sintonizaciones diferenciadas según las necesidades dinámicas del vehículo:
-PID de Línea Estándar: Configurado con valores conservadores (Kp = 0.015, Kd = 0.035) para mantener transiciones suaves y un desplazamiento lineal estable en rectas.
-PID de Evasión de Obstáculos: Configurado con una respuesta altamente agresiva (Kp = 0.32, Kd = 0.01). El término proporcional elevado garantiza que el vehículo responda con un torque de dirección inmediato ante el desplazamiento del pilar en la imagen, mientras que el término derivativo amortigua el retorno para evitar que la parte trasera del chasis (cola) derrape y golpee el obstáculo.
+* **PID de Línea Estándar:** Configurado con valores conservadores ($K_p = 0.015, K_d = 0.035$) para mantener transiciones suaves y un desplazamiento lineal estable en rectas.
+* **PID de Evasión de Obstáculos:** Configurado con una respuesta altamente agresiva ($K_p = 0.32, K_d = 0.01$). El término proporcional elevado garantiza que el vehículo responda con un torque de dirección inmediato ante el desplazamiento del pilar en la imagen, mientras que el término derivativo amortigua el retorno para evitar que la parte trasera del chasis (cola) derrape y golpee el obstáculo.
 
-	- 2. Implementación de la Máquina de Estados de Navegación
-	El comportamiento dinámico de Halbi the Green se rige por una máquina de estados finitos que conmuta de forma asíncrona entre tres modos de operación para asegurar que las lógicas de centrado y evasión no entren en conflicto.
+#### Implementación de la Máquina de Estados de Navegación
 
-		- Estado 1: LINEAL (Navegación Base y Curvas Cerradas)
-		Es el estado por defecto del robot. Mientras se encuentra en este modo, el vehículo ejecuta de forma prioritaria el centrado geométrico calculando el error entre las áreas negras laterales (error = black_areas[1] - black_areas[0]). Si el sensor de ultrasonido frontal detecta una pared a corta distancia (front_dist < 90 cm) en copresencia con una alta densidad de pixeles negros de pista (LNM.black_area > 8000), el estado se bloquea temporalmente bajo la bandera girando = True para forzar un giro de esquina cerrada de 90°. De manera simultánea, el método procesar_obstaculos() analiza los contornos máximos filtrados bajo las máscaras mask_red y mask_green. La transición hacia el estado de evasión se activa inmediatamente cuando el área de un contorno supera los umbrales de ruido calibrados:
+El comportamiento dinámico de Halbi the Green se rige por una máquina de estados finitos que conmuta de forma asíncrona entre tres modos de operación para asegurar que las lógicas de centrado y evasión no entren en conflicto.
 
-  
-		**Pilar Verde: Área $> 350 \text{ px} \rightarrow$ Transición a ESQUIVANDO | memoria_lado = "IZQUIERDA" (El pilar se debe dejar a la izquierda).**
-		**Pilar Rojo: Área $> 300 \text{ px} \rightarrow$ Transición a ESQUIVANDO | memoria_lado = "DERECHA" (El pilar se debe dejar a la derecha).**
-   
-		
-		- Estado 2: ESQUIVANDO (Lazo de Control de Evasión)
-		Al entrar en este modo, el PID de líneas se suspende y el control de dirección pasa al lazo PID de obstáculos. El algoritmo persigue un Setpoint o punto de consigna absoluto en los extremos del cuadro visual para forzar al carro a abrirse hacia el carril libre:
+* **Estado 1: LINEAL (Navegación Base y Curvas Cerradas)**
+  Es el estado por defecto del robot. Mientras se encuentra en este modo, el vehículo ejecuta de forma prioritaria el centrado geométrico calculando el error entre las áreas negras laterales (`error = black_areas[1] - black_areas[0]`). Si el sensor de ultrasonido frontal detecta una pared a corta distancia (`front_dist < 90 cm`) en copresencia con una alta densidad de pixeles negros de pista (`LNM.black_area > 8000`), el estado se bloquea temporalmente bajo la bandera `girando = True` para forzar un giro de esquina cerrada de 90°. De manera simultánea, el método `procesar_obstaculos()` analiza los contornos máximos filtrados bajo las máscaras `mask_red` y `mask_green`. La transición hacia el estado de evasión se activa inmediatamente cuando el área de un contorno supera los umbrales de ruido calibrados:
+  * **Pilar Verde:** Área $> 350 \text{ px} \rightarrow$ Transición a ESQUIVANDO | `memoria_lado = "IZQUIERDA"` (El pilar se debe dejar a la izquierda).
+  * **Pilar Rojo:** Área $> 300 \text{ px} \rightarrow$ Transición a ESQUIVANDO | `memoria_lado = "DERECHA"` (El pilar se debe dejar a la derecha).
 
-	
-		**Para pilares verdes (dejar a la izquierda), se busca el SETPOINT_VERDE = 549 (extremo derecho del marco).**
-		**Para pilares rojos (dejar a la derecha), se busca el SETPOINT_ROJO = 50 (extremo izquierdo del marco).**
-   
-  
-		- Mecanismo de Tiempo de Gracia: Debido a la agresividad del giro, es común que el pilar salga del campo visual de la cámara antes de que el vehículo lo haya superado físicamente.
+* **Estado 2: ESQUIVANDO (Lazo de Control de Evasión)**
+  Al entrar en este modo, el PID de líneas se suspende y el control de dirección pasa al lazo PID de obstáculos. El algoritmo persigue un Setpoint o punto de consigna absoluto en los extremos del cuadro visual para forzar al carro a abrirse hacia el carril libre:
+  * Para pilares verdes (dejar a la izquierda), se busca el `SETPOINT_VERDE = 549` (extremo derecho del marco).
+  * Para pilares rojos (dejar a la derecha), se busca el `SETPOINT_ROJO = 50` (extremo izquierdo del marco).
 
-		Para evitar que el robot regrese prematuramente al centro de la pista y colisione con el obstáculo, se implementó un temporizador de inercia (TIEMPO_GRACIA = 0.2 segundos). Si el área del pilar cae a cero, el sistema mantiene el cálculo del último error registrado (error_obs = prev_error), sosteniendo el ángulo de giro por hardware durante el tiempo de gracia antes de conmutar al estado REBASANDO.
+  *Mecanismo de Tiempo de Gracia:* Debido a la agresividad del giro, es común que el pilar salga del campo visual de la cámara antes de que el vehículo lo haya superado físicamente. Para evitar que el robot regrese prematuramente al centro de la pista y colisione con el obstáculo, se implementó un temporizador de inercia (`TIEMPO_GRACIA = 0.2` segundos). Si el área del pilar cae a cero, el sistema mantiene el cálculo del último error registrado (`error_obs = prev_error`), sosteniendo el ángulo de giro por hardware durante el tiempo de gracia antes de conmutar al estado REBASANDO.
 
-		- Seguridad por Encajonamiento: Si los sensores ultrasónicos detectan que el vehículo se está aproximando peligrosamente a la pared exterior del circuito debido a la maniobra de esquiva (left_dist o right_dist < DIST_MIN_PARED de $18.0\text{ cm}$), la máquina aborta el lazo PID de visión y fuerza la transición inmediata al estado de rebase para proteger la integridad estructural.
-  
-		- Estado 3: REBASANDO (Zona de Seguridad y Retorno)
-		Este estado garantiza que la parte posterior del chasis rebase completamente el pilar antes de restablecer las condiciones de carrera lineal. Dado que la cámara ya no posee contacto visual con el obstáculo, el control se delega a la telemetría de los sensores ultrasónicos laterales. El vehículo mantiene un ángulo de compensación controlado según el lado memorizado para evitar rozar la pared lateral. La máquina de estados no permite el regreso al modo LINEAL hasta que el sensor de ultrasonido del lado opuesto al pilar registre una distancia libre mayor a $40\text{ cm}$ (left_dist > 40 o right_dist > 40). Esta holgura asegura de forma matemática que el volumen total del robot ha despejado la posición del pilar, evitando enganches con las esquinas traseras o la base del obstáculo.
+  *Seguridad por Encajonamiento:* Si los sensores ultrasónicos detectan que el vehículo se está aproximando peligrosamente a la pared exterior del circuito debido a la maniobra de esquiva (`left_dist` o `right_dist < DIST_MIN_PARED` de $18.0\text{ cm}$), la máquina aborta el lazo PID de visión y fuerza la transición inmediata al estado de rebase para proteger la integridad estructural.
 
-		Como última capa de protección ante pérdidas de tracking visual o escenarios de colisión inminente, el ciclo de control ejecuta en cada iteración una subrutina de freno de mano físico. Si el ultrasonido frontal registra una distancia menor a DIST_MIN_CHOQUE ($12.0\text{ cm}$), el vehículo interrumpe la energía de los motores mediante LNM.stop() y calcula un ángulo de escape inverso de manera dinámica:
+* **Estado 3: REBASANDO (Zona de Seguridad y Retorno)**
+  Este estado garantiza que la parte posterior del chasis rebase completamente el pilar antes de restablecer las condiciones de carrera lineal. Dado que la cámara ya no posee contacto visual con el obstáculo, el control se delega a la telemetría de los sensores ultrasónicos laterales. El vehículo mantiene un ángulo de compensación controlado según el lado memorizado para evitar rozar la pared lateral. La máquina de estados no permite el regreso al modo LINEAL hasta que el sensor de ultrasonido del lado opuesto al pilar registre una distancia libre mayor a $40\text{ cm}$ (`left_dist > 40` o `right_dist > 40`). Esta holgura asegura de forma matemática que el volumen total del robot ha despejado la posición del pilar, evitando enganches con las esquinas traseras o la base del obstáculo.
 
-		<div align="center">
-	
-		$$\text{Ángulo Escapatoria} = 160^\circ - \text{steering}_{\text{angle}}$$
+Como última capa de protección ante pérdidas de tracking visual o escenarios de colisión inminente, el ciclo de control ejecuta en cada iteración una subrutina de freno de mano físico. Si el ultrasonido frontal registra una distancia menor a `DIST_MIN_CHOQUE` ($12.0\text{ cm}$), el vehículo interrumpe la energía de los motores mediante `LNM.stop()` y calcula un ángulo de escape inverso de manera dinámica:
 
-		</div>
-	
+<div align="center">
 
-		El robot realiza una maniobra de retroceso a alta potencia (speed = 85) durante $0.75$ segundos, resetea las variables integrales del PID a cero y reestablece el estado de carrera a LINEAL, garantizando la resiliencia del software ante condiciones críticas de atasco ambiental.
+$$\text{Ángulo Escapatoria} = 160^\circ - \text{steering}_{\text{angle}}$$
 
+</div>
 
-		- **Diagrama de Flujo:**
- 
-		<div align="center">
+El robot realiza una maniobra de retroceso a alta potencia (`speed = 85`) durante $0.75$ segundos, resetea las variables integrales del PID a cero y reestablece el estado de carrera a LINEAL, garantizando la resiliencia del software ante condiciones críticas de atasco ambiental.
 
-		<img width="3533" height="5354" alt="untitled" src="https://github.com/user-attachments/assets/9ba2ee32-f8ed-4207-aa86-ce3b5ed009fa" />
+#### Diagrama de Flujo:
 
-		</div>
+<div align="center">
 
-# 4. Challenges
+<img width="3533" height="5354" alt="untitled" src="https://github.com/user-attachments/assets/9ba2ee32-f8ed-4207-aa86-ce3b5ed009fa" />
 
-- ### Problemas de Hardware:
+</div>
 
-	**Objetivo:** Completar tres vueltas de forma autónoma en circuitos configurados dinámicamente.
+---
 
-	### Problemas de espaciamiento
+## 7. Problemas y soluciones durante el desarollo <a id="7-problemas-y-soluciones-durante-el-desarollo"></a>
 
-	Durante el desarrollo temprano de *Halbi the Green*, se presentaron inconvenientes con respecto al posicionamiento de los componentes dentro del chasis base (sin modificar). Debido a que los componentes ocupaban más espacio del disponible, el problema se resolvió temporalmente fijándolos con cinta aislante. Aunque esto funcionó de forma provisional, no era una solución viable a largo plazo. 
+### Problemas de Hardware:
 
-	Por ello, se decidió implementar una serie de bases impresas en 3D pensadas para agregar **dos niveles adicionales** al vehículo y **tres soportes complementarios** (dos laterales y uno frontal) para ubicar los sensores de ultrasonido, los cuales originalmente no tenían un lugar asignado.
+**Objetivo:** Completar tres vueltas de forma autónoma en circuitos configurados dinámicamente.
 
-	De manera más específica, los problemas de espaciamiento y sus respectivas soluciones fueron los siguientes:
+#### Problemas de espaciamiento
 
-	- **Espacio ocupado por las baterías:**
+Durante el desarrollo temprano de *Halbi the Green*, se presentaron inconvenientes con respecto al posicionamiento de los componentes dentro del chasis base (sin modificar). Debido a que los componentes ocupaban más espacio del disponible, el problema se resolvió temporalmente fijándolos con cinta aislante. Aunque esto funcionó de forma provisional, no era una solución viable a largo plazo. 
 
-		- *Problema:* Ocupaban demasiado volumen en el chasis y no dejaban espacio para ubicar los componentes de forma cómoda.
+Por ello, se decidió implementar una serie de bases impresas en 3D pensadas para agregar **dos niveles adicionales** al vehículo y **tres soportes complementarios** (dos laterales y uno frontal) para ubicar los sensores de ultrasonido, los cuales originalmente no tenían un lugar asignado.
 
-    	- *Solución:* Se les diseñó una base a medida para ubicarlas en el centro del robot y, sobre esta estructura, se construyó el piso superior.
-       
-	- **Anclaje de sensores de ultrasonido:**
-   
-		- *Problema:* No tenían puntos previstos para anclarlos al chasis original.
+De manera más específica, los problemas de espaciamiento y sus respectivas soluciones fueron los siguientes:
 
-    	- *Solución:* Se diseñaron 3 bases impresas que van adjuntas a 3 caras del chasis.
-      
-    - *Nota técnica:* Esta solución no fue del todo ideal, ya que estas bases sobresalen un poco de la estructura, causando atascamientos mecánicos cuando el vehículo pasa muy cerca de una esquina.
-      
-	* **Ubicación de la cámara y controlador:** * *Problema:* No había lugar físico para situar la cámara ni la placa de procesamiento.
-  
-    	* *Solución:* Sobre la base de las baterías se diseñó un soporte dedicado para la Raspberry Pi y la cámara. Esta última incluye una base con ángulo graduable para poder ajustar el punto de vista del lente de manera cómoda y precisa.
+* **Espacio ocupado por las baterías:**
+  * *Problema:* Ocupaban demasiado volumen en el chasis y no dejaban espacio para ubicar los componentes de forma cómoda.
+  * *Solución:* Se les diseñó una base a medida para ubicarlas en el centro del robot y, sobre esta estructura, se construyó el piso superior.
 
+* **Anclaje de sensores de ultrasonido:**
+  * *Problema:* No tenían puntos previstos para anclarlos al chasis original.
+  * *Solución:* Se diseñaron 3 bases impresas que van adjuntas a 3 caras del chasis.
+  * *Nota técnica:* Esta solución no fue del todo ideal, ya que estas bases sobresalen un poco de la estructura, causando atascamientos mecánicos cuando el vehículo pasa muy cerca de una esquina.
+
+* **Ubicación de la cámara y controlador:**
+  * *Problema:* No había lugar físico para situar la cámara ni la placa de procesamiento.
+  * *Solución:* Sobre la base de las baterías se diseñó un soporte dedicado para la Raspberry Pi y la cámara. Esta última incluye una base con ángulo graduable para poder ajustar el punto de vista del lente de manera cómoda y precisa.
