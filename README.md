@@ -1,3 +1,4 @@
+
 **If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
 
 ``` Para mejor visualización, se recomienda ver el repositorio en la computadora ```
@@ -34,8 +35,8 @@
    - 6.6. **[Challenge Overview](#66-challenge-overview)**
       - 6.6.1 **[Open Challenge](#661-open-challenge)**
       - 6.6.2 **[Obstacle Challenge](#662-obstacle-challenge)**
-      - 6.6.3. **[Ronda abierta(Open challenge)](#663-ronda-abiertaopen-challenge)**
-      - 6.6.4. **[Ronda de obstaculos(Obstacel challenge)](#662-ronda-de-obstaculosobstacle-challenge)**
+      - 6.6.3. **[Estrategia en Ronda Abierta](#663-ronda-abierta-estrategia)**
+      - 6.6.4. **[Estrategia en Ronda de Obstáculos](#664-ronda-de-obstaculos-estrategia)**
 7. **[Problemas y soluciones durante el desarollo](#7-problemas-y-soluciones-durante-el-desarollo)**
 8. **[Licencia y réplica](#8-licencia-y-replicacion)**
 
@@ -697,7 +698,7 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 ---
 
-### 6.6.3. Ronda abierta(Open challenge) <a id="663-ronda-abiertaopen-challenge"></a>
+### 6.6.3. Estrategia en Ronda Abierta <a id="663-ronda-abierta-estrategia"></a>
 
 * **Open Challenge Video:**
 
@@ -705,11 +706,11 @@ El constructor establece un canal de comunicación a través de puerto serial po
 	
   [![Open Challenge Video](https://img.youtube.com/vi/WPSj0BXfQ5U/0.jpg)](https://youtu.be/WPSj0BXfQ5U)
 
-  *Demonstrates autonomous navigation and speed control on a dynamic track.*
+  *Demuestra navegación autónoma y control de velocidad en una pista dinámica.*
 
   </div>
 
-* **Estrategia:** Para cumplir con los desafíos del Open Challenge, se diseñó e implementó una arquitectura de software basada en un bucle de control de alta frecuencia. La estrategia central no depende de un solo sensor, sino de un Control Híbrido (Sensor Fusión) que alterna dinámicamente entre la Visión Artificial (cámara) y la Telemetría Acústica (sensores ultrasónicos) según las condiciones de la pista. El sistema se divide en cuatro pilares de ejecución: Detección de Sentido, Control de Trayectoria (PIDs independientes), Navegación en Esquinas y Seguridad Activa (Anticolisión).
+* **Estrategia Pasada:** Para cumplir con los desafíos del Open Challenge, se diseñó e implementó una arquitectura de software basada en un bucle de control de alta frecuencia. La estrategia central no depende de un solo sensor, sino de un Control Híbrido (Sensor Fusión) que alterna dinámicamente entre la Visión Artificial (cámara) y la Telemetría Acústica (sensores ultrasónicos) según las condiciones de la pista. El sistema se divide en cuatro pilares de ejecución: Detección de Sentido, Control de Trayectoria (PIDs independientes), Navegación en Esquinas y Seguridad Activa (Anticolisión).
 
 * **ROIs:** Para optimizar el procesamiento computacional, mantener un alto framerate y evitar falsos positivos con elementos externos a la pista, el campo de visión de la cámara se segmenta geométricamente:
   * *ROI Principal (Búsqueda de Color):* Un recuadro amplio (0, 50, width, height-100) dedicado exclusivamente a procesar máscaras de color (Rojo, Verde, Azul, Naranja) mediante la búsqueda de contornos.
@@ -719,26 +720,79 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 * **Diagrama de Flujo:**
 
-  <div align="center">
+ <div align="center">
 
   <img width="3505" height="4877" alt="untitled (1)" src="https://github.com/user-attachments/assets/94f21db8-a8a3-445f-988f-bbd1e25d0978" />
 
+ </div>
+
+---
+
+* **Estrategia Actual:** En esta nueva versión, se migró de un sistema de control híbrido (sensores de ultrasonido + cámara) a un **paradigma de Visión Artificial Pura en C++17** ejecutado a alta frecuencia. Se eliminó la dependencia de la telemetría acústica para evitar conflictos de arbitraje e interrupciones por rebotes de eco en las paredes laterales. El control del chasis y la percepción del entorno se gestionan mediante el procesamiento eficiente de imágenes utilizando **OpenCV con backend GStreamer**, mientras que la respuesta física (servomotor y motor de tracción) se coordina mediante la librería **pigpio**, aprovechando la modulación PWM por Hardware vía DMA para garantizar máxima precisión y nula latencia.
+
+* **ROIs:** Para optimizar el uso de recursos computacionales, mantener un framerate elevado y filtrar falsos positivos externos a la pista, la captura de video se segmenta dinámicamente en **5 zonas de procesamiento estratégico**:
+
+-   `ROI 1 (Lateral Izquierdo) [0, 40, 320, 160]`: Procesa el área de las paredes oscuras del carril izquierdo (`left_blk`).
+    
+-   `ROI 2 (Lateral Derecho) [320, 40, 640, 160]`: Procesa el área de las paredes oscuras del carril derecho (`right_blk`).
+    
+-   `ROI 3 (Central Frontal) [200, 20, 430, 200]`: Supervisa la presencia lejana o cercana de la pared frontal (`central_blk`) para determinar la salida de las curvas.
+    
+-   `ROI 4 (Inferior de Control) [200, 90, 430, 200]`: Detecta los bloques/marcas de color en el suelo (`down_orange` y `down_blue`) para fijar el sentido de la pista y registrar el conteo de vueltas.
+    
+-   `ROI 5 (Central Superior) [200, 70, 430, 140]`: Analiza marcadores de transición lejanos (`central_orange` y `central_blkt`) para anticipar cambios de estado antes de ingresar a la curva.
+
+* **Contador de loops:** Durante la fase inicial de arranque (`ESTADO_CARRERA = "INICIANDO"`), el robot evalúa el color predominante en el suelo mediante el `ROI 4`. Si el área naranja supera el umbral crítico (`down_orange > 1000`), la variable global `turning_direction` asume el valor `2` (Giro en sentido horario / derecha). Si el área azul rompe el umbral (`down_blue > 1000`), se establece en `1` (Giro en sentido antihorario / izquierda). Esta decisión queda bloqueada para el resto del recorrido.
+
+* **Algoritmo de Centrado y Control Proporcional:** El centrado en tramos rectos se basa en la diferencia diferencial del área de pared detectada en ambos lados:
+
+$$\text{Error} = \text{left\_blk} - \text{right\_blk}$$
+
+$$\text{Ángulo Servo} = 90^\circ + (0.001 \times \text{Error})$$
+
+El ángulo de la dirección se restringe dinámicamente en una ventana de seguridad entre $70^\circ$ y $110^\circ$ para evitar sobrevirajes bruscos en línea recta.
+
+* **Máquina de Estados Finita (FSM) para la Navegación en Curvas:** El sistema se estructura bajo dos estados principales:
+
+1.  **`INICIANDO`:** El motor opera a alta velocidad (PWM `210`) realizando correcciones de centrado proporcional continuo. Al detectar la cercanía de una esquina por color (`down_orange > 500` o `central_orange > 800`), transita inmediatamente al estado de giro.
+    
+2.  **`GIRANDO`:** El robot reduce la velocidad de tracción (PWM `120`–`140`) y aplica un ángulo de viraje fijo ($80^\circ$ o $110^\circ$). La transición de regreso a `INICIANDO` ocurre de forma autónoma cuando la masa oscura de la pared frontal desaparece del campo visual (`central_blk < 9500` o `< 8400`), reanudando la aceleración en el carril recto.
+
+* **Conteo de Vueltas y Apagado Seguros (Garantía de 12 Vueltas):**  Se implementó un control de histeresis (`transicion`) que incrementa la variable `loops` únicamente cuando el robot ejecuta una curva en presencia de la marca oficial de la pista.
+    
+-   **Finalización de Carrera:** Al alcanzar la vuelta 12 (`loops == 12`), el sistema inicia un temporizador de precisión mediante `std::chrono::steady_clock`. Tras avanzar $3.5$ segundos adicionales para asegurar que el chasis cruce completamente la línea de meta, el programa interrumpe el bucle principal.
+    
+-   **Seguridad Hardware:** Mediante el gestor de señales `gpioSetSignalFunc(SIGINT)`, ante cualquier parada de emergencia o Ctrl+C, se ejecutan de forma asíncrona y segura la detención del motor (`PI_LOW`), el corte de señal PWM del servomotor y la liberación limpia del demonio `pigpio`.
+
+---
+
+### 6.6.4. Estrategia en Ronda de Obstaculos <a id="664-ronda-de-obstaculos-estrategia"></a>
+
+* **Obstacle Challenge Video:**
+
+  <div align="center">
+	
+  (Video)
+
+  *Demuestra navegación autónoma, control de velocidad y esquiva de obstáculos en una pista dinámica.*
+
   </div>
 
-### 6.6.4. Ronda de obstaculos(Obstacle challenge) <a id="664-ronda-de-obstaculosobstacle-challenge"></a>
-
-La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
+* **Estrategia Pasada:** La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
 El núcleo de este reto radica en la interpretación semántica del entorno según las reglas oficiales de la competencia: los pilares actúan como señales direccionales que indican el carril de paso correcto. Para cumplir con esta lógica de navegación de manera robusta a una velocidad constante (`VELOCIDAD_BASE = 68`), el software se estructuró sobre tres pilares fundamentales:
+
 1. Base del Reto Abierto (Navegación Línea Base): Conserva el control de centrado mediante la diferencia de áreas de líneas y el fallback de seguridad asistido por ultrasonidos.
 2. Técnica de Selección de Carril (Visión Computacional): Segmentación por color a larga distancia mediante una nueva Región de Interés frontal expandida (`ROI_OBSTACULOS`).
 3. Máquina de Estados Asíncrona: Algoritmos de control dedicados para la evasión precisa y el retorno seguro al carril.
 
 Para anticipar la trayectoria de los pilares sin interferir con la lectura de las líneas guía del suelo, se implementó una zona de escaneo central denominada `ROI_OBSTACULOS` con dimensiones optimizadas en píxeles ROI(30, 30, 610, 320). Esta configuración permite procesar los objetos antes de que entren en el umbral crítico de colisión frontal.
 Adicionalmente, el sistema implementa dos lazos de control PID independientes con sintonizaciones diferenciadas según las necesidades dinámicas del vehículo:
+
 * **PID de Línea Estándar:** Configurado con valores conservadores ($K_p = 0.015, K_d = 0.035$) para mantener transiciones suaves y un desplazamiento lineal estable en rectas.
+
 * **PID de Evasión de Obstáculos:** Configurado con una respuesta altamente agresiva ($K_p = 0.32, K_d = 0.01$). El término proporcional elevado garantiza que el vehículo responda con un torque de dirección inmediato ante el desplazamiento del pilar en la imagen, mientras que el término derivativo amortigua el retorno para evitar que la parte trasera del chasis (cola) derrape y golpee el obstáculo.
 
-#### Implementación de la Máquina de Estados de Navegación
+**Implementación de la Máquina de Estados de Navegación**
 
 El comportamiento dinámico de Halbi the Green se rige por una máquina de estados finitos que conmuta de forma asíncrona entre tres modos de operación para asegurar que las lógicas de centrado y evasión no entren en conflicto.
 
@@ -776,6 +830,56 @@ El robot realiza una maniobra de retroceso a alta potencia (`speed = 85`) durant
 <img width="3533" height="5354" alt="untitled" src="https://github.com/user-attachments/assets/9ba2ee32-f8ed-4207-aa86-ce3b5ed009fa" />
 
 </div>
+
+---
+
+* **Estrategia actual:** Elimina por completo la dependencia acústica de los ultrasonidos para la evasión. Implementa un **Control PD Dinámico Ponderado por Área (Proximidad)** apoyado en un filtro de **Histéresis por Conteo de Frames (Memoria Visual)** ejecutado a alta velocidad mediante GStreamer + OpenCV.
+
+* **Matriz Comparativa de Arquitectura:**
+
+| Parámetro / Componente | Estrategia Pasada | Estrategia Actual |
+| --- | --- | ---|
+|Sensores de Evasión | Cámara OpenCV + Ultrasonidos laterales y frontales. | Cámara de alta velocidad + Pipeline GStreamer (Sin ultrasonidos). |
+| Lógica de Esquive | PID agresivo fijo a setpoints laterales estáticos. | PD Ponderado por área de proximidad ($\text{Peso} \in [0.0, 1.0]$). |
+| Retorno al Carril | Telemetría ultrasónica lateral ($d > 40\text{ cm}$). | Filtro de Histéresis por conteo de frames (8 frames de memoria). |
+| Gestión de Velocidad | Velocidad constante (`68`) con frenado brusco. | Velocidad Adaptativa Dinámica: frena de `200` a `140` PWM según cercanía. |
+
+* **ROIs:** **ROI 6 (General Frontal/Obstáculos) `[10, 50, 630, 300]`:** Cubre casi la totalidad del ancho y la sección superior del marco visual. Permite detectar contornos de pilares **Rojos** y **Verdes** a larga distancia antes de que entren al carril de paso.
+
+* **Control PD Ponderado por Proximidad y Velocidad Adaptativa:** En lugar de virar de forma brusca al avistar un pilar, el sistema ajusta la corrección mediante un **Factor de Peso ($\text{Peso}$)** que depende del área del objeto en píxeles:
+
+-   **Cálculo del Factor de Peso:**
+    
+    $$\text{Área Útil} = \max\left(0.0, \text{Área Central} - \text{Umbral}\right)$$
+    
+    _(Umbral Rojo: $900\text{ px}$ | Umbral Verde: $2200\text{ px}$)_
+    
+    $$\text{Peso} = \min\left(1.0, \frac{\text{Área Útil}}{2500.0}\right)$$
+    
+-   **Corrección de Dirección Ponderada:**
+    
+    $$\text{Corrección} = \text{Peso} \cdot \left[ (K_p \cdot \text{Error}) + (K_d \cdot \text{Derivada}) \right]$$
+    
+-   **Control de Modulación de Velocidad:**
+    
+    $$\text{Velocidad Motor} = 200 - (\text{Peso} \cdot 60)$$
+    
+    _(Modula linealmente entre 200 PWM cuando está lejos y 140 PWM al estar muy cerca)_
+    
+
+**Parámetros por Color:**
+
+-   **Pilar Rojo (Dejar a la Derecha):** Target en `SetPoint_Red = 60` con $K_p = 0.40$ y $K_d = 0.15$.
+    
+-   **Pilar Verde (Dejar a la Izquierda):** Target en `SetPoint_Green = 584` con $K_p = 0.01$ y $K_d = 0.00$.
+
+* **Memoria de Histéresis Visual (Salida Segura de Obstáculo):** Para evitar que el chasis golpee el pilar cuando este sale del campo de visión antes de superarlo físicamente:
+
+1.  **Activación:** Se enciende `modo_esquive_activo` al superar el umbral de área y se memoriza el color en `ultimo_obstaculo_fue_rojo`.
+    
+2.  **Pérdida Visual:** Si el pilar desaparece del encuadre, el contador `frames_sin_obstaculo` comienza a incrementarse en cada ciclo.
+    
+3.  **Retorno Seguro:** Se mantiene el viraje de evasión durante **8 frames consecutivos** (~0.3 a 0.4 segundos). Transcurrido este tiempo, el sistema desactiva el esquive y retorna al centrado lineal del carril libre.
 
 ---
 
