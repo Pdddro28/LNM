@@ -805,33 +805,33 @@ De manera más específica, los problemas de espaciamiento y sus respectivas sol
   * *Problema:* No había lugar físico para situar la cámara ni la placa de procesamiento.
   * *Solución:* Sobre la base de las baterías se diseñó un soporte dedicado para la Raspberry Pi y la cámara. Esta última incluye una base con ángulo graduable para poder ajustar el punto de vista del lente de manera cómoda y precisa.
 
-## **License & Replication** <a id="8-licencia-y-replicacion"></a>
+## 8. **Licencia y réplica** <a id="8-license--replication"></a>
 
-### **Open Source Philosophy for Community Advancement**
+### **Filosofía de código abierto para el avance de la comunidad**
 
-**Replication-Focused Documentation**:
-- **Complete Technical Transparency**: Every design decision and implementation detail documented
-- **Manufacturing Accessibility**: Use of widely available components and custom manufacturing methods
-- **Educational Value**: Detailed explanations enabling understanding of engineering principles
-- **Future Development**: Clear pathways for system improvements and modifications
+**Documentación centrada en la réplica**:
+- **Transparencia técnica total**: Se documentan todas las decisiones de diseño y los detalles de implementación
+- **Accesibilidad en la fabricación**: Uso de componentes ampliamente disponibles y métodos de fabricación personalizados
+- **Valor educativo**: Explicaciones detalladas que permiten comprender los principios de ingeniería
+- **Desarrollo futuro**: Vías claras para mejoras y modificaciones del sistema
 
-This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)** to promote open collaboration, ensure continued community access to derivative works, facilitate easy replication by future developers and competition teams, and foster ongoing innovation through publicly accessible developments.
+Este proyecto está licenciado bajo la **Licencia Pública General Affero de GNU v3.0 (AGPL-3.0)** para promover la colaboración abierta, garantizar el acceso continuo de la comunidad a obras derivadas, facilitar la réplica por parte de futuros desarrolladores y equipos de competencia, y fomentar la innovación continua a través de desarrollos de acceso público.
 
 ```
-GNU Affero General Public License v3.0
+Licencia Pública General Affero de GNU v3.0
 
 Copyright (C) 2026 Pdddro28 (Pedro Catamo)
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published
-by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Este programa es software libre: puedes redistribuirlo y/o modificarlo
+bajo los términos de la Licencia Pública General Affero de GNU tal como la publicó
+la Fundación para el Software Libre, ya sea la versión 3 de la Licencia o
+(a tu elección) cualquier versión posterior.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License for more details.
+Este programa se distribuye con la esperanza de que sea útil,
+pero SIN NINGUNA GARANTÍA; ni siquiera la garantía implícita de
+COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la
+Licencia Pública General Affero de GNU para obtener más detalles.
 
-You should have received a copy of the GNU Affero General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
+Debería haber recibido una copia de la Licencia Pública General Affero de GNU
+junto con este programa. De no ser así, consulte <https://www.gnu.org/licenses/>.
 ```
