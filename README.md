@@ -14,9 +14,6 @@
 
 1. **[Introducción](#1-introduccion)**
    - 1.1. **[Miembros](#11-miembros)**
-   - 1.2. **[Challenge Overview](#12-challenge-overview)**
-      - 1.2.1 **[Open Challenge](#122-open-challenge)**
-      - 1.2.2 **[Obstacle Challenge](#123-obstacle-challenge)**
 2. **[Proyectos anteriores](#2-proyectos-anteriores)**
 3. **[Diseño y mobilidad](#3-diseño-y-mobilidad)**
    - 3.1. **[Fotos del vehiculo](#31-fotos-del-vehiculo)**
@@ -34,8 +31,11 @@
    - 6.3. **[Compilación y ejecución de archivos(codigos del carro)](#63-compilacion-y-ejecucion)**
    - 6.4. **[Abreviaciones con bash](#64-abreviaciones-con-bash)**
    - 6.5. **[Megapi controller(Deprecated)](#65-megapi-controllerdeprecated)**
-      - 6.5.1. **[Ronda abierta(Open challenge)](#651-ronda-abiertaopen-challenge)**
-      - 6.5.2. **[Ronda de obstaculos(Obstacel challenge)](#652-ronda-de-obstaculosobstacle-challenge)**
+   - 6.6. **[Challenge Overview](#66-challenge-overview)**
+      - 6.6.1 **[Open Challenge](#661-open-challenge)**
+      - 6.6.2 **[Obstacle Challenge](#662-obstacle-challenge)**
+      - 6.6.3. **[Ronda abierta(Open challenge)](#663-ronda-abiertaopen-challenge)**
+      - 6.6.4. **[Ronda de obstaculos(Obstacel challenge)](#662-ronda-de-obstaculosobstacle-challenge)**
 7. **[Problemas y soluciones durante el desarollo](#7-problemas-y-soluciones-durante-el-desarollo)**
 8. **[Licencia y réplica](#8-licencia-y-replicacion)**
 
@@ -74,48 +74,6 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 | :---: | :---: | :---: |
 | 👤 **David Wang** | 👤 **Pedro Catamo** | 👤 **Jesús Alcalá** |
 | 📅 **Nacido en:** 04/01/2011 (15 años)<br>🏫 **Estudio:** 4º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [davidwangwu104@gmail.com](mailto:davidwangwu104@gmail.com) | 📅 **Nacido en:** 28/01/2009 (17 años)<br>🏫 **Estudio:** Graduado en la U.E.C. Colegio Eduado Blanco<br>📧 **Gmail:** [pedrocatamo.2009@gmail.com](mailto:pedrocatamo.2009@gmail.com) | 📅 **Nacido en:** 18/11/2005 (21 años) <br> 🏫 **Estudio:** Ingenieria en computación & Ingenieria informática <br> 📧 **Gmail:** [Jdam50002@gmail.com](mailto:Jdam50002@gmail.com) |
-
-</div>
-
----
-
-## 1.2. Challenge Overview <a id="12-challenge-overview"></a>
-
-<div align="center">
-
-## **WRO 2026 Future Engineers Challenges**
-
-### **Dos retos distintos de navegación autónoma que ponen a prueba la inteligencia y la precisión de los vehículos**
-
-</div>
-
-### 1.2.1. **Open Challenge** <a id="121-open-challenge"></a>
-
-<div align="center">
-
-**Objetivo:** Completar tres vueltas autónomas en pistas configuradas dinámicamente.
-
-| Aspectos | Retos | Nuestra solución |
-|--------|-----------|--------------|
-| **Variabilidad de la pista** | Ubicación aleatoria de las paredes internas | Algoritmos adaptativos de planificación de ruta |
-| **Navegación** | Trazados desconocidos de la pista en cada ronda | Seguimiento robusto de las paredes con detección de esquinas |
-| **Rendimiento** | Tiempos de vuelta consistentes a pesar de las variaciones | Control PID optimizado y fusión de cámaras |
-| **Precisión** | Mantener el rumbo en carriles estrechos | Dirección y control de velocidad de alta precisión |
-
-</div>
-
-### 1.2.2. **Obstacle Challenge** <a id="122-obstacle-challenge"></a>
-
-<div align="center">
-
-**Objetivo:** Recorrer tres vueltas respetando las señales de tránsito y estacionando con precisión.
-
-| Elemento del desafío | Requisito | Nuestra implementación |
-|-------------------|-------------|-------------------|
-| **Señales de tránsito** | Rojo → Desviación hacia la derecha<br>Verde → Desviación hacia la izquierda | Detección de color en tiempo real con el espacio de color LAB |
-| **Equive de obstáculos** | Ajuste dinámico de la trayectoria | Seguimiento fluido a distancias constantes |
-| **Maniobra de estacionamiento** | Estacionamiento en paralelo tras completar una vuelta | Estacionamiento en varias etapas con validación por camara |
-| **Navegación** | Optimización de la ruta más corta | Ruteo eficiente alrededor de combinaciones de obstáculos |
 
 </div>
 
@@ -696,7 +654,50 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 </div>
 
-### 6.5.1. Ronda abierta(Open challenge) <a id="651-ronda-abiertaopen-challenge"></a>
+
+## 6.6. Challenge Overview <a id="66-challenge-overview"></a>
+
+<div align="center">
+
+## **WRO 2026 Future Engineers Challenges**
+
+### **Dos retos distintos de navegación autónoma que ponen a prueba la inteligencia y la precisión de los vehículos**
+
+</div>
+
+### 6.6.1. **Open Challenge** <a id="661-open-challenge"></a>
+
+<div align="center">
+
+**Objetivo:** Completar tres vueltas autónomas en pistas configuradas dinámicamente.
+
+| Aspectos | Retos | Nuestra solución |
+|--------|-----------|--------------|
+| **Variabilidad de la pista** | Ubicación aleatoria de las paredes internas | Algoritmos adaptativos de planificación de ruta |
+| **Navegación** | Trazados desconocidos de la pista en cada ronda | Seguimiento robusto de las paredes con detección de esquinas |
+| **Rendimiento** | Tiempos de vuelta consistentes a pesar de las variaciones | Control PID optimizado y fusión de cámaras |
+| **Precisión** | Mantener el rumbo en carriles estrechos | Dirección y control de velocidad de alta precisión |
+
+</div>
+
+### 6.6.2. **Obstacle Challenge** <a id="662-obstacle-challenge"></a>
+
+<div align="center">
+
+**Objetivo:** Recorrer tres vueltas respetando las señales de tránsito y estacionando con precisión.
+
+| Elemento del desafío | Requisito | Nuestra implementación |
+|-------------------|-------------|-------------------|
+| **Señales de tránsito** | Rojo → Desviación hacia la derecha<br>Verde → Desviación hacia la izquierda | Detección de color en tiempo real con el espacio de color LAB |
+| **Equive de obstáculos** | Ajuste dinámico de la trayectoria | Seguimiento fluido a distancias constantes |
+| **Maniobra de estacionamiento** | Estacionamiento en paralelo tras completar una vuelta | Estacionamiento en varias etapas con validación por camara |
+| **Navegación** | Optimización de la ruta más corta | Ruteo eficiente alrededor de combinaciones de obstáculos |
+
+</div>
+
+---
+
+### 6.6.3. Ronda abierta(Open challenge) <a id="663-ronda-abiertaopen-challenge"></a>
 
 * **Open Challenge Video:**
 
@@ -724,7 +725,7 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
   </div>
 
-### 6.5.2. Ronda de obstaculos(Obstacle challenge) <a id="652-ronda-de-obstaculosobstacle-challenge"></a>
+### 6.6.4. Ronda de obstaculos(Obstacle challenge) <a id="664-ronda-de-obstaculosobstacle-challenge"></a>
 
 La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
 El núcleo de este reto radica en la interpretación semántica del entorno según las reglas oficiales de la competencia: los pilares actúan como señales direccionales que indican el carril de paso correcto. Para cumplir con esta lógica de navegación de manera robusta a una velocidad constante (`VELOCIDAD_BASE = 68`), el software se estructuró sobre tres pilares fundamentales:
