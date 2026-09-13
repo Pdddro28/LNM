@@ -198,7 +198,7 @@ El sistema de propulsión posterior del vehículo confía en micro-motoreductore
 </div>
 
 
-## 2. Análisis Cinemático Ampliado y Cálculo de la Velocidad Teórica Absoluta
+## 2. Análisis Cinemático y Cálculo de la Velocidad Teórica Absoluta
 
 Para modelar la dinámica del vehículo en pista y calibrar las ventanas de tiempo por vuelta (como el parámetro de control `lap_time = 4.3`), se realiza un análisis cinemático directo enfocado exclusivamente en el eje trasero motriz (**Tracción Trasera Mecánica Bifásica**) e interactuando dinámicamente con la **Geometría de Dirección Ackermann** ubicada en el eje delantero.
 
