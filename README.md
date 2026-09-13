@@ -728,6 +728,16 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 ---
 
+* **Open Challenge Video:**
+
+  <div align="center">
+	
+  (video)
+
+  *Demuestra navegación autónoma y control de velocidad en una pista dinámica.*
+
+  </div>
+
 * **Estrategia Actual:** En esta nueva versión, se migró de un sistema de control híbrido (sensores de ultrasonido + cámara) a un **paradigma de Visión Artificial Pura en C++17** ejecutado a alta frecuencia. Se eliminó la dependencia de la telemetría acústica para evitar conflictos de arbitraje e interrupciones por rebotes de eco en las paredes laterales. El control del chasis y la percepción del entorno se gestionan mediante el procesamiento eficiente de imágenes utilizando **OpenCV con backend GStreamer**, mientras que la respuesta física (servomotor y motor de tracción) se coordina mediante la librería **pigpio**, aprovechando la modulación PWM por Hardware vía DMA para garantizar máxima precisión y nula latencia.
 
 * **ROIs:** Para optimizar el uso de recursos computacionales, mantener un framerate elevado y filtrar falsos positivos externos a la pista, la captura de video se segmenta dinámicamente en **5 zonas de procesamiento estratégico**:
@@ -767,16 +777,6 @@ El ángulo de la dirección se restringe dinámicamente en una ventana de seguri
 ---
 
 ### 6.6.4. Estrategia en Ronda de Obstaculos <a id="664-ronda-de-obstaculos-estrategia"></a>
-
-* **Obstacle Challenge Video:**
-
-  <div align="center">
-	
-  (Video)
-
-  *Demuestra navegación autónoma, control de velocidad y esquiva de obstáculos en una pista dinámica.*
-
-  </div>
 
 * **Estrategia Pasada:** La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
 El núcleo de este reto radica en la interpretación semántica del entorno según las reglas oficiales de la competencia: los pilares actúan como señales direccionales que indican el carril de paso correcto. Para cumplir con esta lógica de navegación de manera robusta a una velocidad constante (`VELOCIDAD_BASE = 68`), el software se estructuró sobre tres pilares fundamentales:
@@ -831,6 +831,16 @@ El robot realiza una maniobra de retroceso a alta potencia (`speed = 85`) durant
 </div>
 
 ---
+
+* **Obstacle Challenge Video:**
+
+  <div align="center">
+	
+  (Video)
+
+  *Demuestra navegación autónoma, control de velocidad y esquiva de obstáculos en una pista dinámica.*
+
+  </div>
 
 * **Estrategia actual:** Elimina por completo la dependencia acústica de los ultrasonidos para la evasión. Implementa un **Control PD Dinámico Ponderado por Área (Proximidad)** apoyado en un filtro de **Histéresis por Conteo de Frames (Memoria Visual)** ejecutado a alta velocidad mediante GStreamer + OpenCV.
 
