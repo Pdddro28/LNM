@@ -28,7 +28,7 @@
 6. **[Software](#6-software)**
    - 6.1. **[Herramientas de apoyo](#61-herramientas-de-apoyo)**
    - 6.2. **[Intalación en shell](#62-instalacion-en-shell)**
-   - 6.3. **[Compilación y ejecución de archivos (codigos del carro)](63-compilación-y-ejecución)**
+   - 6.3. **[Compilación y ejecución de archivos(codigos del carro)](#63-compilacion-y-ejecucion)**
    - 6.4. **[Abreviaciones con bash](#64-abreviaciones-con-bash)**
    - 6.5. **[Megapi controller(Deprecated)](#65-megapi-controllerdeprecated)**
       - 6.5.1. **[Ronda abierta(Open challenge)](#651-ronda-abiertaopen-challenge)**
@@ -500,7 +500,7 @@ echo "   Ejecuta: sudo reboot"
 echo "=================================================="
 ```
 
-### 6.3. Compilación y ejecución de archivos (codigos del carro) <a id="63-compilación-y-ejecución"></a>
+### 6.3. Compilación y ejecución de archivos (codigos del carro) <a id="63-compilacion-y-ejecucion"></a>
 
 **DATO IMPORTANTE:** Primero que todo hay que acceder a la carpeta donde están los códigos del carro para iniciarlos. En nuestro caso está escrito así:
 
