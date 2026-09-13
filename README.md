@@ -498,7 +498,7 @@ echo "   Ejecuta: sudo reboot"
 echo "=================================================="
 ```
 
-# Compilación y ejecución de archivos (codigos del carro)
+#### Compilación y ejecución de archivos (codigos del carro)
 
 **DATO IMPORTANTE:** Primero que todo hay que acceder a la carpeta donde están los códigos del carro para iniciarlos. En nuestro caso está escrito así:
 
@@ -506,7 +506,7 @@ echo "=================================================="
 cd code/LNM/src/visioncontroller
 ```
 
-## Reto 1
+##### Reto 1
 - *Compilación de app.cpp*
 ```
 g++ -O2 app.cpp vision_controller.cpp -o vision_app `pkg-config --cflags --libs opencv4` -lpigpio -pthread -lrt
@@ -517,7 +517,7 @@ g++ -O2 app.cpp vision_controller.cpp -o vision_app `pkg-config --cflags --libs 
 sudo -E ./vision_app
 ```
 
-## Reto 2
+##### Reto 2
 - *Compilación de app2.cpp*
 ```
 g++ -O2 app2.cpp vision_controller.cpp -o vision_app2 `pkg-config --cflags --libs opencv4` -lpigpio -pthread -lrt
@@ -530,9 +530,9 @@ sudo -E ./vision_app2
 
 *Dato extra:* Usamos el **bash** para abreviar las lineas de código para compilar y ejecutar juntos y cuando se quiere ejecutar, solo usaremos la linea de ejecución.
 
-# Abreviaciones con Bash
+#### Abreviaciones con Bash
 
-## Reto 1
+##### Reto 1
 Creamos un bash escribiendo:
 
 ```
@@ -549,7 +549,7 @@ Le damos a las teclas *Ctrl+O* y al final *Enter*.
 
 **Al final solo se necesita ejecutar en la terminal ./app2.sh**
 
-## Reto 2
+##### Reto 2
 Creamos un bash escribiendo:
 
 ```
