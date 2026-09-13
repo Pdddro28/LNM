@@ -805,7 +805,7 @@ De manera más específica, los problemas de espaciamiento y sus respectivas sol
   * *Problema:* No había lugar físico para situar la cámara ni la placa de procesamiento.
   * *Solución:* Sobre la base de las baterías se diseñó un soporte dedicado para la Raspberry Pi y la cámara. Esta última incluye una base con ángulo graduable para poder ajustar el punto de vista del lente de manera cómoda y precisa.
 
-## 8. **Licencia y réplica** <a id="8-license--replication"></a>
+## 8. **Licencia y réplica** <a id="8-licencia-y-replicacion"></a>
 
 ### **Filosofía de código abierto para el avance de la comunidad**
 
