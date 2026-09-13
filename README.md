@@ -14,6 +14,9 @@
 
 1. **[Introducción](#1-introduccion)**
    - 1.1. **[Miembros](#11-miembros)**
+   - 1.2. **[Challenge Overview](#12-challenge-overview)**
+      - 1.2.1 **[Open Challenge](#122-open-challenge)**
+      - 1.2.2 **[Obstacle Challenge](#123-obstacle-challenge)**
 2. **[Proyectos anteriores](#2-proyectos-anteriores)**
 3. **[Diseño y mobilidad](#3-diseño-y-mobilidad)**
    - 3.1. **[Fotos del vehiculo](#31-fotos-del-vehiculo)**
@@ -70,6 +73,48 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 | :---: | :---: | :---: |
 | 👤 **David Wang** | 👤 **Pedro Catamo** | 👤 **Jesús Alcalá** |
 | 📅 **Nacido en:** 04/01/2011 (15 años)<br>🏫 **Estudio:** 4º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [davidwangwu104@gmail.com](mailto:davidwangwu104@gmail.com) | 📅 **Nacido en:** 28/01/2009 (17 años)<br>🏫 **Estudio:** Graduado en la U.E.C .Colegio Eduado Blanco<br>📧 **Gmail:** [pedrocatamo.2009@gmail.com](mailto:pedrocatamo.2009@gmail.com) | 📅 **Nacido en:** 18/11/2005 (21 años) <br> 🏫 **Estudio:** Ingenieria en computación & Ingenieria informática <br> 📧 **Gmail:** [Jdam50002@gmail.com](mailto:Jdam50002@gmail.com) |
+
+</div>
+
+---
+
+## 1.2. Challenge Overview <a id="12-challenge-overview"></a>
+
+<div align="center">
+
+## **WRO 2026 Future Engineers Challenges**
+
+### **Dos retos distintos de navegación autónoma que ponen a prueba la inteligencia y la precisión de los vehículos**
+
+</div>
+
+### 1.2.1. **Open Challenge** <a id="121-open-challenge"></a>
+
+<div align="center">
+
+**Objetivo:** Completar tres vueltas autónomas en pistas configuradas dinámicamente.
+
+| Aspectos | Retos | Nuestra solución |
+|--------|-----------|--------------|
+| **Variabilidad de la pista** | Ubicación aleatoria de las paredes internas | Algoritmos adaptativos de planificación de ruta |
+| **Navegación** | Trazados desconocidos de la pista en cada ronda | Seguimiento robusto de las paredes con detección de esquinas |
+| **Rendimiento** | Tiempos de vuelta consistentes a pesar de las variaciones | Control PID optimizado y fusión de cámaras |
+| **Precisión** | Mantener el rumbo en carriles estrechos | Dirección y control de velocidad de alta precisión |
+
+</div>
+
+### 1.2.2. **Obstacle Challenge** <a id="122-obstacle-challenge"></a>
+
+<div align="center">
+
+**Objetivo:** Recorrer tres vueltas respetando las señales de tránsito y estacionando con precisión.
+
+| Elemento del desafío | Requisito | Nuestra implementación |
+|-------------------|-------------|-------------------|
+| **Señales de tránsito** | Rojo → Desviación hacia la derecha<br>Verde → Desviación hacia la izquierda | Detección de color en tiempo real con el espacio de color LAB |
+| **Equive de obstáculos** | Ajuste dinámico de la trayectoria | Seguimiento fluido a distancias constantes |
+| **Maniobra de estacionamiento** | Estacionamiento en paralelo tras completar una vuelta | Estacionamiento en varias etapas con validación por camara |
+| **Navegación** | Optimización de la ruta más corta | Ruteo eficiente alrededor de combinaciones de obstáculos |
 
 </div>
 
