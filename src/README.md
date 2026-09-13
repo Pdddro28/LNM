@@ -116,7 +116,7 @@ sudo -E ./vision_app
 
 Le damos a las teclas *Ctrl+O* y al final *Enter*.
 
-**Al final solo se necesita ejecutar en la terminal ./app2.sh*
+**Al final solo se necesita ejecutar en la terminal ./app2.sh**
 
 ## Reto 2
 Creamos un bash escribiendo:
@@ -133,4 +133,4 @@ sudo -E ./vision_app2
 
 Le damos a las teclas *Ctrl+O* y al final *Enter*.
 
-**Al final solo se necesita ejecutar en la terminal ./app2.sh*
+**Al final solo se necesita ejecutar en la terminal ./app2.sh**
