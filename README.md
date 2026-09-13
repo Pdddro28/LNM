@@ -191,13 +191,12 @@ El sistema de propulsión posterior del vehículo confía en micro-motoreductore
 * **Velocidad de Rotación de Salida:** $100\text{ RPM}$ en el eje D de la caja reductora a voltaje nominal.
 * **Torque Nominal y de Bloqueo:** Entrega aproximadamente $0.8\text{ kg}\cdot\text{cm} - 1.2\text{ kg}\cdot\text{cm}$ de torque de bloqueo, suficiente para romper la fricción estática de la masa de $346\text{ g}$ sin provocar un deslizamiento excesivo o pérdida de tracción en las ruedas motrices traseras.
 
----
 
-### Espacio para Imagen: Motor N20
-![Micro-motoreductor N20 de 100 RPM con Caja Reductora](ruta/a/tu/imagen_n20.png)
-*Figura 1: Micro-motoreductor N20 con caja reductora metálica recto-axial.*
+### Motor N20
+<div align="center">
+<img width="500" height="202" alt="D_NQ_NP_927109-MLV78777179998_092024-O" src="https://github.com/user-attachments/assets/893776fb-e058-4613-ada9-9e5b64286ebd" />
+</div>
 
----
 
 ## 2. Análisis Cinemático Ampliado y Cálculo de la Velocidad Teórica Absoluta
 
@@ -215,14 +214,6 @@ Considerando un diámetro de rueda trasera de $D = 6.5\text{ cm} = 0.065\text{ m
 
 3. **Velocidad Lineal Máxima Teórica ($V_{teorica}$):**
    $$V_{teorica} = C \cdot n = 0.2042\text{ m} \times 1.667\text{ s}^{-1} \approx 0.340\text{ m/s} \quad (34.0\text{ cm/s})$$
-
----
-
-###Esquema de Tracción y Dirección
-![Esquema Cinemático del Chasis](ruta/a/tu/imagen_cinematica.png)
-*Figura 2: Diagrama cinemático mostrando la interacción de la Tracción Trasera Bifásica y el eje delantero con Dirección Ackermann.*
-
----
 
 ### B. Interacción Cinemática: Tracción Trasera y Dirección Ackermann
 
