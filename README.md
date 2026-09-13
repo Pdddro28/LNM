@@ -37,6 +37,7 @@
       - 6.5.1. **[Ronda abierta(Open challenge)](#651-ronda-abiertaopen-challenge)**
       - 6.5.2. **[Ronda de obstaculos(Obstacel challenge)](#652-ronda-de-obstaculosobstacle-challenge)**
 7. **[Problemas y soluciones durante el desarollo](#7-problemas-y-soluciones-durante-el-desarollo)**
+8. **[Licencia y réplica](#8-licencia-y-replicacion)**
 
 ---
 
@@ -803,3 +804,34 @@ De manera más específica, los problemas de espaciamiento y sus respectivas sol
 * **Ubicación de la cámara y controlador:**
   * *Problema:* No había lugar físico para situar la cámara ni la placa de procesamiento.
   * *Solución:* Sobre la base de las baterías se diseñó un soporte dedicado para la Raspberry Pi y la cámara. Esta última incluye una base con ángulo graduable para poder ajustar el punto de vista del lente de manera cómoda y precisa.
+
+## **License & Replication** <a id="8-licencia-y-replicacion"></a>
+
+### **Open Source Philosophy for Community Advancement**
+
+**Replication-Focused Documentation**:
+- **Complete Technical Transparency**: Every design decision and implementation detail documented
+- **Manufacturing Accessibility**: Use of widely available components and custom manufacturing methods
+- **Educational Value**: Detailed explanations enabling understanding of engineering principles
+- **Future Development**: Clear pathways for system improvements and modifications
+
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)** to promote open collaboration, ensure continued community access to derivative works, facilitate easy replication by future developers and competition teams, and foster ongoing innovation through publicly accessible developments.
+
+```
+GNU Affero General Public License v3.0
+
+Copyright (C) 2026 Pdddro28 (Pedro Catamo)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+```
