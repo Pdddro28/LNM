@@ -14,9 +14,6 @@
 
 1. **[Introducción](#1-introduccion)**
    - 1.1. **[Miembros](#11-miembros)**
-   - 1.2. **[Challenge Overview](#12-challenge-overview)**
-      - 1.2.1 **[Open Challenge](#122-open-challenge)**
-      - 1.2.2 **[Obstacle Challenge](#123-obstacle-challenge)**
 2. **[Proyectos anteriores](#2-proyectos-anteriores)**
 3. **[Diseño y mobilidad](#3-diseño-y-mobilidad)**
    - 3.1. **[Fotos del vehiculo](#31-fotos-del-vehiculo)**
@@ -73,48 +70,6 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 | :---: | :---: | :---: |
 | 👤 **David Wang** | 👤 **Pedro Catamo** | 👤 **Jesús Alcalá** |
 | 📅 **Nacido en:** 04/01/2011 (15 años)<br>🏫 **Estudio:** 4º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [davidwangwu104@gmail.com](mailto:davidwangwu104@gmail.com) | 📅 **Nacido en:** 28/01/2009 (17 años)<br>🏫 **Estudio:** Graduado en la U.E.C .Colegio Eduado Blanco<br>📧 **Gmail:** [pedrocatamo.2009@gmail.com](mailto:pedrocatamo.2009@gmail.com) | 📅 **Nacido en:** 18/11/2005 (21 años) <br> 🏫 **Estudio:** Ingenieria en computación & Ingenieria informática <br> 📧 **Gmail:** [Jdam50002@gmail.com](mailto:Jdam50002@gmail.com) |
-
-</div>
-
----
-
-## 1.2. Challenge Overview <a id="12-challenge-overview"></a>
-
-<div align="center">
-
-## **WRO 2026 Future Engineers Challenges**
-
-### **Dos retos distintos de navegación autónoma que ponen a prueba la inteligencia y la precisión de los vehículos**
-
-</div>
-
-### 1.2.1. **Open Challenge** <a id="121-open-challenge"></a>
-
-<div align="center">
-
-**Objetivo:** Completar tres vueltas autónomas en pistas configuradas dinámicamente.
-
-| Aspectos | Retos | Nuestra solución |
-|--------|-----------|--------------|
-| **Variabilidad de la pista** | Ubicación aleatoria de las paredes internas | Algoritmos adaptativos de planificación de ruta |
-| **Navegación** | Trazados desconocidos de la pista en cada ronda | Seguimiento robusto de las paredes con detección de esquinas |
-| **Rendimiento** | Tiempos de vuelta consistentes a pesar de las variaciones | Control PID optimizado y fusión de cámaras |
-| **Precisión** | Mantener el rumbo en carriles estrechos | Dirección y control de velocidad de alta precisión |
-
-</div>
-
-### 1.2.2. **Obstacle Challenge** <a id="122-obstacle-challenge"></a>
-
-<div align="center">
-
-**Objetivo:** Recorrer tres vueltas respetando las señales de tránsito y estacionando con precisión.
-
-| Elemento del desafío | Requisito | Nuestra implementación |
-|-------------------|-------------|-------------------|
-| **Señales de tránsito** | Rojo → Desviación hacia la derecha<br>Verde → Desviación hacia la izquierda | Detección de color en tiempo real con el espacio de color LAB |
-| **Equive de obstáculos** | Ajuste dinámico de la trayectoria | Seguimiento fluido a distancias constantes |
-| **Maniobra de estacionamiento** | Estacionamiento en paralelo tras completar una vuelta | Estacionamiento en varias etapas con validación por camara |
-| **Navegación** | Optimización de la ruta más corta | Ruteo eficiente alrededor de combinaciones de obstáculos |
 
 </div>
 
@@ -224,25 +179,56 @@ https://github.com/user-attachments/assets/042841d2-482d-409c-a0ef-2fa391119745
 
 </div>
 
-* **Especificaciones Técnicas de los Motores (RS380):** El bloque motriz confía en motores de CC con escobillas imantadas, seleccionados específicamente por su curva de respuesta dinámica y tolerancia a picos transitorios de carga.
-  * **Voltaje Nominal:** $12\text{V}$ (Operando a un voltaje nominal de celda de $11.1\text{V}$ mediante una batería LiPo 3S para asegurar la estabilidad térmica).
-  * **Corriente de Vacío (No-load):** $0.3\text{A}$ | **Corriente de Arranque/Pérdida (Stall):** $3\text{A}$ de protección en el driver.
-  * **Velocidad de Rotación de Fábrica:** $15000\text{ RPM}$ en el núcleo del motor, reducida internamente y ajustada finalmente por el engranaje externo para entregar una velocidad final estimada de transferencia de aprox. $450\text{ RPM}$ en el eje de la rueda.
+# Especificaciones Técnicas y Análisis Cinemático del Vehículo
 
-* **Análisis Cinemático y Cálculo de la Velocidad Teórica Absoluta:**
-Para determinar el rendimiento del chasis en pista y calibrar las ventanas de tiempo por vuelta (como el parámetro de control `lap_time = 4.3`), se realiza el cálculo cinemático basado en el diámetro de las ruedas motrices de $6.5\text{ cm}$ ($0.065\text{ m}$). Evaluamos la circunferencia de rodadura ($C$) y la velocidad lineal máxima teórica ($V$):
+## 1. Especificaciones Técnicas de los Motores (N20 - 100 RPM)
 
-<div align="center">
+El sistema de propulsión posterior del vehículo confía en micro-motoreductores de CC con escobillas metálicas (tipo N20) integrados con una caja reductora de engranajes metálicos rectos. Este conjunto fue seleccionado específicamente para optimizar la relación torque/volumen dentro de las dimensiones compactas del chasis ($14\text{ cm} \text{ (largo)} \times 12\text{ cm} \text{ (ancho)} \times 10.3\text{ cm} \text{ (alto)}$) y gestionar eficientemente la inercia asociada a su masa total de aproximadamente $346\text{ g}$.
 
-$$C = \pi \times 0.065\text{ m} \approx 0.2041\text{ m}$$
+* **Voltaje Nominal de Operación:** Operando a un voltaje nominal de $6\text{V}$ (ajustado mediante la etapa de potencia desde la fuente principal). Su comportamiento térmico y eléctrico se mantiene estable bajo periodos prolongados de tracción activa.
+* **Corriente de Vacío (No-load):** $\approx 0.06\text{ A} - 0.08\text{ A}$ por motor.
+* **Corriente de Bloqueo / Arranque (Stall):** $\approx 0.7\text{ A} - 0.8\text{ A}$ a $6\text{V}$. Esta demanda pico encaja de manera óptima dentro de las especificaciones del driver **DRV8833**, el cual soporta hasta $1.2\text{ A}$ de corriente continua por canal ($2.0\text{ A}$ pico), garantizando un margen térmico y de corriente seguro ante caídas de velocidad o eventuales atascamientos en pista.
+* **Velocidad de Rotación de Salida:** $100\text{ RPM}$ en el eje D de la caja reductora a voltaje nominal.
+* **Torque Nominal y de Bloqueo:** Entrega aproximadamente $0.8\text{ kg}\cdot\text{cm} - 1.2\text{ kg}\cdot\text{cm}$ de torque de bloqueo, suficiente para romper la fricción estática de la masa de $346\text{ g}$ sin provocar un deslizamiento excesivo o pérdida de tracción en las ruedas motrices traseras.
 
-</div>
+---
 
-Transformando las revoluciones por minuto del eje secundario de la transmisión a revoluciones por segundo y multiplicando por el desarrollo de la circunferencia, obtenemos la velocidad de avance del chasis:
+### Espacio para Imagen: Motor N20
+![Micro-motoreductor N20 de 100 RPM con Caja Reductora](ruta/a/tu/imagen_n20.png)
+*Figura 1: Micro-motoreductor N20 con caja reductora metálica recto-axial.*
 
-<div align="center">
+---
 
-$$V = \frac{450\text{ RPM}}{60} \times 0.2041\text{ m} \approx 1.53\text{ m/s}$$
+## 2. Análisis Cinemático Ampliado y Cálculo de la Velocidad Teórica Absoluta
+
+Para modelar la dinámica del vehículo en pista y calibrar las ventanas de tiempo por vuelta (como el parámetro de control `lap_time = 4.3`), se realiza un análisis cinemático directo enfocado exclusivamente en el eje trasero motriz (**Tracción Trasera Mecánica Bifásica**) e interactuando dinámicamente con la **Geometría de Dirección Ackermann** ubicada en el eje delantero.
+
+### A. Cálculo de Perímetro y Velocidad Lineal Teórica ($V_{max}$)
+
+Considerando un diámetro de rueda trasera de $D = 6.5\text{ cm} = 0.065\text{ m}$:
+
+1. **Circunferencia de Rodadura ($C$):**
+   $$C = \pi \cdot D = \pi \cdot 0.065\text{ m} \approx 0.2042\text{ m/vuelta}$$
+
+2. **Frecuencia de Rotación ($\omega$):**
+   $$N = 100\text{ RPM} \implies n = \frac{100}{60} \approx 1.667\text{ rev/s}$$
+
+3. **Velocidad Lineal Máxima Teórica ($V_{teorica}$):**
+   $$V_{teorica} = C \cdot n = 0.2042\text{ m} \times 1.667\text{ s}^{-1} \approx 0.340\text{ m/s} \quad (34.0\text{ cm/s})$$
+
+---
+
+###Esquema de Tracción y Dirección
+![Esquema Cinemático del Chasis](ruta/a/tu/imagen_cinematica.png)
+*Figura 2: Diagrama cinemático mostrando la interacción de la Tracción Trasera Bifásica y el eje delantero con Dirección Ackermann.*
+
+---
+
+### B. Interacción Cinemática: Tracción Trasera y Dirección Ackermann
+
+* **Control con Driver DRV8833:** El puente en H dual DRV8833 modula por PWM la tensión aplicada a los dos motores N20 independientes situados en el eje posterior. Al no contar con un diferencial mecánico físico en el eje trasero, el control electrónico puede ajustar sutilmente la velocidad diferencial entre ambas ruedas traseras para prevenir el arrastre o patinaje durante las curvas.
+* **Geometría Ackermann en el Eje Delantero:** Las ruedas delanteras (no motrices) pivotan en ángulos desiguales ($\theta_{interna} > \theta_{externa}$) para converger en un centro instantáneo de rotación único (Punto ICC). Esto elimina el deslice lateral de las llantas de guía, garantizando que la velocidad lineal impulsada por los motores N20 ($0.340\text{ m/s}$) se transfiera eficientemente en trayectoria tangencial sobre las curvas.
+* **Distribución de Masa e Inercia:** Con una masa total de $m = 346\text{ g}$, la fricción estática del eje trasero genera la fuerza de adherencia ($F_N = m_{trasera} \cdot g$) adecuada para transformar el torque del N20 en aceleración longitudinal instantánea, minimizando pérdidas cinéticas por patinaje inicial.
 
 </div>
 
