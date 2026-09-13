@@ -413,7 +413,7 @@ La arquitectura eléctrica de nuestro carro se basa en un diseño simplificado y
 
 <div align="center">
 
-<img width="1320" height="552" alt="ElectricDiagramLNMmini" src="https://github.com/user-attachments/assets/80d0a87e-5b5d-4501-8b80-1597dfc30bc8" />
+<img width="1518" height="688" alt="Diagrama de cableado" src="https://github.com/user-attachments/assets/64c91c6a-99f8-4729-aea7-bc2c2aa19d2f" />
 
 </div>
 
