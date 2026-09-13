@@ -28,9 +28,11 @@
 6. **[Software](#6-software)**
    - 6.1. **[Herramientas de apoyo](#61-herramientas-de-apoyo)**
    - 6.2. **[Intalación en shell](#62-instalacion-en-shell)**
-   - 6.3. **[Megapi controller(Deprecated)](#63-megapi-controllerdeprecated)**
-      - 6.3.1. **[Ronda abierta(Open challenge)](#631-ronda-abiertaopen-challenge)**
-      - 6.3.2. **[Ronda de obstaculos(Obstacel challenge)](#632-ronda-de-obstaculosobstacel-challenge)**
+   - 6.3. **[Compilación y ejecución de archivos (codigos del carro)](63-compilación-y-ejecución)**
+   - 6.4. **[Abreviaciones con bash](#64-abreviaciones-con-bash)**
+   - 6.5. **[Megapi controller(Deprecated)](#65-megapi-controllerdeprecated)**
+      - 6.5.1. **[Ronda abierta(Open challenge)](#651-ronda-abiertaopen-challenge)**
+      - 6.5.2. **[Ronda de obstaculos(Obstacel challenge)](#652-ronda-de-obstaculosobstacle-challenge)**
 7. **[Problemas y soluciones durante el desarollo](#7-problemas-y-soluciones-durante-el-desarollo)**
 
 ---
@@ -498,7 +500,7 @@ echo "   Ejecuta: sudo reboot"
 echo "=================================================="
 ```
 
-#### Compilación y ejecución de archivos (codigos del carro)
+### 6.3. Compilación y ejecución de archivos (codigos del carro) <a id="63-compilación-y-ejecución"></a>
 
 **DATO IMPORTANTE:** Primero que todo hay que acceder a la carpeta donde están los códigos del carro para iniciarlos. En nuestro caso está escrito así:
 
@@ -530,7 +532,7 @@ sudo -E ./vision_app2
 
 *Dato extra:* Usamos el **bash** para abreviar las lineas de código para compilar y ejecutar juntos y cuando se quiere ejecutar, solo usaremos la linea de ejecución.
 
-#### Abreviaciones con Bash
+### 6.4. Abreviaciones con Bash <a id="64-abreviaciones-con-bash"></a>
 
 ##### Reto 1
 Creamos un bash escribiendo:
@@ -566,7 +568,7 @@ Le damos a las teclas *Ctrl+O* y al final *Enter*.
 
 **Al final solo se necesita ejecutar en la terminal ./app2.sh**
 
-### 6.3. Megapi controller(Deprecated) <a id="63-megapi-controllerdeprecated"></a>
+### 6.5. Megapi controller(Deprecated) <a id="65-megapi-controllerdeprecated"></a>
 
 Esta es una descripción completa de todos los atributos y métodos de la clase `MegaPiController`, junto con sus argumentos. Te recomendamos que la consultes primero antes de pasar a las demás secciones y que, cuando clones el repositorio, la utilices como guía para orientarte en nuestro código.
 
@@ -648,7 +650,7 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 </div>
 
-### 6.3.1. Ronda abierta(Open challenge) <a id="631-ronda-abiertaopen-challenge"></a>
+### 6.5.1. Ronda abierta(Open challenge) <a id="651-ronda-abiertaopen-challenge"></a>
 
 * **Open Challenge Video:**
 
@@ -676,7 +678,7 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
   </div>
 
-### 6.3.2. Ronda de obstaculos(Obstacel challenge) <a id="632-ronda-de-obstaculosobstacel-challenge"></a>
+### 6.5.2. Ronda de obstaculos(Obstacle challenge) <a id="652-ronda-de-obstaculosobstacle-challenge"></a>
 
 La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
 El núcleo de este reto radica en la interpretación semántica del entorno según las reglas oficiales de la competencia: los pilares actúan como señales direccionales que indican el carril de paso correcto. Para cumplir con esta lógica de navegación de manera robusta a una velocidad constante (`VELOCIDAD_BASE = 68`), el software se estructuró sobre tres pilares fundamentales:
