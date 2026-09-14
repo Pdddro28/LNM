@@ -1,4 +1,5 @@
 
+
 **If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
 
 ``` Para mejor visualización, se recomienda ver el repositorio en la computadora ```
@@ -14,7 +15,9 @@
 ## **Índice**
 
 1. **[Introducción](#1-introduccion)**
-   - 1.1. **[Miembros](#11-miembros)**
+   - 1.1. **[Miembros y Coach](#11-miembros-y-coach)**
+      - 1.1.1. **[David Wang](#111-David)**
+      - 1.1.2. **[Pedro Catámo](#112-Pedro)**
 2. **[Proyectos anteriores](#2-proyectos-anteriores)**
 3. **[Diseño y mobilidad](#3-diseño-y-mobilidad)**
    - 3.1. **[Fotos del vehiculo](#31-fotos-del-vehiculo)**
@@ -61,7 +64,7 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 
 </div>
 
-### 1.1. Miembros <a id="11-miembros"></a>
+### 1.1. Miembros y Coach <a id="11-miembros-y-coach"></a>
 
 <div align="center">
 	
@@ -77,6 +80,38 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 | 📅 **Nacido en:** 04/01/2011 (15 años)<br>🏫 **Estudio:** 4º año en la U.E.C. Eduardo Blanco<br>📧 **Gmail:** [davidwangwu104@gmail.com](mailto:davidwangwu104@gmail.com) | 📅 **Nacido en:** 28/01/2009 (17 años)<br>🏫 **Estudio:** Graduado en la U.E.C. Colegio Eduado Blanco<br>📧 **Gmail:** [pedrocatamo.2009@gmail.com](mailto:pedrocatamo.2009@gmail.com) | 📅 **Nacido en:** 18/11/2005 (21 años) <br> 🏫 **Estudio:** Ingenieria en computación & Ingenieria informática <br> 📧 **Gmail:** [Jdam50002@gmail.com](mailto:Jdam50002@gmail.com) |
 
 </div>
+
+---
+
+#### 1.1.1. David Wang <a id="111-David"></a>
+
+**Rol: Programación y Lógica Autónoma, Integrador de Sistemas y  Diseñador 3D**
+
+* **Programación y Lógica Autónoma:** Me encargo del desarrollo del código en la placa pprincipal, la lógica de control del vehículo y la programación del sistema de visión por computadora.
+
+* **Integración de Sistemas:** Me aseguro de que la información de la cámara se traduzca correctamente en movimientos del vehículo de forma fluida.
+
+* **Diseñador 3D:** Trabajo en la conceptualización y modelado CAD del chasis y las piezas junto al mentor del área técnica, adaptando la estructura según las necesidades del espacio que requiere la electrónica.
+
+#### 1.1.2. Pedro Catámo <a id="112-Pedro"></a>
+
+**Rol: Ensamblaje Mecánico y Mantenimiento, Ingeniería de Pruebas y Telemetría y Redacción y Gestión del Reporte Técnico**
+
+* **Ensamblaje Mecánico y Mantenimiento:** Me encargo del montaje físico del carro, el ajuste de tornillería, la calibración de componentes con herramientas de precisión y la revisión del estado general del vehículo para evitar fallos físicos.
+
+* **Ingeniería de Pruebas y Telemetría:** Registro los tiempos en pista, mide el rendimiento del carro en cada intento y anota qué ajustes físicos o de parámetros generan mejoras o fallos.
+
+* **Redacción y Gestión del Reporte Técnico:** Responsable principal de estructurar y maquetar el documento del proyecto que se entrega a los jueces, recopilando la información del código, el diseño y las pruebas.
+
+#### 1.1.3. Jesús Alcalá <a id="113-Jesus"></a>
+
+**Rol: Mentor de Programación y Lógica, Mentor de Diseño y Estructura y Mentor de Gestión y Reglamento**
+
+* **Mentor de Programación y Lógica:** Me encargo de guiarlos en la arquitectura del código, la lógica de navegación autónoma y el procesamiento de imágenes. Los oriento en la resolución de errores lógicos y en la optimización del programa para garantizar un rendimiento estable en pista.
+
+* **Mentor de Diseño y Estructura:** Me encargo de guiarlos en la concepción física del vehículo, enseñándoles técnicas de diseño CAD y optimización de piezas para lograr un chasis resistente y funcional.
+
+* **Mentor de Gestión y Reglamento:** Me encargo de verificar el cumplimiento estricto del reglamento de la WRO, asesorarlos en la estructuración de la documentación técnica y orientarlos en las decisiones generales del proyecto para asegurar un desarrollo ordenado.**
 
 ---
 
@@ -362,7 +397,7 @@ Esta distribución tridimensional complementa la estrategia de navegación autó
 
 <img width="4080" height="3060" alt="20260829_205432" src="https://github.com/user-attachments/assets/14a58644-2533-4508-8e80-18146f99838e" />
 
-NOTA: en esta imagen los sensores de tiempo de vuelo no estan acoplados. 
+NOTA: En esta imagen los sensores de tiempo de vuelo no estan acoplados. 
 
 </div>
 
@@ -390,7 +425,7 @@ Esta configuración nos permite operar con la máxima seguridad, garantizando qu
 | **Mini360 Mini 360 3A DC-DC** | 1 | 4.75 V / 23 V | 15 mA (reposo) / 3000 mA (Límite) | 15 mA |
 | **VL53L0X Time of Flight** | 2 |  2.6 V / 5.5 V | 10 mA / 20 mA (c/u) | 20 mA |
 | **Gikfun in Touch Switch** | 1 |  2.0 V / 5.5 V | 4 mA / 8 mA | 8 mA |
-| Total | | |  589 mA / 2173 mA (2.17 A) | 2173 mA (2.17 A) |
+| **Total** | | |  589 mA / 2173 mA (2.17 A) | 2173 mA (2.17 A) |
 
 </div>
 
@@ -658,11 +693,10 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 ## 6.6. Challenge Overview <a id="66-challenge-overview"></a>
 
-<div align="center">
 
-## **WRO 2026 Future Engineers Challenges**
+### **WRO 2026 Future Engineers Challenges:** 
 
-### **Dos retos distintos de navegación autónoma que ponen a prueba la inteligencia y la precisión de los vehículos**
+Dos retos distintos de navegación autónoma que ponen a prueba la inteligencia y la precisión de los vehículos.
 
 </div>
 
@@ -700,6 +734,8 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
 ### 6.6.3. Estrategia en Ronda Abierta <a id="663-ronda-abierta-estrategia"></a>
 
+## Estrategia Pasada:
+
 * **Open Challenge Video:**
 
   <div align="center">
@@ -710,7 +746,7 @@ El constructor establece un canal de comunicación a través de puerto serial po
 
   </div>
 
-* **Estrategia Pasada:** Para cumplir con los desafíos del Open Challenge, se diseñó e implementó una arquitectura de software basada en un bucle de control de alta frecuencia. La estrategia central no depende de un solo sensor, sino de un Control Híbrido (Sensor Fusión) que alterna dinámicamente entre la Visión Artificial (cámara) y la Telemetría Acústica (sensores ultrasónicos) según las condiciones de la pista. El sistema se divide en cuatro pilares de ejecución: Detección de Sentido, Control de Trayectoria (PIDs independientes), Navegación en Esquinas y Seguridad Activa (Anticolisión).
+* **Estrategia:** Para cumplir con los desafíos del Open Challenge, se diseñó e implementó una arquitectura de software basada en un bucle de control de alta frecuencia. La estrategia central no depende de un solo sensor, sino de un Control Híbrido (Sensor Fusión) que alterna dinámicamente entre la Visión Artificial (cámara) y la Telemetría Acústica (sensores ultrasónicos) según las condiciones de la pista. El sistema se divide en cuatro pilares de ejecución: Detección de Sentido, Control de Trayectoria (PIDs independientes), Navegación en Esquinas y Seguridad Activa (Anticolisión).
 
 * **ROIs:** Para optimizar el procesamiento computacional, mantener un alto framerate y evitar falsos positivos con elementos externos a la pista, el campo de visión de la cámara se segmenta geométricamente:
   * *ROI Principal (Búsqueda de Color):* Un recuadro amplio (0, 50, width, height-100) dedicado exclusivamente a procesar máscaras de color (Rojo, Verde, Azul, Naranja) mediante la búsqueda de contornos.
@@ -727,6 +763,8 @@ El constructor establece un canal de comunicación a través de puerto serial po
  </div>
 
 ---
+
+## Estrategia Actual:
 
 * **Open Challenge Video:**
 
@@ -778,7 +816,9 @@ El ángulo de la dirección se restringe dinámicamente en una ventana de seguri
 
 ### 6.6.4. Estrategia en Ronda de Obstaculos <a id="664-ronda-de-obstaculos-estrategia"></a>
 
-* **Estrategia Pasada:** La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
+## Estrategia Pasada:
+
+* **Estrategia:** La estrategia diseñada para abordar el segundo reto (evasión de obstáculos) se construye de forma modular sobre la base arquitectónica de la ronda abierta. Se conservan las Regiones de Interés laterales (`roi_izq` y `roi_der`), la resolución de la cámara y los filtros de segmentación de color base.
 El núcleo de este reto radica en la interpretación semántica del entorno según las reglas oficiales de la competencia: los pilares actúan como señales direccionales que indican el carril de paso correcto. Para cumplir con esta lógica de navegación de manera robusta a una velocidad constante (`VELOCIDAD_BASE = 68`), el software se estructuró sobre tres pilares fundamentales:
 
 1. Base del Reto Abierto (Navegación Línea Base): Conserva el control de centrado mediante la diferencia de áreas de líneas y el fallback de seguridad asistido por ultrasonidos.
@@ -832,6 +872,8 @@ El robot realiza una maniobra de retroceso a alta potencia (`speed = 85`) durant
 
 ---
 
+## Estrategia Actual:
+
 * **Obstacle Challenge Video:**
 
   <div align="center">
@@ -842,7 +884,7 @@ El robot realiza una maniobra de retroceso a alta potencia (`speed = 85`) durant
 
   </div>
 
-* **Estrategia actual:** Elimina por completo la dependencia acústica de los ultrasonidos para la evasión. Implementa un **Control PD Dinámico Ponderado por Área (Proximidad)** apoyado en un filtro de **Histéresis por Conteo de Frames (Memoria Visual)** ejecutado a alta velocidad mediante GStreamer + OpenCV.
+* **Estrategia:** Elimina por completo la dependencia acústica de los ultrasonidos para la evasión. Implementa un **Control PD Dinámico Ponderado por Área (Proximidad)** apoyado en un filtro de **Histéresis por Conteo de Frames (Memoria Visual)** ejecutado a alta velocidad mediante GStreamer + OpenCV.
 
 * **Matriz Comparativa de Arquitectura:**
 
