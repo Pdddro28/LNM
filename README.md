@@ -8,7 +8,7 @@
 
 <div align="center">
 	
-<img width="1100" height="700" alt="WhatsApp Image 2026-06-19 at 11 51 57 PM" src="https://github.com/user-attachments/assets/cee364df-eeba-4338-8f2a-14949adb755b" />
+<img width="1000" height="600" alt="WhatsApp Image 2026-06-19 at 11 51 57 PM" src="https://github.com/user-attachments/assets/cee364df-eeba-4338-8f2a-14949adb755b" />
 
 </div>
 
