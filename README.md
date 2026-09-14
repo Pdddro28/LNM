@@ -200,7 +200,7 @@ Dado que la cotangente crece más rápido a ángulos pequeños, esta relación o
 
 <div align="center">
 
-<img width="800" height="800" alt="17523247_203569336801744_2788986523412924047_n" src="https://github.com/user-attachments/assets/c36a271c-b45c-492a-805e-b107851429cd" />
+<img width="700" height="700" alt="ackermann png" src="https://github.com/user-attachments/assets/4d664a20-9be0-47e3-a76d-9321eebc615a" />
 
 </div>
 
