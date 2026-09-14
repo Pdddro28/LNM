@@ -213,6 +213,8 @@ La fuerza motriz de la plataforma se genera mediante un sistema de tracción tra
 
 </div>
 
+## *Una demostración de la tracción trasera*
+
 <div align="center">
 
 https://github.com/user-attachments/assets/042841d2-482d-409c-a0ef-2fa391119745
