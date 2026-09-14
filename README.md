@@ -117,7 +117,7 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 
 * **Mentor de Diseño y Estructura:** Me encargo de guiarlos en la concepción física del vehículo, enseñándoles técnicas de diseño CAD y optimización de piezas para lograr un chasis resistente y funcional.
 
-* **Mentor de Gestión y Reglamento:** Me encargo de verificar el cumplimiento estricto del reglamento de la WRO, asesorarlos en la estructuración de la documentación técnica y orientarlos en las decisiones generales del proyecto para asegurar un desarrollo ordenado.
+* **Mentor de Gestión y Reglamento:** Encargado de verificar el cumplimiento estricto del reglamento de la WRO, asesorarlos en la estructuración de la documentación técnica y orientarlos en las decisiones generales del proyecto para asegurar un desarrollo ordenado.
 
 ---
 
