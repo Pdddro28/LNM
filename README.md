@@ -87,6 +87,12 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 
 **Rol: Programación y Lógica Autónoma, Integrador de Sistemas y  Diseñador 3D**
 
+<div align="center">
+
+<img width="400" height="700" alt="David" src="https://github.com/user-attachments/assets/f19589c0-22ea-44fb-ba63-21a8cb10d5f8" />
+
+</div>
+
 * **Programación y Lógica Autónoma:** Me encargo del desarrollo del código en la placa pprincipal, la lógica de control del vehículo y la programación del sistema de visión por computadora.
 
 * **Integración de Sistemas:** Me aseguro de que la información de la cámara se traduzca correctamente en movimientos del vehículo de forma fluida.
