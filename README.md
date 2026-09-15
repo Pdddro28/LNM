@@ -362,6 +362,12 @@ Este valor de $1.53\text{ m/s}$ representa la velocidad límite ideal de la plat
 Se usaron las impresoras Creality Hi y Creality K1:
 
 * **Creality Hi:** Es una de las propuestas más recientes de Creality, diseñada con un fuerte enfoque en competir directamente en el mercado de impresión multicolor accesible.
+
+<div align="center">
+
+
+</div>
+
   * **Volumen de construcción:** $260 \times 260 \times 300\text{ mm}$. Es un tamaño intermedio-alto, excelente para robótica porque te permite hacer chasis completos en una sola pieza sin tener que segmentarlos.
   * **Dimensiones de la máquina:** $409 \times 392 \times 477\text{ mm}$ (Peso: $8.75\text{ kg}$).
   * Es una impresora cartesiana de alta velocidad equipada con motores step-servo en los ejes X/Y para evitar la pérdida de pasos. Su gran fuerte es la compatibilidad nativa con el sistema CFS (Creality Filament System), un módulo externo tipo "banco de filamentos" que te permite alternar de forma automatizada hasta 4 colores diferentes (o hasta 16 si encadenas 4 módulos). Su velocidad máxima es de $500\text{ m/s}$ con una aceleración de $12,000\text{ mm/s}^2$ y alcanza los $300^\circ\text{C}$ en la boquilla.
@@ -371,6 +377,13 @@ Se usaron las impresoras Creality Hi y Creality K1:
   * **¿Se recomienda usarla a futuro?** Sí, totalmente. Al ser una plataforma moderna, cuenta con el soporte de software más actualizado (Creality Print 5.1 / OrcaSlicer) y está diseñada bajo el ecosistema de cambio de filamento automático. Es una excelente inversión a largo plazo para un taller.
 
 * **Creality K1:** Lanzada originalmente como la respuesta directa de Creality a la serie P1 de Bambu Lab, es una máquina de nivel profesional diseñada para velocidad pura y materiales exigentes.
+
+<div align="center">
+
+<img width="500" height="500" alt="K1roof_windows" src="https://github.com/user-attachments/assets/40f5c82b-c552-44e5-88a2-95d0ab9ffcd9" />
+
+</div>
+  
   * **Volumen de construcción:** $220 \times 220 \times 250\text{ mm}$. Es un espacio estándar (ligeramente más pequeña que la Creality Hi).
   * **Dimensiones de la máquina:** $355 \times 355 \times 480\text{ mm}$ (Peso: $12.5\text{ kg}$).
   * Utiliza un sistema cinemático CoreXY donde el cabezal se mueve de forma ultraligera en los ejes X/Y usando correas cruzadas, mientras la cama solo baja en el eje Z. Al estar completamente cerrada con paneles de vidrio y acrílico, retiene el calor interno en la cámara de impresión. Alcanza una velocidad de $600\text{ mm/s}$ y una aceleración masiva de $20,000\text{ mm/s}^2$ gracias a su firmware basado en Klipper (Creality OS).
