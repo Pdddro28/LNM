@@ -1,4 +1,4 @@
-<img width="541" height="390" alt="image" src="https://github.com/user-attachments/assets/563fce61-5af0-4060-a7e8-2547052046c4" />**If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
+**If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
 
 ``` Para mejor visualización, se recomienda ver el repositorio en la computadora ```
 
@@ -110,6 +110,12 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 #### 1.1.3. Jesús Alcalá <a id="113-Jesus"></a>
 
 **Rol: Mentor de Programación y Lógica, Mentor de Diseño y Estructura y Mentor de Gestión y Reglamento**
+
+<div align="center">
+
+<img width="400" height="700" alt="1000281781" src="https://github.com/user-attachments/assets/f77cb86f-cff0-4f8c-8ea1-c10f3c5291b0" />
+
+</div>
 
 * **Mentor de Programación y Lógica:** Me encargo de guiarlos en la arquitectura del código, la lógica de navegación autónoma y el procesamiento de imágenes. Los oriento en la resolución de errores lógicos y en la optimización del programa para garantizar un rendimiento estable en pista.
 
