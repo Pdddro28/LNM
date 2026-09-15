@@ -1,5 +1,3 @@
-<img width="411" height="342" alt="ing eje 2" src="https://github.com/user-attachments/assets/f3263f7b-0c6d-4b91-aa6b-deeccd807496" /><img width="411" height="343" alt="Captura de pantalla 2026-09-14 232649" src="https://github.com/user-attachments/assets/f083f03f-ab3a-49f6-955b-00ed8119c135" /><img width="272" height="213" alt="image" src="https://github.com/user-attachments/assets/0291c2a1-d0c2-4532-9c85-2ba82b2b37e9" /><img width="341" height="307" alt="image" src="https://github.com/user-attachments/assets/07eb357b-030d-4be3-b596-e4eb5734205e" />
-
 **If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
 
 ``` Para mejor visualización, se recomienda ver el repositorio en la computadora ```
