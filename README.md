@@ -1,4 +1,4 @@
-
+<img width="411" height="342" alt="ing eje 2" src="https://github.com/user-attachments/assets/f3263f7b-0c6d-4b91-aa6b-deeccd807496" /><img width="411" height="343" alt="Captura de pantalla 2026-09-14 232649" src="https://github.com/user-attachments/assets/f083f03f-ab3a-49f6-955b-00ed8119c135" /><img width="272" height="213" alt="image" src="https://github.com/user-attachments/assets/0291c2a1-d0c2-4532-9c85-2ba82b2b37e9" /><img width="341" height="307" alt="image" src="https://github.com/user-attachments/assets/07eb357b-030d-4be3-b596-e4eb5734205e" />
 
 **If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
 
@@ -288,6 +288,8 @@ Este valor de $1.53\text{ m/s}$ representa la velocidad límite ideal de la plat
 
 #### **Piezas impresas:**
 
+## **Actualmente en uso:**
+
 <div align="center">
 
 | Component & Preview | Design & Geometry | Engineering Purpose |
@@ -300,6 +302,46 @@ Este valor de $1.53\text{ m/s}$ representa la velocidad límite ideal de la plat
 | **Direccional** <br><br><img width="5000" height="5000" alt="Screenshot 2026-08-31 202722" src="https://github.com/user-attachments/assets/6c66220a-595f-4e60-8dd9-857fee6638fa" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
 | **Triangulo Ackermann** <br><br><img width="5000" height="5000" alt="Screenshot 2026-08-31 202522" src="https://github.com/user-attachments/assets/32e2294f-8eb8-408a-979d-4f841066f1c7" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
 | **Pillar** <br><br><img width="5000" height="5000" alt="Screenshot 2026-08-31 202741" src="https://github.com/user-attachments/assets/3de1f1a2-ce3a-4e5d-aaff-baba42a604d2" /> | Un soporte protector compacto de doble barril hecho a medida para encapsular firmemente los cilindros del transmisor y receptor del módulo del sensor ultrasónico. Cuenta con pestañas de montaje traseras integradas y bridas inferiores para un acoplamiento mecánico continuo a las vigas transversales delanteras de la estructura del chasis. | Proporciona una carcasa rígida y aislada de vibraciones que mantiene el sensor ultrasónico perfectamente perpendicular al plano horizontal de la pista. Esta alineación precisa elimina la distorsión de la señal acústica y la dispersión de las ondas, garantizando mediciones de distancia en tiempo real altamente precisas para la detección de obstáculos y mapas de frenado de emergencia. |
+
+</div>
+
+###**Control de versiones**
+
+##Estos son todos los modelos empleados a lo largo del uso del carro
+
+<div align="center">
+
+| Archivo | Categoría / Subsistema | Tipo | Estado / Versión | Registro de Cambios / Notas |
+| --- | --- | --- | --- | --- |
+| **Chasis Ing_01.stl** | Estructura / Chasis | Modelo 3D | v1.0 | Versión inicial del módulo de chasis(actual) <img width="60" height="60" alt="image" src="https://github.com/user-attachments/assets/0a52fc2e-f24b-4e39-b533-8d27122c9fff" />|
+| **Chasis Ing_02.stl** | Estructura / Chasis | Modelo 3D | v1.1 | Ajuste y modificacion de encages(actual) <img width="60" height="60" alt="chassis 2" src="https://github.com/user-attachments/assets/87dbbc7e-e684-4b3e-a303-eff6fd0788c4" />|
+| **Chasis Ing_03.stl** | Estructura / Chasis | Modelo 3D | v1.2 | Modificación de puntos de fijación(actual) <img width="60" height="60" alt="chassis 3" src="https://github.com/user-attachments/assets/040432da-a6a5-4295-b2bc-ebe392392554" />|
+| **Chasis Ing_04.stl** | Estructura / Chasis | Modelo 3D | v1.3 | Optimización de grosor de pared(actual) <img width="60" height="60" alt="chassis 4" src="https://github.com/user-attachments/assets/dbc39911-a64c-4891-bc1d-e53381995408" />|
+| **Chasis Ing_05.stl** | Estructura / Chasis | Modelo 3D | v1.4 | adicion de espacio para la traccion(actual) <img width="60" height="60" alt="chassis 5" src="https://github.com/user-attachments/assets/27fd48cd-7148-4b0a-8776-85946bd72d4a" />|
+| **Chasis Ing_06.stl** | **Estructura / Chasis** | Modelo 3D | v1.5 | Reorganización de huecos para cables(actual) <img width="60" height="60" alt="chassis 6" src="https://github.com/user-attachments/assets/cdb0ac6e-ac42-45cc-8e68-d5e27928e12d" />|
+| **Chasis Ing_07.stl** | Estructura / Chasis | Modelo 3D | v1.6 | Ensanche de el hueco central(actual) <img width="60" height="60" alt="chassis 7" src="https://github.com/user-attachments/assets/f0e23bdd-37eb-4dc7-baba-f2ff393334ec"/>|
+| **LNM_FI.stl** | Estructura / Chasis | Modelo 3D | v1.0 | modelo chassis completo(deprecated) |
+| **ing akerman .stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Diseño base del sistema Ackermann |
+| **ing akerman 1.stl** | Dirección y Transmisión | Modelo 3D | v1.1 | Revisión de ángulo de giro |
+| **ing akerman 2.stl** | Dirección y Transmisión | Modelo 3D | v1.2 | Ajuste de orificio para pasador |
+| **ing akerman 3.stl** | Dirección y Transmisión | Modelo 3D | v1.3 | Refuerzo en el brazo de acople |
+| **Ing eje 01.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Eje de rueda primario para traccion trasera(actual) <img width="272" height="213" alt="eje 1" src="https://github.com/user-attachments/assets/981f13bf-b080-4d76-97d4-357239d5d770" />|
+| **Ing eje 02.stl** | Dirección y Transmisión | Modelo 3D | v1.1 | Eje modificado para transmisión(actual)|
+| **Ing eje DIF.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Eje adaptado para diferencial |
+| **Ing PIN WHEEL.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Pasador/pin de sujeción de rueda <img width="60" height="60" alt="Captura de pantalla 2026-09-14 224225" src="https://github.com/user-attachments/assets/206103a3-b63a-442b-a417-8a236a55d81a" />|
+| **Ing SOP NEW EJE .stl** | Dirección y Transmisión | Modelo 3D | v2.0 | Nuevo soporte para el eje principal <img width="60" height="60" alt="sop new eje" src="https://github.com/user-attachments/assets/9e9453fd-ff75-40b3-be99-3931fd7c3e75" />|
+| **Ing SOP TOP.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Soporte superior para raspberry(actual) <img width="60" height="60" alt="Sop top" src="https://github.com/user-attachments/assets/46ec8d18-42b4-4c3b-b542-f827dde9fb76" />|
+| **ing BAT SOP.stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Soporte para la batería |
+| **ing SERVO ARM.stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Brazo de acople para servomotor |
+| **ing SOP CAM .stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Soporte para módulo de cámara |
+| **ing tall PIN .stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Pin/pasador largo de fijación |
+| **ing tall PIN 1.stl** | Soportes y Sujeciones | Modelo 3D | v1.1 | Pin largo con tolerancia ajustada |
+| **motor clip .stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Clip de retención para motor |
+| **BatteryCase.png** | Documentación / Renders | Render | v1.0 | caja de batería(deprecated) |
+| **CameraCase.png** | Documentación / Renders | Render | v1.0 | funda de cámara(deprecated) |
+| **MegaPiBase.png** | Documentación / Renders | Render | v1.0 | base MegaPi(deprecated) |
+| **RaspberryPiBase.png** | Documentación / Renders | Render | v1.0 | base Raspberry Pi(deprecated) |
+| **UltrasonicSensorCase.png** | Documentación / Renders | Render | v1.0 |case del ultrasónico(deprecated) |
 
 </div>
 
