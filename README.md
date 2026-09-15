@@ -365,6 +365,7 @@ Se usaron las impresoras Creality Hi y Creality K1:
 
 <div align="center">
 
+<img width="1920" height="1080" alt="0deac4af82ceb4a97052a4de7d764385" src="https://github.com/user-attachments/assets/a2a97f38-e7f2-43c8-b593-dbd963f9081d" />
 
 </div>
 
