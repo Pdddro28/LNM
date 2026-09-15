@@ -1,4 +1,4 @@
-**If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
+<img width="541" height="390" alt="image" src="https://github.com/user-attachments/assets/563fce61-5af0-4060-a7e8-2547052046c4" />**If you want to see this repository in English, [click here](https://github.com/Pdddro28/K-O-M-R-A-D/blob/main/README_EN.md)**
 
 ``` Para mejor visualización, se recomienda ver el repositorio en la computadora ```
 
@@ -323,15 +323,15 @@ Este valor de $1.53\text{ m/s}$ representa la velocidad límite ideal de la plat
 | **ing akerman 1.stl** | Dirección y Transmisión | Modelo 3D | v1.1 | Revisión de ángulo de giro |
 | **ing akerman 2.stl** | Dirección y Transmisión | Modelo 3D | v1.2 | Ajuste de orificio para pasador |
 | **ing akerman 3.stl** | Dirección y Transmisión | Modelo 3D | v1.3 | Refuerzo en el brazo de acople |
-| **Ing eje 01.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Eje de rueda primario para traccion trasera(actual) <img width="272" height="213" alt="eje 1" src="https://github.com/user-attachments/assets/981f13bf-b080-4d76-97d4-357239d5d770" />|
-| **Ing eje 02.stl** | Dirección y Transmisión | Modelo 3D | v1.1 | Eje modificado para transmisión(actual)|
+| **Ing eje 01.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Eje de rueda primario para traccion trasera(actual) <img width="60" height="60" alt="eje 1" src="https://github.com/user-attachments/assets/981f13bf-b080-4d76-97d4-357239d5d770" />|
+| **Ing eje 02.stl** | Dirección y Transmisión | Modelo 3D | v1.1 | Eje modificado para nueva transmisión(actual)<img width="60" height="60" alt="ing eje 2" src="https://github.com/user-attachments/assets/a8bfbc44-759b-4bb1-9755-8f0bb65ac8ce" />|
 | **Ing eje DIF.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Eje adaptado para diferencial |
-| **Ing PIN WHEEL.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Pasador/pin de sujeción de rueda <img width="60" height="60" alt="Captura de pantalla 2026-09-14 224225" src="https://github.com/user-attachments/assets/206103a3-b63a-442b-a417-8a236a55d81a" />|
+| **Ing PIN WHEEL.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Pasador/pin de sujeción de rueda(actual) <img width="60" height="60" alt="Captura de pantalla 2026-09-14 224225" src="https://github.com/user-attachments/assets/206103a3-b63a-442b-a417-8a236a55d81a" />|
 | **Ing SOP NEW EJE .stl** | Dirección y Transmisión | Modelo 3D | v2.0 | Nuevo soporte para el eje principal <img width="60" height="60" alt="sop new eje" src="https://github.com/user-attachments/assets/9e9453fd-ff75-40b3-be99-3931fd7c3e75" />|
 | **Ing SOP TOP.stl** | Dirección y Transmisión | Modelo 3D | v1.0 | Soporte superior para raspberry(actual) <img width="60" height="60" alt="Sop top" src="https://github.com/user-attachments/assets/46ec8d18-42b4-4c3b-b542-f827dde9fb76" />|
-| **ing BAT SOP.stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Soporte para la batería |
+| **ing BAT SOP.stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Soporte para la batería 2do piso(actual)<img width="60" height="60" alt="Bat sop" src="https://github.com/user-attachments/assets/d4af1e0a-31d2-4941-8646-7fe7627e51ac" />|
 | **ing SERVO ARM.stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Brazo de acople para servomotor |
-| **ing SOP CAM .stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Soporte para módulo de cámara |
+| **ing SOP CAM .stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Soporte para módulo de cámara IMX219(actual)<img width="318" height="266" alt="Sop cam" src="https://github.com/user-attachments/assets/af98f137-4eb2-41fa-b15d-8b1275c05ea4" />|
 | **ing tall PIN .stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Pin/pasador largo de fijación |
 | **ing tall PIN 1.stl** | Soportes y Sujeciones | Modelo 3D | v1.1 | Pin largo con tolerancia ajustada |
 | **motor clip .stl** | Soportes y Sujeciones | Modelo 3D | v1.0 | Clip de retención para motor |
