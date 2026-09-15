@@ -87,7 +87,7 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 
 <div align="center">
 
-<img width="500" height="700" alt="David" src="https://github.com/user-attachments/assets/f19589c0-22ea-44fb-ba63-21a8cb10d5f8" />
+<img width="400" height="700" alt="David" src="https://github.com/user-attachments/assets/f19589c0-22ea-44fb-ba63-21a8cb10d5f8" />
 
 </div>
 
@@ -113,7 +113,7 @@ Esta es la estructura general de carpetas de nuestro repositorio:
 
 <div align="center">
 
-<img width="400" height="700" alt="1000281781" src="https://github.com/user-attachments/assets/f77cb86f-cff0-4f8c-8ea1-c10f3c5291b0" />
+<img width="500" height="700" alt="1000281781" src="https://github.com/user-attachments/assets/f77cb86f-cff0-4f8c-8ea1-c10f3c5291b0" />
 
 </div>
 
